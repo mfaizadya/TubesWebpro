@@ -1,0 +1,147 @@
+/* --- Navbar --- */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #2977FF;
+  padding: 1rem 3rem; /* Tambah padding kiri-kanan agar tidak nempel */
+  color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  box-sizing: border-box;
+}
+
+.nav-brand a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.2s ease;
+}
+
+.nav-links a:hover {
+  opacity: 0.8;
+}
+
+.nav-logout {
+  display: flex;
+  align-items: center;
+}
+
+.nav-logout a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  background-color: #e63946;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: background-color 0.2s ease;
+}
+
+.nav-logout a:hover {
+  background-color: #d62828;
+}
+
+
+/* --- Body & Layout --- */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f6f7fb;
+  margin: 0;
+  padding-top: 90px; /* Memberi ruang di bawah navbar */
+}
+
+/* --- Form Card --- */
+main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 90px);
+}
+
+.form-card {
+  background-color: #fff;
+  width: 380px;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.logo {
+  text-align: center;
+  font-weight: 700;
+  font-size: 22px;
+  color: #2977FF;
+  margin-bottom: 10px;
+  letter-spacing: 2px;
+}
+
+.form-card h2 {
+  text-align: center;
+  margin-bottom: 24px;
+  color: #333;
+  font-weight: 600;
+}
+
+label {
+  font-weight: 500;
+  color: #555;
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+input[type="text"],
+select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d0d0d0;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #333;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+input[type="text"]:focus,
+select:focus {
+  border-color: #5a67d8;
+  box-shadow: 0 0 0 2px rgba(90, 103, 216, 0.2);
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #2977FF;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #1e5edb;
+}
