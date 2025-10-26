@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (isConfirmed) {
                 console.log('Pengguna telah logout.');
                 alert('Anda telah berhasil logout.');
-                window.location.href = 'login.html'; 
+                window.location.href = 'Login.html'; 
             }
         });
     }
