@@ -8,10 +8,8 @@
   justify-content: space-between;
   align-items: center;
   background-color: #2977FF;
-  padding: 1rem 3rem; /* Tambah padding kiri-kanan agar tidak nempel */
+  padding: 16px 48px;
   color: white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  z-index: 100;
   box-sizing: border-box;
 }
 
@@ -20,19 +18,19 @@
   text-decoration: none;
   font-size: 1.5rem;
   font-weight: bold;
-  letter-spacing: 1px;
 }
 
 .nav-links {
   display: flex;
   gap: 1.5rem;
+  margin-left: auto;
+  padding-right: 16px;
 }
 
 .nav-links a {
   color: white;
   text-decoration: none;
-  font-weight: 500;
-  transition: opacity 0.2s ease;
+  font-weight: bold;
 }
 
 .nav-links a:hover {
@@ -48,39 +46,35 @@
   color: white;
   text-decoration: none;
   font-weight: 500;
-  background-color: #e63946;
+  background-color: red;
   padding: 0.5rem 1rem;
   border-radius: 5px;
-  transition: background-color 0.2s ease;
 }
 
 .nav-logout a:hover {
-  background-color: #d62828;
+  background-color: darkred;
 }
 
 
-/* --- Body & Layout --- */
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f6f7fb;
-  margin: 0;
-  padding-top: 90px; /* Memberi ruang di bawah navbar */
+  font-family: "Inter", sans-serif;
+  background-color: lightgray;
+  padding-top: 200px;
 }
 
-/* --- Form Card --- */
 main {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: calc(100vh - 90px);
 }
 
 .form-card {
-  background-color: #fff;
+  background-color: white;
   width: 380px;
   padding: 32px;
   border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  border-style:solid;
+  border-color: grey;
 }
 
 .logo {
@@ -95,34 +89,34 @@ main {
 .form-card h2 {
   text-align: center;
   margin-bottom: 24px;
-  color: #333;
+  color: black;
   font-weight: 600;
 }
 
 label {
   font-weight: 500;
-  color: #555;
+  color: black;
   display: block;
   margin-bottom: 6px;
   font-size: 14px;
 }
 
-input[type="text"],
+#inputNama {
+  width: 93%;
+  padding: 10px 12px;
+  border: 1px solid grey;
+  border-radius: 8px;
+  font-size: 14px;
+  color: black;
+}
+
 select {
   width: 100%;
   padding: 10px 12px;
-  border: 1px solid #d0d0d0;
+  border: 1px solid grey;
   border-radius: 8px;
   font-size: 14px;
-  color: #333;
-  transition: all 0.3s ease;
-  outline: none;
-}
-
-input[type="text"]:focus,
-select:focus {
-  border-color: #5a67d8;
-  box-shadow: 0 0 0 2px rgba(90, 103, 216, 0.2);
+  color: black;
 }
 
 .form-group {
@@ -135,11 +129,9 @@ button {
   background-color: #2977FF;
   border: none;
   border-radius: 8px;
-  color: #fff;
-  font-weight: 600;
-  font-size: 15px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
 }
 
 button:hover {
