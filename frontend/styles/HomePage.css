@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-/* --- Variabel Desain Sistem Baru --- */
+/* Variabel Desain */
 :root {
     --primary: #2977FF;
     --background: #f9fafb;
@@ -10,7 +10,6 @@
     --shadow: 0 4px 12px rgba(37,99,235,0.1); 
 }
 
-/* --- Reset & Global --- */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -24,7 +23,7 @@ body {
     line-height: 1.6;
 }
 
-/* --- Navbar --- */
+/* Navbar */
 .navbar {
     display: flex;
     justify-content: space-between; 
@@ -95,7 +94,7 @@ p {
     color: var(--muted); 
 }
 
-/* --- Table --- */
+/* Table */
 .table-container {
     overflow-x: auto;
 }
@@ -126,7 +125,7 @@ tbody tr:hover {
     background-color: #f5f5f5;
 }
 
-/* --- Tombol Action --- */
+/* Tombol Action */
 .action-buttons {
     display: flex;
     gap: 0.5rem;
@@ -143,7 +142,7 @@ tbody tr:hover {
     transition: opacity 0.2s;
 }
 
-/* Tombol Rename (Biru) */
+/* Tombol Rename */
 .rename-btn {
     background-color: var(--primary); 
 }
@@ -152,7 +151,7 @@ tbody tr:hover {
     opacity: 0.9; 
 }
 
-/* Tombol Delete (Merah) */
+/* Tombol Delete */
 .delete-btn {
     background-color: #dc3545;
 }
