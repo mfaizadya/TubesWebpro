@@ -1,0 +1,139 @@
+/* --- Navbar --- */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #2977FF;
+  padding: 16px 48px;
+  color: white;
+  box-sizing: border-box;
+}
+
+.nav-brand a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+  margin-left: auto;
+  padding-right: 16px;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.nav-links a:hover {
+  opacity: 0.8;
+}
+
+.nav-logout {
+  display: flex;
+  align-items: center;
+}
+
+.nav-logout a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  background-color: red;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+}
+
+.nav-logout a:hover {
+  background-color: darkred;
+}
+
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: lightgray;
+  padding-top: 200px;
+}
+
+main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-card {
+  background-color: white;
+  width: 380px;
+  padding: 32px;
+  border-radius: 12px;
+  border-style:solid;
+  border-color: grey;
+}
+
+.logo {
+  text-align: center;
+  font-weight: 700;
+  font-size: 22px;
+  color: #2977FF;
+  margin-bottom: 10px;
+  letter-spacing: 2px;
+}
+
+.form-card h2 {
+  text-align: center;
+  margin-bottom: 24px;
+  color: black;
+  font-weight: 600;
+}
+
+label {
+  font-weight: 500;
+  color: black;
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+#inputNama {
+  width: 93%;
+  padding: 10px 12px;
+  border: 1px solid grey;
+  border-radius: 8px;
+  font-size: 14px;
+  color: black;
+}
+
+select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid grey;
+  border-radius: 8px;
+  font-size: 14px;
+  color: black;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #2977FF;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: #1e5edb;
+}

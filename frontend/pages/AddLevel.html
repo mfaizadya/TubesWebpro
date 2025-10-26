@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tambah Level</title>
+  <link rel="stylesheet" href="../styles/AddLevel.css">
+</head>
+
+<body>
+  <nav class="navbar">
+    <div class="nav-brand">
+      <a href="#">LogiLearn</a>
+    </div>
+    <div class="nav-links">
+      <a href="#level">Level</a>
+      <a href="#section">Section</a>
+      <a href="#review">Review Attempt</a>
+    </div>
+    <div class="nav-logout">
+      <a href="Login.html" id="logout-btn">Keluar</a>
+    </div>
+  </nav>
+  <main>
+    <div class="form-card">
+      <div class="logo">LogiLearn</div>
+      <h2>Tambah Level</h2>
+      <form id="add-level-form" action="">
+        <div class="form-group">
+          <label for="nama">Nama</label>
+          <input type="text" placeholder="Nama Level" id="inputNama">
+        </div>
+
+        <div class="form-group">
+          <label for="section">Section</label>
+          <select name="section" id="inputSection">
+            <option value="">Pilih Section</option>
+            <option value="Logika Dasar">Logika Dasar</option>
+            <option value="Logika Pemrograman">Logika Pemrograman</option>
+            <option value="Logika Silogisme">Logika Silogisme</option>
+          </select>
+        </div>
+
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </main>
+  <script src="../Script/AddLevel.js"></script>
+</body>
+</html>
