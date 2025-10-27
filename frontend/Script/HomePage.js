@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if (logoutButton) {
         logoutButton.addEventListener('click', (event) => {
-            event.preventDefault();
             const isConfirmed = confirm('Apakah Anda yakin ingin keluar?');
             
             if (isConfirmed) {
