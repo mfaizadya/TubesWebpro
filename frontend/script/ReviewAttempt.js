@@ -17,7 +17,9 @@ function renderAttempts() {
       <div class="card">
         <h3>${a.name}</h3>
         <p class="small">Section: ${a.section} | Level: ${a.level}</p>
-        <button>Lihat Detail</button>
+        <button onclick="window.location.href='DetailAttempt.html?name=${a.name}'">
+          Lihat Detail
+        </button>
       </div>`).join("")
     : "<p class='small'>Belum ada attempt.</p>";
 }
