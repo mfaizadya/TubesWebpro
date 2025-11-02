@@ -132,6 +132,12 @@ select {
   display: flex;
   align-items: center;
   gap: 10px;
+  justify-content: space-between;
+}
+
+.add-btns {
+  display: flex;
+  gap: 15px;
 }
 
 .form-group a {
@@ -179,7 +185,7 @@ td {
 }
 
 thead tr {
-  background-color: #f9f9f9;
+  background-color: #ddd4d4;
 }
 
 .question {
