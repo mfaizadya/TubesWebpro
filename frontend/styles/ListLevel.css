@@ -96,7 +96,8 @@ p {
 
 /* Table */
 .table-container {
-    overflow-x: auto;
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
 table {
@@ -173,6 +174,10 @@ tbody tr:hover {
     display: flex;
     gap: 0.5rem;
     margin-left: auto;
+}
+
+a {
+    text-decoration: none;
 }
 
 .add-btn:hover {
