@@ -35,7 +35,6 @@
 
           <label for="section">Section</label>
           <select name="section" id="inputSection">
-            <option value="">Pilih Section</option>
             <option value="Logika Dasar" selected>Logika Dasar</option>
             <option value="Logika Pemrograman">Logika Pemrograman</option>
             <option value="Logika Silogisme">Logika Silogisme</option>
@@ -44,13 +43,50 @@
           <a href=""><button class="add-btn">Tambah Soal</button></a>
         </div>
 
-        <table>
-          
+        <table class="table-container">
+          <thead>
+            <tr>
+              <th>Nomor</th>
+              <th>Tipe Soal</th>
+              <th>Pertanyaan</th>
+              <th>Kunci Jawaban</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Esai</td>
+              <td class="question">Satu keranjang berisi 5 apel. Jika kamu mengambil 2 apel, berapa apel yang kamu miliki?</td>
+              <td>3</td>
+              <td>
+                <div class="action-buttons">
+                    <a href=""><button class="edit-btn" data-id="sec1">Edit</button></a>
+                    <a href="#"><button class="delete-btn" data-id="sec1">Delete</button></a>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Pilihan Ganda</td>
+              <td class="question">Berapa itu 2 + 2 = ....</td>
+              <td>4</td>
+              <td>
+                <div class="action-buttons">
+                    <a href=""><button class="edit-btn" data-id="sec1">Edit</button></a>
+                    <a href="#"><button class="delete-btn" data-id="sec1">Delete</button></a>
+                </div>
+              </td>
+            </tr>
+          </tbody>
         </table>
-        <button type="submit">Save</button>
+        <div class="btn-right">
+          <button type="reset" class="cancel-btn">Cancel</button>
+          <button type="submit" class="save-btn">Save</button>
+        </div>
       </form>
     </div>
   </main>
-  <script src="../Script/AddLevel.js"></script>
+  <!-- <script src="../Script/AddLevel.js"></script> -->
 </body>
 </html>
