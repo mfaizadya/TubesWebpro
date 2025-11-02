@@ -4,8 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tambah Level</title>
-  <link rel="stylesheet" href="../styles/AddLevel.css">
+  <title>Edit Level</title>
+  <link rel="stylesheet" href="../styles/EditLevel.css">
 </head>
 
 <body>
@@ -26,25 +26,28 @@
     </div>
 </nav>
   <main class="container">
+    <h1>Edit Level</h1>
     <div class="form-card">
-    <h1>Tambah Level</h1>
       <form id="add-level-form" action="">
         <div class="form-group">
           <label for="nama">Nama</label>
-          <input type="text" placeholder="Nama Level" id="inputNama">
-        </div>
+          <input type="text" placeholder="Nama Level" id="inputNama" value="Level 1">
 
-        <div class="form-group">
           <label for="section">Section</label>
           <select name="section" id="inputSection">
             <option value="">Pilih Section</option>
-            <option value="Logika Dasar">Logika Dasar</option>
+            <option value="Logika Dasar" selected>Logika Dasar</option>
             <option value="Logika Pemrograman">Logika Pemrograman</option>
             <option value="Logika Silogisme">Logika Silogisme</option>
           </select>
+          
+          <a href=""><button class="add-btn">Tambah Soal</button></a>
         </div>
 
-        <button type="submit">Submit</button>
+        <table>
+          
+        </table>
+        <button type="submit">Save</button>
       </form>
     </div>
   </main>

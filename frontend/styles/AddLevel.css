@@ -1,139 +1,130 @@
-/* --- Navbar --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Variabel Desain */
+:root {
+    --primary: #2977FF;
+    --background: #f9fafb;
+    --text: #111827;
+    --muted: #6b7280;
+    --radius: 12px; 
+    --shadow: 0 4px 12px rgba(37,99,235,0.1); 
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Inter", sans-serif; 
+    background-color: var(--background); 
+    color: var(--text); 
+    line-height: 1.6;
+}
+
+/* Navbar */
 .navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #2977FF;
-  padding: 16px 48px;
-  color: white;
-  box-sizing: border-box;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    background-color: var(--primary); 
+    padding: 1rem 2rem;
+    color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem; 
 }
 
 .nav-brand a {
-  color: white;
-  text-decoration: none;
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-.nav-links {
-  display: flex;
-  gap: 1.5rem;
-  margin-left: auto;
-  padding-right: 16px;
+    color: white;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: bold;
 }
 
 .nav-links a {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
+    color: white;
+    text-decoration: none;
+    margin: 0 1rem;
+    font-weight: 500;
 }
 
 .nav-links a:hover {
-  opacity: 0.8;
-}
-
-.nav-logout {
-  display: flex;
-  align-items: center;
+    text-decoration: underline;
 }
 
 .nav-logout a {
-  color: white;
-  text-decoration: none;
-  font-weight: 500;
-  background-color: red;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    background-color: #e63946;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius);
+    transition: background-color 0.2s, opacity 0.2s;
 }
 
 .nav-logout a:hover {
-  background-color: darkred;
+    background-color: #d62828;
+    opacity: 0.9;
 }
 
-
-body {
-  font-family: "Inter", sans-serif;
-  background-color: lightgray;
-  padding-top: 200px;
+/* --- Main Content --- */
+.container {
+    max-width: 1100px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: var(--radius); 
+    box-shadow: var(--shadow); 
+    align-items: center;
+    justify-content: center;
 }
 
-main {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+h1 {
+  text-align: center;
+  color: #2977FF;
 }
 
 .form-card {
-  background-color: white;
-  width: 380px;
-  padding: 32px;
-  border-radius: 12px;
-  border-style:solid;
-  border-color: grey;
-}
-
-.logo {
-  text-align: center;
-  font-weight: 700;
-  font-size: 22px;
-  color: #2977FF;
-  margin-bottom: 10px;
-  letter-spacing: 2px;
-}
-
-.form-card h2 {
-  text-align: center;
-  margin-bottom: 24px;
-  color: black;
-  font-weight: 600;
+  margin: auto;
+  width: 50%;
 }
 
 label {
-  font-weight: 500;
-  color: black;
   display: block;
-  margin-bottom: 6px;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 #inputNama {
-  width: 93%;
-  padding: 10px 12px;
-  border: 1px solid grey;
-  border-radius: 8px;
+  width: 100%;
   font-size: 14px;
-  color: black;
+  padding: 5px;
+  border-radius: 4px;
 }
 
 select {
   width: 100%;
-  padding: 10px 12px;
-  border: 1px solid grey;
-  border-radius: 8px;
   font-size: 14px;
-  color: black;
+  padding: 5px;
+  border-radius: 4px;
 }
 
 .form-group {
-  margin-bottom: 18px;
+  margin-bottom: 10px;
 }
 
 button {
+  margin-top: 10px;
   width: 100%;
-  padding: 10px;
-  background-color: #2977FF;
-  border: none;
-  border-radius: 8px;
-  color: white;
+  padding: 5px;
+  font-size: 14px;
   font-weight: bold;
-  font-size: 16px;
-}
-
-button:hover {
-  background-color: #1e5edb;
+  color: white;
+  background-color: #2977FF;
+  border-radius: 4px;
 }
