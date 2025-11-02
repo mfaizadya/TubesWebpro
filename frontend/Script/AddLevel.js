@@ -7,8 +7,9 @@ form.addEventListener("submit", function (event) {
     const section = document.getElementById("inputSection").value;
 
     if(nama.trim() === "" || section === ""){
-    alert("Harap isi semua field!");
+        alert("Harap isi semua field!");
     } else {
-    alert(`Level ${nama} section ${section} berhasil ditambahkan!`);
+        alert(`Level ${nama} section ${section} berhasil ditambahkan!`);
+        window.location.href = "ListLevel.html";
     }
 });

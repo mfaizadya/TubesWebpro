@@ -10,21 +10,27 @@
 
 <body>
   <nav class="navbar">
-    <div class="nav-brand">
-        <a href="HomePage.html">LogiLearn</a>
-    </div>
+      <div class="nav-brand">
+        <a href="HomePage.html" class="brand-link">
+          <span>LogiLearn</span>
+          <img
+            src="../assets/pose hai.png"
+            alt="LogiLearn Mascot"
+            class="brand-logo"
+          />
+        </a>
+      </div>
 
-    <div class="nav-right">
+      <div class="nav-right">
         <div class="nav-links">
-            <a href="ListLevel.html">Level</a>
-            <a href="#section">Section</a>
-            <a href="ReviewAttempt.html">Review Attempt</a>
+          <a href="ListLevel.html">Level</a>
+          <a href="ReviewAttempt.html">Review Attempt</a>
         </div>
         <div class="nav-logout">
-            <a href="#" id="logout-btn">Keluar</a>
+          <a href="Login.html" id="logout-btn">Keluar</a>
         </div>
-    </div>
-</nav>
+      </div>
+  </nav>
   <main class="container">
     <h1>Edit Level</h1>
     <div class="form-card">
@@ -40,7 +46,10 @@
             <option value="Logika Silogisme">Logika Silogisme</option>
           </select>
           
-          <a href=""><button class="add-btn">Tambah Soal</button></a>
+          <div class="add-btns">
+            <a href="" class="add-btn">Tambah Soal PG</a>
+            <a href="" class="add-btn">Tambah Soal Esai</a>
+          </div>
         </div>
 
         <table class="table-container">
@@ -61,8 +70,8 @@
               <td>3</td>
               <td>
                 <div class="action-buttons">
-                    <a href=""><button class="edit-btn" data-id="sec1">Edit</button></a>
-                    <a href="#"><button class="delete-btn" data-id="sec1">Delete</button></a>
+                    <button class="edit-btn" data-id="sec1"><a href="EditSoalEsai.html">Edit</a></button>
+                    <button class="delete-btn" data-id="sec1"><a href="">Delete</a></button>
                 </div>
               </td>
             </tr>
@@ -73,20 +82,20 @@
               <td>4</td>
               <td>
                 <div class="action-buttons">
-                    <a href=""><button class="edit-btn" data-id="sec1">Edit</button></a>
-                    <a href="#"><button class="delete-btn" data-id="sec1">Delete</button></a>
+                    <button class="edit-btn" data-id="sec1"><a href="">Edit</a></button>
+                    <button class="delete-btn" data-id="sec1"><a href="">Delete</a></button>
                 </div>
               </td>
             </tr>
           </tbody>
         </table>
         <div class="btn-right">
-          <button type="reset" class="cancel-btn">Cancel</button>
-          <button type="submit" class="save-btn">Save</button>
+          <button type="reset" class="cancel-btn" id="cancel-btn"><a href="">Cancel</a></button>
+          <button type="submit" class="save-btn" id="save-btn"><a href="">Save</a></button>
         </div>
       </form>
     </div>
   </main>
-  <!-- <script src="../Script/AddLevel.js"></script> -->
+  <script src="../Script/EditLevel.js"></script>
 </body>
 </html>

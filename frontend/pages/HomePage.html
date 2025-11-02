@@ -1,49 +1,55 @@
 <!DOCTYPE html>
 <html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard LogiLearn</title>
-    <link rel="stylesheet" href="../styles/HomePage.css">
-</head>
-<body>
+    <link rel="stylesheet" href="../styles/HomePage.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <a href="HomePage.html" class="brand-link">
+          <span>LogiLearn</span>
+          <img
+            src="../assets/pose hai.png"
+            alt="LogiLearn Mascot"
+            class="brand-logo"
+          />
+        </a>
+      </div>
 
-<nav class="navbar">
-    <div class="nav-brand">
-        <a href="HomePage.html">LogiLearn</a>
-    </div>
-    <div class="nav-right">
+      <div class="nav-right">
         <div class="nav-links">
-            <a href="ListLevel.html">Level</a>
-            <a href="ReviewAttempt.html">Review Attempt</a>
+          <a href="ListLevel.html">Level</a>
+          <a href="ReviewAttempt.html">Review Attempt</a>
         </div>
         <div class="nav-logout">
-            <a href="#" id="logout-btn">Keluar</a>
+          <a href="Login.html" id="logout-btn">Keluar</a>
         </div>
-    </div>
-</nav>
+      </div>
+    </nav>
 
     <main class="container">
-        
-        <div class="page-header">
-            <div>
-                <h1>Homepage Admin</h1>
-                <p>Pilih section dan level yang ingin Anda edit.</p>
-            </div>
-            <div>
-                <button id="add-section-btn" class="btn-add">Tambah Section</button>
-            </div>
+      <div class="page-header">
+        <div>
+          <h1>Homepage Admin</h1>
+          <p>Pilih section dan level yang ingin Anda edit.</p>
         </div>
-        <div class="table-container">
-    <table>
-        <thead>
+        <div>
+          <button id="add-section-btn" class="btn-add">Tambah Section</button>
+        </div>
+      </div>
+      <div class="table-container">
+        <table>
+          <thead>
             <tr>
-                <th>Section</th>
-                <th>Levels</th>
-                <th>Action</th>
+              <th>Section</th>
+              <th>Levels</th>
+              <th>Action</th>
             </tr>
-        </thead>
-        <tbody>
+          </thead>
+          <tbody>
             <tr>
                 <td>Section 1: Logika Dasar</td>
                 <td>1 - 10</td>
@@ -59,8 +65,8 @@
                 <td>1 - 8</td>
                 <td>
                     <div class="action-buttons">
-                        <button class="rename-btn" >Rename</button>
-                        <button class="delete-btn" >Delete</button>
+                        <button class="rename-btn" data-id="sec2">Rename</button>
+                        <button class="delete-btn" data-id="sec2">Delete</button>
                     </div>
                 </td>
             </tr>
@@ -69,17 +75,16 @@
                 <td>1 - 12</td>
                 <td>
                     <div class="action-buttons">
-                        <button class="rename-btn" >Rename</button>
-                        <button class="delete-btn" >Delete</button>
+                        <button class="rename-btn" data-id="sec3">Rename</button>
+                        <button class="delete-btn" data-id="sec3">Delete</button>
                     </div>
                 </td>
             </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
 
-        </tbody>
-    </table>
-</div>
-</main>
-
-<script src="../Script/HomePage.js"></script>
-</body>
+    <script src="../Script/HomePage.js"></script>
+  </body>
 </html>
