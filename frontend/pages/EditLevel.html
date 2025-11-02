@@ -47,7 +47,7 @@
           </select>
           
           <div class="add-btns">
-            <a href="" class="add-btn">Tambah Soal PG</a>
+            <a href="AddSoalPG.html" class="add-btn">Tambah Soal PG</a>
             <a href="AddSoalEsai.html" class="add-btn">Tambah Soal Esai</a>
           </div>
         </div>
@@ -62,8 +62,8 @@
               <th>Action</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
+          <tbody id="question-list">
+            <tr data-question-id="q-1">
               <td>1</td>
               <td>Esai</td>
               <td class="question">Satu keranjang berisi 5 apel. Jika kamu mengambil 2 apel, berapa apel yang kamu miliki?</td>
@@ -75,23 +75,23 @@
                 </div>
               </td>
             </tr>
-            <tr>
+            <tr data-question-id="q-2">
               <td>2</td>
               <td>Pilihan Ganda</td>
               <td class="question">Berapa itu 2 + 2 = ....</td>
               <td>4</td>
               <td>
                 <div class="action-buttons">
-                    <button class="edit-btn" data-id="sec1"><a href="">Edit</a></button>
-                    <button class="delete-btn" data-id="sec1"><a href="">Delete</a></button>
+                    <button class="edit-btn"><a href="EditSoalPG.html">Edit</a></button>
+                    <button type="button" class="delete-btn delete-question-btn" data-question-id="q-2">Delete</button>
                 </div>
               </td>
             </tr>
           </tbody>
         </table>
         <div class="btn-right">
-          <button type="reset" class="cancel-btn" id="cancel-btn"><a href="">Cancel</a></button>
-          <button type="submit" class="save-btn" id="save-btn"><a href="">Save</a></button>
+          <button type="button" class="cancel-btn" id="cancel-btn">Cancel</button>
+          <button type="submit" class="save-btn" id="save-btn">Save</button>
         </div>
       </form>
     </div>

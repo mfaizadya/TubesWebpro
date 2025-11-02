@@ -1,6 +1,7 @@
 const save = document.getElementById("save-btn");
 const cancel = document.getElementById("cancel-btn");
 const hapus = document.getElementById("delete-btn");
+const questionList = document.getElementById("question-list");
 
 save.addEventListener("click", function(event) {
     event.preventDefault();
@@ -9,9 +10,9 @@ save.addEventListener("click", function(event) {
     const section = document.getElementById("inputSection").value;
 
     if(nama.trim() === "" || section === ""){
-        alert("Harap isi semua field!");
+        alert("Harap isi semua field Nama dan Section!");
     } else {
-        alert(`Level ${nama} section ${section} berhasil disimpan!`);
+        alert(`Level "${nama}" section "${section}" berhasil diperbarui!`);
         window.location.href = "ListLevel.html";
     }
 });
@@ -28,3 +29,28 @@ hapus.addEventListener("click", function(event) {
 
     alert(`Soal Sudah Dihapus`);
 });
+
+questionList.addEventListener("click", function(event) {
+    if (event.target.classList.contains("delete-question-btn")) {
+        event.preventDefault();
+        
+        const deleteButton = event.target;
+        const questionId = deleteButton.getAttribute("data-question-id");
+        const row = deleteButton.closest("tr");
+        
+        if (confirm(`Apakah Anda yakin ingin menghapus soal dengan ID: ${questionId}?`)) {
+            row.remove();
+            
+            alert(`Soal ID ${questionId} berhasil dihapus dari Level!`);
+
+            updateQuestionNumbering();
+        }
+    }
+});
+
+function updateQuestionNumbering() {
+    const rows = questionList.querySelectorAll("tr");
+    rows.forEach((row, index) => {
+        row.querySelector("td:first-child").textContent = index + 1;
+    });
+}
