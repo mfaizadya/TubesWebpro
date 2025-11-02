@@ -92,30 +92,41 @@ h1 {
 
 .form-card {
   margin: auto;
-  width: 50%;
+  width: 100%;
 }
 
 label {
-  display: block;
   font-size: 16px;
 }
 
 #inputNama {
-  width: 100%;
+  width: 200px;
   font-size: 14px;
-  padding: 5px;
+  padding: 4px;
   border-radius: 4px;
 }
 
 select {
-  width: 100%;
+  width: 200px;
   font-size: 14px;
-  padding: 5px;
+  padding: 4px;
   border-radius: 4px;
 }
 
 .form-group {
   margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.form-group a {
+    margin-left: auto;
+}
+
+.add-btn {
+    background-color: green;
+    width: fit-content;
 }
 
 button {
@@ -127,4 +138,58 @@ button {
   color: white;
   background-color: #2977FF;
   border-radius: 4px;
+  border: none;
+}
+
+.table-container {
+    width: 100%;
+    margin: 0 auto;
+}
+
+table {
+    width: 100%;
+    margin-top: 16px;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 5px;
+    text-align: left;
+    border-bottom: 1px solid;
+    vertical-align: middle;
+}
+
+thead tr {
+    background-color: #f9f9f9;
+}
+
+.question {
+    width: 300px;
+    overflow: hidden;
+}
+
+.cancel-btn,
+.save-btn {
+    width: 10%;
+    border: none;
+}
+
+.btn-right {
+    display: flex;
+    margin-left: auto;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.cancel-btn,
+.delete-btn {
+    background-color: #d62828;
+}
+
+.save-btn {
+    background-color: green;
+}
+
+.edit-btn {
+    background-color: #2977FF;
 }
