@@ -49,7 +49,7 @@ function renderOptions() {
     delBtn.style.justifyContent = "center";
     delBtn.style.fontSize = "18px";
     delBtn.style.flexShrink = "0";
-    delBtn.type = "button"; // Penting untuk mencegah submit form
+    delBtn.type = "button";
 
     delBtn.addEventListener("click", () => {
       soalPG.opsi.splice(i, 1);
