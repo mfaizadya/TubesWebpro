@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard LogiLearn</title>
+    <title>List Level</title>
     <link rel="stylesheet" href="../styles/ListLevel.css" />
   </head>
 
@@ -33,7 +33,7 @@
 
     <main class="container">
       <h1>List Level</h1>
-      <p>Section 1: Logika Dasar</p>
+      <!-- <p>Section 1: Logika Dasar</p> -->
       <a href="AddLevel.html">
         <button class="add-btn">Tambah Level</button>
       </a>
@@ -42,30 +42,33 @@
         <table>
           <thead>
             <tr>
-              <th>Levels</th>
+              <th>Level</th>
+              <th>Section</th>
               <th>Jumlah Soal</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>Level 1</td>
+              <td id="level-name">Level 1</td>
+              <td id="section-name">Section 1: Logika Dasar</td>
               <td>3</td>
               <td>
                 <div class="action-buttons">
                   <a href="EditLevel.html"
-                    ><button class="edit-btn" data-id="sec1">Edit</button></a
+                    ><button class="edit-btn">Edit</button></a
                   >
-                  <a href="#"
-                    ><button class="delete-btn" data-id="sec1">
+                  <a href="#">
+                    <button class="delete-btn" id="delete-btn" type="submit">
                       Delete
-                    </button></a
-                  >
+                    </button>
+                  </a>
                 </div>
               </td>
             </tr>
             <tr>
               <td>Level 2</td>
+              <td>Section 1: Logika Dasar</td>
               <td>3</td>
               <td>
                 <div class="action-buttons">
@@ -82,6 +85,7 @@
             </tr>
             <tr>
               <td>Level 3</td>
+              <td>Section 1: Logika Dasar</td>
               <td>3</td>
               <td>
                 <div class="action-buttons">
@@ -98,6 +102,7 @@
             </tr>
             <tr>
               <td>Level 4</td>
+              <td>Section 1: Logika Dasar</td>
               <td>3</td>
               <td>
                 <div class="action-buttons">
@@ -114,6 +119,7 @@
             </tr>
             <tr>
               <td>Level 5</td>
+              <td>Section 1: Logika Dasar</td>
               <td>3</td>
               <td>
                 <div class="action-buttons">
@@ -130,6 +136,7 @@
             </tr>
             <tr>
               <td>Level 6</td>
+              <td>Section 1: Logika Dasar</td>
               <td>3</td>
               <td>
                 <div class="action-buttons">
@@ -146,6 +153,7 @@
             </tr>
             <tr>
               <td>Level 7</td>
+              <td>Section 1: Logika Dasar</td>
               <td>3</td>
               <td>
                 <div class="action-buttons">
@@ -162,6 +170,7 @@
             </tr>
             <tr>
               <td>Level 8</td>
+              <td>Section 1: Logika Dasar</td>
               <td>3</td>
               <td>
                 <div class="action-buttons">
@@ -178,6 +187,7 @@
             </tr>
             <tr>
               <td>Level 9</td>
+              <td>Section 1: Logika Dasar</td>
               <td>3</td>
               <td>
                 <div class="action-buttons">
@@ -194,6 +204,7 @@
             </tr>
             <tr>
               <td>Level 10</td>
+              <td>Section 1: Logika Dasar</td>
               <td>3</td>
               <td>
                 <div class="action-buttons">
@@ -213,6 +224,6 @@
       </div>
     </main>
 
-    <script src="../Script/HomePage.js"></script>
+    <script src="../Script/ListLevel.js"></script>
   </body>
 </html>
