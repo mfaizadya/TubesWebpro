@@ -25,6 +25,4 @@ document.getElementById("save-btn").addEventListener("click", function () {
   localStorage.setItem("soalEsai", JSON.stringify(soalEsai));
 
   alert("Soal berhasil disimpan!");
-
-  window.location.href = "#";
 });

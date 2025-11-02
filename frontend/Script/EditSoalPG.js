@@ -49,6 +49,7 @@ function renderOptions() {
     delBtn.style.justifyContent = "center";
     delBtn.style.fontSize = "18px";
     delBtn.style.flexShrink = "0";
+    delBtn.type = "button"; // Penting untuk mencegah submit form
 
     delBtn.addEventListener("click", () => {
       soalPG.opsi.splice(i, 1);
@@ -104,7 +105,6 @@ document.getElementById("save-btn").addEventListener("click", () => {
 
   localStorage.setItem("soalPG", JSON.stringify(soalPG));
   alert("Soal berhasil disimpan!");
-  window.location.href = "DetailSoalPG.html";
 });
 
 
