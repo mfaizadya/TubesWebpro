@@ -122,6 +122,9 @@ select {
 
 .form-group a {
     margin-left: auto;
+    background-color: green;
+    border-radius: 4px;
+    padding: 4px;
 }
 
 .add-btn {
@@ -192,4 +195,9 @@ thead tr {
 
 .edit-btn {
     background-color: #2977FF;
+}
+
+a {
+    text-decoration: none;
+    color: white;
 }
