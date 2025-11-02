@@ -80,7 +80,7 @@ html, body {
   background-color: #fff;
 }
 
-.btn {
+.btn, .add-btn {
   width: 100%;
   background-color: #2977FF;
   color: #fff;

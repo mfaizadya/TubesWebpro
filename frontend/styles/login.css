@@ -81,3 +81,26 @@ button {
 button:hover {
   background-color: #1d5ed4;
 }
+
+.show-password-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  margin-bottom: 20px;
+}
+
+.show-password-wrapper input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  margin: 0;
+}
+
+.show-password-wrapper label {
+  font-size: 13px;
+  color: #333;
+  cursor: pointer;
+  user-select: none;
+  line-height: 1;
+}

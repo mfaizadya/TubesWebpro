@@ -1,5 +1,6 @@
 const save = document.getElementById("save-btn");
 const cancel = document.getElementById("cancel-btn");
+const hapus = document.getElementById("delete-btn");
 
 save.addEventListener("click", function(event) {
     event.preventDefault();
@@ -20,4 +21,10 @@ cancel.addEventListener("click", function(event) {
 
     alert(`Perubahan Level dibatalkan!`);
     window.location.href = "ListLevel.html";
+});
+
+hapus.addEventListener("click", function(event) {
+    event.preventDefault();
+
+    alert(`Soal Sudah Dihapus`);
 });
