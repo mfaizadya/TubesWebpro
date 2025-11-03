@@ -42,7 +42,7 @@ function renderDetail() {
           <p>Jawaban: <b>${a.a}</b></p>
           ${
             a.type === "PG"
-              ? `<p>${a.correct ? "✅ Benar" : "❌ Salah"}</p>`
+              ? `<p style="color: ${a.correct ? "green" : "red"};">${a.correct ? "✅ Benar" : "❌ Salah"}</p>`
               : `
                 <label>Nilai Esai:</label>
                 <input class="input" type="number" placeholder="0-100" value="${a.score ?? ""}">
