@@ -1,7 +1,7 @@
 const prisma = require('./prisma')
 
 async function getAllSections() {
-    prisma.sections.findMany({
+    return prisma.sections.findMany({
         include: {
             levels: true
         }
@@ -9,7 +9,7 @@ async function getAllSections() {
 }
 
 async function getSectionById(id) {
-    prisma.sections.findUnique({
+    return prisma.sections.findUnique({
         where:{
             id: Number(id)
         },
@@ -20,7 +20,7 @@ async function getSectionById(id) {
 }
 
 async function createSection(name) {
-    prisma.sections.create({
+    return prisma.sections.create({
         data: {
             name: name
         }
@@ -28,7 +28,7 @@ async function createSection(name) {
 }
 
 async function updateSection(id, name) {
-    prisma.sections.update({
+    return prisma.sections.update({
         where: {
             id: Number(id)
         },
