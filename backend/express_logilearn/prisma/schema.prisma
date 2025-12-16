@@ -17,15 +17,40 @@ datasource db {
 model sections {
   id  Int @id @default(autoincrement())
   nama  String 
+
   levels levels[]
 }
 
 model levels {
   id Int @id @default(autoincrement())
   id_section Int
-  nama  String
+  nama  String 
+
+  attempts attempts[]
 
   sections sections @relation(fields: [id_section], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "level_fk_1")
 
   @@index([id_section], map: "id_section")
+}
+
+model pelajars {
+  id Int @id @default(autoincrement())
+  nama String 
+  username String 
+  password String
+
+  attempts attempts[]
+}
+
+model attempts {
+  id Int @id @default(autoincrement())
+  id_level Int
+  id_pelajar Int
+  skor Float
+
+  levels levels @relation(fields: [id_level], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "attempt_fk_1")
+  pelajars pelajars @relation(fields: [id_pelajar], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "attempt_fk_2")
+
+  @@index([id_level], map: "id_level")
+  @@index([id_pelajar], map: "id_pelajar")
 }
