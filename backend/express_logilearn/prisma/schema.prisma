@@ -16,14 +16,14 @@ datasource db {
 
 model sections {
   id  Int @id @default(autoincrement())
-  name  String 
+  nama  String 
   levels levels[]
 }
 
 model levels {
   id Int @id @default(autoincrement())
   id_section Int
-  name  String
+  nama  String
 
   sections sections @relation(fields: [id_section], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "level_fk_1")
 

@@ -29,8 +29,8 @@ async function getById(req, res) {
 
 async function create(req, res) {
     try {
-        const {name} = req.body
-        const data = await Section.createSection(name)
+        const {nama} = req.body
+        const data = await Section.createSection(nama)
         response(200, data, `section created successfully`, res)
     } catch (err){
         console.log(err.message)
@@ -41,12 +41,12 @@ async function create(req, res) {
 async function update(req, res) {
     try {
         const {id} = req.params
-        const {name} = req.body
+        const {nama} = req.body
         const data = await Section.getSectionById(id)
         if (!data){
             return response(404, null, `data not found`, res)
         }
-        const updated = await Section.updateSection(id,name)
+        const updated = await Section.updateSection(id,nama)
         response(200, updated, `section updated successfully`, res)
     } catch (err){
         console.log(err.message)

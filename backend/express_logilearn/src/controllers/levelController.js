@@ -4,8 +4,8 @@ const { levels } = require('../models/prisma')
 
 async function create(req, res) {
     try {
-        const {name, idSection} = req.body
-        const data = await Level.createLevel(idSection, name)
+        const {nama, idSection} = req.body
+        const data = await Level.createLevel(idSection, nama)
         response(200, data, `successfully`, res)
     } catch(err) {
         console.log(err.message)
@@ -43,12 +43,12 @@ async function getById(req, res) {
 async function update(req, res) {
     try {
         const {id} = req.params
-        const {name, idSection} = req.body
+        const {nama, idSection} = req.body
         const data = await Level.getLevelById(id)
         if(!data){
             return response(404, null, `data not found`, res)
         }
-        const updated = await Level.updateLevel(id, idSection, name)
+        const updated = await Level.updateLevel(id, idSection, nama)
         response(200, updated, `level updated successfully`, res)
     } catch(err) {
         console.log(err.message)

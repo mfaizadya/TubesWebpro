@@ -12,23 +12,23 @@ async function getLevelById(id) {
     })
 }
 
-async function createLevel(idSection, name) {
+async function createLevel(idSection, nama) {
     return prisma.levels.create({
         data: {
             id_section: Number(idSection),
-            name: name
+            nama: nama
         }
     })
 }
 
-async function updateLevel(id, idSection, name) {
+async function updateLevel(id, idSection, nama) {
     return prisma.levels.update({
         where: {
             id: Number(id)
         },
         data: {
             id_section: Number(idSection),
-            name: name
+            nama: nama
         }
     })
 }
