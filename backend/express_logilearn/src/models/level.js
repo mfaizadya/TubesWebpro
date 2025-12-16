@@ -1,13 +1,20 @@
 const prisma = require('./prisma')
 
 async function getAllLevels() {
-    return prisma.levels.findMany()
+    return prisma.levels.findMany({})
 }
 
 async function getLevelById(id) {
     return prisma.levels.findUnique({
         where: {
             id: Number(id)
+        },
+        include: {
+            soals: {
+                include: {
+                    opsis: true
+                }
+            }
         }
     })
 }
