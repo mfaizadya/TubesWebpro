@@ -19,21 +19,21 @@ async function getSectionById(id) {
     })
 }
 
-async function createSection(name) {
+async function createSection(nama) {
     return prisma.sections.create({
         data: {
-            name: name
+            nama: nama
         }
     })
 }
 
-async function updateSection(id, name) {
+async function updateSection(id, nama) {
     return prisma.sections.update({
         where: {
             id: Number(id)
         },
         data: {
-            name: name
+            nama: nama
         }
     })
 }

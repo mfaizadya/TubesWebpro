@@ -1,31 +1,124 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
-  // output = "../src/generated"
 }
 
 datasource db {
   provider = "postgresql"
-  url = env("DATABASE_URL")
+  url      = env("DATABASE_URL")
 }
 
 model sections {
-  id  Int @id @default(autoincrement())
-  name  String 
+  id    Int    @id @default(autoincrement())
+  nama  String
+
   levels levels[]
 }
 
 model levels {
-  id Int @id @default(autoincrement())
+  id         Int    @id @default(autoincrement())
   id_section Int
-  name  String
+  nama       String
 
-  sections sections @relation(fields: [id_section], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "level_fk_1")
+  attempts attempts[]
+  soals    soals[]
 
-  @@index([id_section], map: "id_section")
+  sections sections @relation(fields: [id_section], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "levels_section_fk")
+
+  @@index([id_section], map: "levels_id_section_idx")
+}
+
+model pelajars {
+  id       Int    @id @default(autoincrement())
+  nama     String
+  username String
+  password String
+
+  attempts attempts[]
+}
+
+model attempts {
+  id         Int   @id @default(autoincrement())
+  id_level   Int
+  id_pelajar Int
+  skor       Float
+
+  jawaban_esais jawabanEsais[]
+  jawaban_pgs   jawabanPGs[]
+
+  levels levels @relation(fields: [id_level], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "attempts_level_fk")
+  pelajars pelajars @relation(fields: [id_pelajar], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "attempts_pelajar_fk")
+
+  @@index([id_level], map: "attempts_id_level_idx")
+  @@index([id_pelajar], map: "attempts_id_pelajar_idx")
+}
+
+model soals {
+  id        Int   @id @default(autoincrement())
+  id_level  Int
+  tipe      Tipe
+  text_soal String
+
+  jawaban_esais jawabanEsais[]
+  opsis         opsis[]
+
+  levels levels @relation(fields: [id_level], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "soals_level_fk")
+
+  @@index([id_level], map: "soals_id_level_idx")
+}
+
+enum Tipe {
+  pg
+  esai
+}
+
+model opsis {
+  id         Int    @id @default(autoincrement())
+  id_soal    Int
+  text_opsi  String
+  is_correct Boolean
+
+  jawaban_pgs jawabanPGs[]
+
+  soals soals @relation(fields: [id_soal], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "opsis_soal_fk")
+
+  @@index([id_soal], map: "opsis_id_soal_idx")
+}
+
+model admins {
+  id       Int    @id @default(autoincrement())
+  nama     String
+  username String
+  password String
+
+  jawaban_esais jawabanEsais[]
+}
+
+model jawabanEsais {
+  id                Int    @id @default(autoincrement())
+  id_soal           Int
+  id_attempt        Int
+  id_admin          Int
+  text_jawaban_esai String
+  skor              Float
+
+  soals soals @relation(fields: [id_soal], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "jawaban_esais_soal_fk")
+  attempts attempts @relation(fields: [id_attempt], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "jawaban_esais_attempt_fk")
+  admins admins @relation(fields: [id_admin], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "jawaban_esais_admin_fk")
+
+  @@index([id_soal], map: "jawaban_esais_id_soal_idx")
+  @@index([id_attempt], map: "jawaban_esais_id_attempt_idx")
+  @@index([id_admin], map: "jawaban_esais_id_admin_idx")
+}
+
+model jawabanPGs {
+  id         Int @id @default(autoincrement())
+  id_attempt Int
+  id_opsi    Int
+  skor Float
+
+  attempts attempts @relation(fields: [id_attempt], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "jawaban_pgs_attempt_fk")
+  opsis opsis @relation(fields: [id_opsi], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "jawaban_pgs_opsi_fk")
+
+  @@index([id_attempt], map: "jawaban_pgs_id_attempt_idx")
+  @@index([id_opsi], map: "jawaban_pgs_id_opsi_idx")
 }
