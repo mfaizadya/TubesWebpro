@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Soal Pilihan Ganda</title>
+  <link rel="stylesheet" href="../styles/EditSoalEsai.css">
+</head>
+<body>
+  <div class="page">
+    <header class="header">
+      <a href="EditLevel.html" class="back">&larr;</a>
+      <h1>Edit Soal Pilihan Ganda</h1>
+    </header>
+
+    <main class="content">
+      <label>Pertanyaan</label>
+      <textarea class="input-box" id="pertanyaan-input" rows="4"></textarea>
+
+      <div id="options-container">
+        <label>Opsi Jawaban</label>
+        <div id="options-list"></div>
+        <button id="add-option" class="btn" style="margin-top:10px;">Tambah Opsi</button>
+      </div>
+
+      <label>Pilih Jawaban Benar</label>
+      <select id="correct-answer" class="input-box"></select>
+    </main>
+
+    <footer class="footer">
+      <button class="btn" id="save-btn">SIMPAN</button>
+    </footer>
+  </div>
+
+  <script src="../Script/EditSoalPG.js"></script>
+</body>
+</html>
