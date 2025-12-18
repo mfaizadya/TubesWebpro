@@ -1,0 +1,24 @@
+[
+  {
+    "name": "rakanysr",
+    "section": "Logika Dasar",
+    "level": "1",
+    "answers": [
+      { "type": "PG", "q_id": 1, "q": "2 + 2 = ?", "a": "4", "correct": true },
+      { "type": "PG", "q_id": 2, "q": "Operator logika AND di JavaScript adalah?", "a": "&&", "correct": true },
+      { "type": "PG", "q_id": 3, "q": "Operator logika OR di JavaScript adalah?", "a": "&&", "correct": false },
+      { "type": "Esai", "q": "Apa itu logika?", "a": "Logika adalah cara berpikir sistematis", "score": null, "feedback": "" }
+    ]
+  },
+  {
+    "name": "naufalfahreza",
+    "section": "Logika Dasar",
+    "level": "1",
+    "answers": [
+      { "type": "PG", "q_id": 1, "q": "2 + 2 = ?", "a": "5", "correct": false },
+      { "type": "PG", "q_id": 2, "q": "Operator logika AND di JavaScript adalah?", "a": "AND", "correct": false },
+      { "type": "PG", "q_id": 3, "q": "Operator logika OR di JavaScript adalah?", "a": "||", "correct": true },
+      { "type": "Esai", "q": "Apa pentingnya mempelajari logika pemrograman?", "a": "Agar dapat memahami alur berpikir program", "score": null, "feedback": "" }
+    ]
+  }
+]

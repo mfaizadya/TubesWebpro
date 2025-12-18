@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Level</title>
+  <link rel="stylesheet" href="../styles/EditLevel.css">
+</head>
+
+<body>
+  <nav class="navbar">
+      <div class="nav-brand">
+        <a href="HomePage.html" class="brand-link">
+          <span>LogiLearn</span>
+          <img
+            src="../assets/pose hai.png"
+            alt="LogiLearn Mascot"
+            class="brand-logo"
+          />
+        </a>
+      </div>
+
+      <div class="nav-right">
+        <div class="nav-links">
+          <a href="ListLevel.html">Level</a>
+          <a href="ReviewAttempt.html">Review Attempt</a>
+        </div>
+        <div class="nav-logout">
+          <a href="Login.html" id="logout-btn">Keluar</a>
+        </div>
+      </div>
+  </nav>
+  <main class="container">
+    <h1>Edit Level</h1>
+    <div class="form-card">
+      <form id="add-level-form" action="">
+        <div class="form-group">
+          <label for="nama">Nama</label>
+          <input type="text" placeholder="Nama Level" id="inputNama" value="Level 1">
+
+          <label for="section">Section</label>
+          <select name="section" id="inputSection">
+            <option value="Logika Dasar" selected>Logika Dasar</option>
+            <option value="Logika Pemrograman">Logika Pemrograman</option>
+            <option value="Logika Silogisme">Logika Silogisme</option>
+          </select>
+          
+          <div class="add-btns">
+            <a href="" class="add-btn">Tambah Soal PG</a>
+            <a href="" class="add-btn">Tambah Soal Esai</a>
+          </div>
+        </div>
+
+        <table class="table-container">
+          <thead>
+            <tr>
+              <th>Nomor</th>
+              <th>Tipe Soal</th>
+              <th>Pertanyaan</th>
+              <th>Kunci Jawaban</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Esai</td>
+              <td class="question">Satu keranjang berisi 5 apel. Jika kamu mengambil 2 apel, berapa apel yang kamu miliki?</td>
+              <td>3</td>
+              <td>
+                <div class="action-buttons">
+                    <button class="edit-btn" data-id="sec1"><a href="EditSoalEsai.html">Edit</a></button>
+                    <button class="delete-btn" data-id="sec1"><a href="">Delete</a></button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Pilihan Ganda</td>
+              <td class="question">Berapa itu 2 + 2 = ....</td>
+              <td>4</td>
+              <td>
+                <div class="action-buttons">
+                    <button class="edit-btn" data-id="sec1"><a href="">Edit</a></button>
+                    <button class="delete-btn" data-id="sec1"><a href="">Delete</a></button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="btn-right">
+          <button type="reset" class="cancel-btn" id="cancel-btn"><a href="">Cancel</a></button>
+          <button type="submit" class="save-btn" id="save-btn"><a href="">Save</a></button>
+        </div>
+      </form>
+    </div>
+  </main>
+  <script src="../Script/EditLevel.js"></script>
+</body>
+</html>
