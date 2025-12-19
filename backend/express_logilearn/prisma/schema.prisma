@@ -98,13 +98,13 @@ model jawabanEsais {
   id                Int    @id @default(autoincrement())
   id_soal           Int
   id_attempt        Int
-  id_admin          Int
+  id_admin          Int?
   text_jawaban_esai String
   skor              Float
 
   soals soals @relation(fields: [id_soal], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "jawaban_esais_soal_fk")
   attempts attempts @relation(fields: [id_attempt], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "jawaban_esais_attempt_fk")
-  admins admins @relation(fields: [id_admin], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "jawaban_esais_admin_fk")
+  admins admins? @relation(fields: [id_admin], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "jawaban_esais_admin_fk")
 
   @@index([id_soal], map: "jawaban_esais_id_soal_idx")
   @@index([id_attempt], map: "jawaban_esais_id_attempt_idx")

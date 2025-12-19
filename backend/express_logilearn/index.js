@@ -11,17 +11,20 @@ const sectionRouter = require('./src/routes/sectionRoutes')
 const levelRouter = require('./src/routes/levelRoutes')
 const esaiRouter = require('./src/routes/soalesaiRoutes')
 const attemptRouter = require('./src/routes/attemptRoutes')
+const jawabanPGRouter = require('./src/routes/jawabanPGRoutes')
 const pelajarRoutes = require('./src/routes/pelajarRoutes');
 
 app.use(cors());
 app.use(express.json())
 app.use('/api/auth', authRoutes);
 //routes section
+
 app.use('/api', sectionRouter)
 app.use('/api', levelRouter)
 app.use('/api', esaiRouter)
 app.use('/api', attemptRouter)
-app.use('/api', pelajarRoutes);
+app.use('/api', pelajarRoutes)
+app.use('/api', jawabanPGRouter)
 
 app.get('/', (req, res) => {
     res.send('Hello world')

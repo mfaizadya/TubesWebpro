@@ -1,6 +1,5 @@
 const Level = require('../models/level')
 const response = require('../helpers/response')
-const { levels } = require('../models/prisma')
 
 async function create(req, res) {
     try {
