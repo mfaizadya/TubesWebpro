@@ -13,7 +13,7 @@ ${jawaban}
 Aturan:
 - Skor 0.0 sampai 1.0
 - 0.0 = salah total
-- 1.0 = sangat benar
+- 1.0 = benar
 
 Jawab HANYA dengan JSON VALID.
 JANGAN tambahkan teks apapun.
@@ -31,7 +31,7 @@ Contoh:
     body: JSON.stringify({
       model: process.env.GROQ_MODEL,
       messages: [{ role: "user", content: prompt }],
-      temperature: 0.1
+      temperature: 0.01
     })
   })
 
