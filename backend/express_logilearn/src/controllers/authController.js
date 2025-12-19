@@ -39,42 +39,50 @@ const loginAdmin = async (req, res) => {
   }
 };
 
-const loginPelajar = async (req, res) => {
+const registerPelajar = async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { nama, username, password } = req.body;
 
-    const pelajar = await prisma.pelajars.findFirst({
+    // 1. Validasi Input
+    if (!nama || !username || !password) {
+      return response(400, null, "Nama, Username, dan Password wajib diisi", res);
+    }
+
+    // 2. Cek Duplikat Username
+    const existingPelajar = await prisma.pelajars.findFirst({
       where: { username: username }
     });
 
-    if (!pelajar) {
-      return response(404, null, "Pelajar tidak ditemukan", res);
+    if (existingPelajar) {
+      return response(400, null, "Username sudah digunakan, silakan pilih yang lain", res);
     }
 
-    const isPasswordValid = await bcrypt.compare(password, pelajar.password);
-    if (!isPasswordValid) {
-      return response(401, null, "Password salah", res);
-    }
+    // 3. Hash Password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
-    const token = jwt.sign(
-      { id: pelajar.id, username: pelajar.username, type: "PELAJAR" },
-      process.env.JWT_SECRET,
-      { expiresIn: '1d' }
-    );
+    // 4. Simpan ke Database
+    const newPelajar = await prisma.pelajars.create({
+      data: {
+        nama,
+        username,
+        password: hashedPassword,
+      },
+    });
 
-    const dataLogin = {
-      token: token,
-      pelajar: { id: pelajar.id, nama: pelajar.nama }
+    // 5. Response Sukses
+    const dataRegister = {
+      id: newPelajar.id,
+      nama: newPelajar.nama,
+      username: newPelajar.username
     };
 
-    return response(200, dataLogin, "Login Berhasil", res);
+    return response(201, dataRegister, "Registrasi Berhasil", res);
 
   } catch (error) {
+    console.error("Register Error:", error);
     return response(500, null, `Terjadi kesalahan server: ${error.message}`, res);
   }
 };
 
-module.exports = { 
-  loginAdmin,
-  loginPelajar
- };
+module.exports = { loginAdmin, registerPelajar };
