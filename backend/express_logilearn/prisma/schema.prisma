@@ -57,6 +57,7 @@ model soals {
   id_level  Int
   tipe      Tipe
   text_soal String
+  kata_kunci String?
 
   jawaban_esais jawabanEsais[]
   opsis         opsis[]
