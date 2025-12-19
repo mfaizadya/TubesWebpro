@@ -1,42 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar';
 import './styles/HomePage.css';
 
 const Homepage = () => {
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    navigate('/login');
-  };
-
   return (
     <>
-      {/* Navbar */}
-      <nav className="navbar">
-        <div className="nav-brand">
-          <a href="/home" className="brand-link">
-            <span>LogiLearn</span>
-            <img
-              src="/src/assets/pose hai.png"
-              alt="LogiLearn Mascot"
-              className="brand-logo"
-            />
-          </a>
-        </div>
-
-        <div className="nav-right">
-          <div className="nav-links">
-            <a href="/levels">Level</a>
-            <a href="/review-attempt">Review Attempt</a>
-          </div>
-          <div className="nav-logout">
-            <a href="#" onClick={handleLogout} id="logout-btn">
-              Keluar
-            </a>
-          </div>
-        </div>
-      </nav>
+      <Navbar />
 
       {/* Main Content */}
       <div className="container">
