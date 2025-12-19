@@ -13,6 +13,15 @@ function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<HomePage />} />
+        
+        {/* Route dinamis untuk menangkap ID Section */}
+        <Route path="/section/:id" element={<PlaceholderSection />} />
+      </Routes>
+    </Router>
+  );
+    <Router>
+      <Routes>
         {/* 1. Login */}
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
@@ -38,4 +47,5 @@ function App() {
   );
 }
 
+export default App;
 export default App;
