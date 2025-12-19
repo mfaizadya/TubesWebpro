@@ -15,7 +15,7 @@ const Login = () => {
         setError('');
 
         try {
-            const response = await axios.post('http://localhost:3030/auth/login-admin', {
+            const response = await axios.post('http://localhost:3030/api/auth/login-admin', {
                 username: username,
                 password: password
             });

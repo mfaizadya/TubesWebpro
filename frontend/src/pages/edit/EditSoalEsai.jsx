@@ -14,7 +14,7 @@ export default function EditSoalEsai() {
     const fetchDetailSoal = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch(`http://localhost:3030/soal-esai/${id}`, {
+        const response = await fetch(`http://localhost:3030/api/soal-esai/${id}`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         const result = await response.json();
@@ -43,7 +43,7 @@ export default function EditSoalEsai() {
     setIsSaving(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:3030/soal-esai/${id}`, {
+      const response = await fetch(`http://localhost:3030/api/soal-esai/${id}`, {
         method: 'PUT',
         headers: { 
           'Content-Type': 'application/json',

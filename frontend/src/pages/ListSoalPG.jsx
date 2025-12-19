@@ -16,7 +16,7 @@ export default function ListSoalPG() {
 
   const fetchSoals = async () => {
     try {
-      const response = await fetch(`http://localhost:3030/soals-pg/level/${levelId}`)
+      const response = await fetch(`http://localhost:3030/api/soals-pg/level/${levelId}`)
       const data = await response.json()
       if (data.data) {
         setSoals(data.data)
@@ -32,7 +32,7 @@ export default function ListSoalPG() {
     if (!window.confirm('Apakah Anda yakin ingin menghapus soal ini?')) return
 
     try {
-      const response = await fetch(`http://localhost:3030/soals-pg/${id}`, {
+      const response = await fetch(`http://localhost:3030/api/soals-pg/${id}`, {
         method: 'DELETE'
       })
 

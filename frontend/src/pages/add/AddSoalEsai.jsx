@@ -25,7 +25,7 @@ export default function AddSoalEsai() {
         kata_kunci: kataKunci,
       };
 
-      const response = await fetch('http://localhost:3030/soal-esai', {
+      const response = await fetch('http://localhost:3030/api/soal-esai', {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',

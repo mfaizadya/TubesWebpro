@@ -17,11 +17,11 @@ app.use(cors());
 app.use(express.json())
 app.use('/api/auth', authRoutes);
 //routes section
-app.use('/', sectionRouter)
-app.use('/', levelRouter)
-app.use('/', esaiRouter)
-app.use('/', attemptRouter)
-app.use('/api/pelajar', pelajarRoutes);
+app.use('/api', sectionRouter)
+app.use('/api', levelRouter)
+app.use('/api', esaiRouter)
+app.use('/api', attemptRouter)
+app.use('/api', pelajarRoutes);
 
 app.get('/', (req, res) => {
     res.send('Hello world')

@@ -23,7 +23,7 @@ export default function EditSoalPG() {
 
   const fetchSoal = async () => {
     try {
-      const response = await fetch(`http://localhost:3030/soals-pg/${id}`)
+      const response = await fetch(`http://localhost:3030/api/soals-pg/${id}`)
       const data = await response.json()
       if (data.data) {
         setPertanyaan(data.data.text_soal)
@@ -79,7 +79,7 @@ export default function EditSoalPG() {
     }
 
     try {
-      const response = await fetch(`http://localhost:3030/soals-pg/${id}`, {
+      const response = await fetch(`http://localhost:3030/api/soals-pg/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

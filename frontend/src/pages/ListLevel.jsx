@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar';
 import './styles/ListLevel.css';
 
 const ListLevel = () => {
@@ -15,7 +16,7 @@ const ListLevel = () => {
   const fetchLevels = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:3030/levels');
+      const response = await fetch('http://localhost:3030/api/levels');
       if (!response.ok) {
         throw new Error('Gagal memuat level');
       }
@@ -46,7 +47,7 @@ const ListLevel = () => {
   const handleDeleteLevel = async (id) => {
     if (window.confirm('Apakah Anda yakin ingin menghapus level ini?')) {
       try {
-        const response = await fetch(`http://localhost:3030/levels/${id}`, {
+        const response = await fetch(`http://localhost:3030/api/levels/${id}`, {
           method: 'DELETE',
         });
         if (!response.ok) {
@@ -65,31 +66,7 @@ const ListLevel = () => {
 
   return (
     <>
-      {/* Navbar */}
-      <nav className="navbar">
-        <div className="nav-brand">
-          <a href="/home" className="brand-link">
-            <span>LogiLearn</span>
-            <img
-              src="/src/assets/pose hai.png"
-              alt="LogiLearn Mascot"
-              className="brand-logo"
-            />
-          </a>
-        </div>
-
-        <div className="nav-right">
-          <div className="nav-links">
-            <a href="/levels">Level</a>
-            <a href="/review-attempt">Review Attempt</a>
-          </div>
-          <div className="nav-logout">
-            <a href="#" onClick={handleLogout} id="logout-btn">
-              Keluar
-            </a>
-          </div>
-        </div>
-      </nav>
+      <Navbar />
 
       {/* Main Content */}
       <div className="container">

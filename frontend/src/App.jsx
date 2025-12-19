@@ -15,15 +15,6 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        
-        {/* Route dinamis untuk menangkap ID Section */}
-        <Route path="/section/:id" element={<PlaceholderSection />} />
-      </Routes>
-    </Router>
-  );
-    <Router>
-      <Routes>
         {/* 1. Login */}
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
@@ -47,11 +38,9 @@ function App() {
         {/* 4. Review Attempt */}
         <Route path="/review-attempt" element={<ReviewAttempt />} />
         <Route path="/detail-attempt/:id" element={<DetailAttempt />} />
-        
       </Routes>
     </Router>
   );
 }
 
-export default App;
 export default App;

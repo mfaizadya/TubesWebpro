@@ -42,74 +42,6 @@ body {
   max-width: 100vw; /* Pastikan tidak melebihi viewport width */
 }
 
-/* NAVBAR */
-.navbar {
-  display: flex;
-  justify-content: space-between; /* Kiri dan Kanan terpisah jauh */
-  align-items: center; /* Vertikal Center seluruh item navbar */
-  background-color: var(--primary); 
-  padding: 1rem 2rem;
-  color: white;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  height: 80px; /* Menetapkan tinggi fix agar konsisten */
-  position: sticky; /* Opsional: agar navbar tetap di atas saat scroll */
-  top: 0;
-  z-index: 100;
-}
-
-.nav-right {
-  display: flex;       /* INI PENTING: Mengaktifkan flexbox */
-  align-items: center; /* INI PENTING: Menyejajarkan teks dan tombol secara vertikal */
-  gap: 2rem;           /* Memberi jarak antara Link dan Tombol Logout */
-}
-
-.nav-brand a {
-  color: white;
-  text-decoration: none;
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-.nav-links {
-  display: flex;
-  gap: 1.5rem; /* Jarak antar link */
-}
-
-.nav-links a {
-  color: white;
-  text-decoration: none;
-  font-weight: 500;
-  font-size: 0.95rem;
-  transition: opacity 0.2s;
-}
-
-.nav-links a:hover {
-  opacity: 0.8;
-  text-decoration: underline;
-}
-
-.btn-logout {
-  background-color: #dc3545; /* Warna Merah */
-  color: white;
-  border: none;
-  padding: 0.6rem 1.2rem;
-  border-radius: 8px; /* Rounded corner */
-  font-weight: 600;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: background-color 0.2s;
-  
-  /* Pastikan tombol tidak penyok */
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.btn-logout:hover {
-  background-color: #c82333; /* Merah lebih gelap saat hover */
-}
-
 /* MAIN CONTENT */
 main {
   flex: 1; /* Mengisi sisa ruang vertikal */
@@ -123,12 +55,8 @@ main {
 /* CONTAINER KONTEN */
 .container {
     width: 100%;
-    min-height: 100vh;
-    margin: 0;
     padding: 2rem 4rem;
     background-color: var(--background);
-    border-radius: 0; 
-    box-shadow: none; 
 }
 
 @media (max-width: 768px) {
