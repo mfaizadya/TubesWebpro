@@ -1,6 +1,7 @@
 import React from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import "../pages/styles/HomePage.css";
+import { useNavigate } from 'react-router-dom';
+import logoImg from '../assets/pose-hai.png';
+import './Navbar.css';
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -8,30 +9,44 @@ const Navbar = () => {
   const handleLogout = () => {
     const isConfirmed = confirm('Apakah Anda yakin ingin keluar?');
     if (isConfirmed) {
-      console.log('Pengguna telah logout.');
-      alert('Anda telah berhasil logout.');
-      navigate('/'); // Asumsi route '/' adalah login page
+      localStorage.removeItem('token');
+      navigate('/login');
     }
   };
 
   return (
     <nav className="navbar">
-      <div className="nav-brand">
-        <Link to="/home" className="brand-link">
-          {/* Ganti src dengan path logo Anda jika ada */}
-          <img src="/assets/berdiri.png" alt="Logo" className="brand-logo" />
-          <span>LogiLearn</span>
-        </Link>
-      </div>
-      
-      <div className="nav-right">
-        <div className="nav-links">
-          <Link to="/ReviewAttempt">Review Attempt</Link>
-          <Link to="/ListLevel">List Level</Link>
+      <div className="navbar-wrapper">
+        <div className="navbar-container">
+          <div className="nav-brand">
+            <button 
+              className="brand-link"
+              onClick={() => navigate('/homepage')}
+            >
+              <span className="brand-text">LogiLearn</span>
+              <img src={logoImg} alt="LogiLearn Logo" className="brand-logo" />
+            </button>
+          </div>
+          
+          <div className="nav-right">
+            <div className="nav-links">
+              <button 
+                className="nav-link"
+                onClick={() => navigate('/review-attempt')}
+              >
+                Review Attempt
+              </button>
+            </div>
+            <div className="nav-logout">
+              <button 
+                onClick={handleLogout} 
+                className="btn-logout"
+              >
+                Keluar
+              </button>
+            </div>
+          </div>
         </div>
-        <button onClick={handleLogout} className="btn-logout">
-            Keluar
-        </button>
       </div>
     </nav>
   );

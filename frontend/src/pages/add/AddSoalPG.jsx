@@ -65,7 +65,7 @@ export default function AddSoalPG() {
 
       console.log('Sending payload:', payload)
 
-      const response = await fetch('http://localhost:3030/soals-pg', {
+      const response = await fetch('http://localhost:3030/api/soals-pg', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar';
 import '../styles/ReviewAttempt.css';
 
 export default function ReviewAttempt() {
@@ -15,7 +16,7 @@ export default function ReviewAttempt() {
   const fetchAttempts = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:3030/attempts');
+      const response = await fetch('http://localhost:3030/api/attempts');
       if (!response.ok) {
         throw new Error(`Gagal memuat attempt: ${response.status} ${response.statusText}`);
       }
@@ -43,30 +44,7 @@ export default function ReviewAttempt() {
 
   return (
     <>
-      <nav className="navbar">
-        <div className="nav-brand">
-          <a href="/home" className="brand-link">
-            <span>LogiLearn</span>
-            <img
-              src="/src/assets/pose hai.png"
-              alt="LogiLearn Mascot"
-              className="brand-logo"
-            />
-          </a>
-        </div>
-
-        <div className="nav-right">
-          <div className="nav-links">
-            <a href="/levels">Level</a>
-            <a href="/review-attempt">Review Attempt</a>
-          </div>
-          <div className="nav-logout">
-            <a href="#" onClick={handleLogout} id="logout-btn">
-              Keluar
-            </a>
-          </div>
-        </div>
-      </nav>
+      <Navbar />
 
       <div className="container">
         <h1>Review Attempt</h1>

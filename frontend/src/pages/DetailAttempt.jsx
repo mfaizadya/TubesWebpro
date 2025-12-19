@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar';
 import '../styles/ReviewAttempt.css';
 
 export default function DetailAttempt() {
@@ -16,7 +17,7 @@ export default function DetailAttempt() {
   const fetchAttemptDetail = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`http://localhost:3030/attempts/${id}`);
+      const response = await fetch(`http://localhost:3030/api/attempts/${id}`);
       if (!response.ok) {
         throw new Error(`Gagal memuat detail attempt: ${response.status} ${response.statusText}`);
       }
@@ -45,31 +46,7 @@ export default function DetailAttempt() {
   if (loading) {
     return (
       <>
-        <nav className="navbar">
-          <div className="nav-brand">
-            <a href="/home" className="brand-link">
-              <img
-                src="/src/assets/berdiri depan.png"
-                alt="Mascot"
-                className="brand-logo"
-              />
-              <span>LogiLearn</span>
-            </a>
-          </div>
-
-          <div className="nav-right">
-            <div className="nav-links">
-              <a href="/levels">Level</a>
-              <a href="/review-attempt">Review Attempt</a>
-            </div>
-            <div className="nav-logout">
-              <a href="#" onClick={handleLogout}>
-                Keluar
-              </a>
-            </div>
-          </div>
-        </nav>
-
+        <Navbar />
         <div className="container">
           <p>Memuat data...</p>
         </div>
@@ -80,31 +57,7 @@ export default function DetailAttempt() {
   if (error || !attempt) {
     return (
       <>
-        <nav className="navbar">
-          <div className="nav-brand">
-            <a href="/home" className="brand-link">
-              <img
-                src="/src/assets/berdiri depan.png"
-                alt="Mascot"
-                className="brand-logo"
-              />
-              <span>LogiLearn</span>
-            </a>
-          </div>
-
-          <div className="nav-right">
-            <div className="nav-links">
-              <a href="/levels">Level</a>
-              <a href="/review-attempt">Review Attempt</a>
-            </div>
-            <div className="nav-logout">
-              <a href="#" onClick={handleLogout}>
-                Keluar
-              </a>
-            </div>
-          </div>
-        </nav>
-
+        <Navbar />
         <div className="container">
           <p style={{ color: 'red' }}>Error: {error}</p>
           <button onClick={handleBack}>⬅ Kembali</button>
@@ -115,31 +68,7 @@ export default function DetailAttempt() {
 
   return (
     <>
-      <nav className="navbar">
-        <div className="nav-brand">
-          <a href="/home" className="brand-link">
-            <img
-              src="/src/assets/berdiri depan.png"
-              alt="Mascot"
-              className="brand-logo"
-            />
-            <span>LogiLearn</span>
-          </a>
-        </div>
-
-        <div className="nav-right">
-          <div className="nav-links">
-            <a href="/levels">Level</a>
-            <a href="/review-attempt">Review Attempt</a>
-          </div>
-          <div className="nav-logout">
-            <a href="#" onClick={handleLogout}>
-              Keluar
-            </a>
-          </div>
-        </div>
-      </nav>
-
+      <Navbar />
       <div className="container">
         <h1>Detail Attempt</h1>
 
