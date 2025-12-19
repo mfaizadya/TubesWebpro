@@ -1,22 +1,21 @@
 const express = require('express')
+const cors = require('cors');
 require('dotenv').config()
-const cors = require('cors')
 
 const app = express()
 const port = process.env.PORT || 3030
 
 //import routes
+const authRoutes = require('./src/routes/authRoutes');
 const sectionRouter = require('./src/routes/sectionRoutes')
 const levelRouter = require('./src/routes/levelRoutes')
-const soalPGRouter = require('./src/routes/soalPGRoutes')
 
+app.use(cors());
 app.use(express.json())
-app.use(cors())
-
+app.use('/auth', authRoutes);
 //routes section
 app.use('/', sectionRouter)
 app.use('/', levelRouter)
-app.use('/', soalPGRouter)
 
 app.get('/', (req, res) => {
     res.send('Hello world')
