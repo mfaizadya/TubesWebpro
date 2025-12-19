@@ -1,20 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const esaiController = require('../controllers/esaiController');
-const verifyToken = require('../helpers/authmiddleware');
+const { verifyLogin, onlyAdmin } = require('../middlewares/authMiddleware');
 
-// CREATE
-router.post('/soal-esai', verifyToken, esaiController.createEsai);
+router.post('/soal-esai', verifyLogin, onlyAdmin, esaiController.createEsai);
 
-// READ 
-router.get('/soal-esai', verifyToken, esaiController.getAllEsai);
-router.get('/soal-esai/:id', verifyToken, esaiController.getEsaiById);
-router.get('/soal-esai/level/:id_level', verifyToken, esaiController.getEsaiByLevel);
+router.put('/soal-esai/:id', verifyLogin, onlyAdmin, esaiController.updateEsai);
 
-// UPDATE
-router.put('/soal-esai/:id', verifyToken, esaiController.updateEsai);
+router.delete('/soal-esai/:id', verifyLogin, onlyAdmin, esaiController.deleteEsai);
 
-// DELETE
-router.delete('/soal-esai/:id', verifyToken, esaiController.deleteEsai);
+router.get('/soal-esai', verifyLogin, esaiController.getAllEsai);
+router.get('/soal-esai/:id', verifyLogin, esaiController.getEsaiById);
+router.get('/soal-esai/level/:id_level', verifyLogin, esaiController.getEsaiByLevel);
 
 module.exports = router;
