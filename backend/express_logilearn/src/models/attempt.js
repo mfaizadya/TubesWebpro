@@ -9,7 +9,8 @@ class Attempt {
         include: {
           levels: {
             include: {
-              sections: true
+              sections: true,
+              soals: true
             }
           },
           pelajars: true,
