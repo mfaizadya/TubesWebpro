@@ -21,6 +21,24 @@ function verifyLogin(req, res, next) {
   }
 }
 
+function onlyAdmin(req, res, next){
+  if (req.auth.type !== 'ADMIN') {
+    return resp(403, null, 'Admin only', res);
+  }
+
+  next();
+}
+
+function onlyPelajar(req, res, next){
+  if (req.auth.type !== 'PELAJAR') {
+    return resp(403, null, 'Pelajar only', res);
+  }
+
+  next();
+}
+
 module.exports = {
-  verifyLogin
+  verifyLogin,
+  onlyAdmin,
+  onlyPelajar
 };
