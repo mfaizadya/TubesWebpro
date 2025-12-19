@@ -12,11 +12,15 @@ router.get('/test-login-admin', verifyLogin, (req, res) => {
     return resp(401, null, 'Unauthorized', res);
   }
 
-  if (req.auth.type !== 'ADMIN') {
-    return resp(403, null, 'Admin only', res);
+  return resp(200, null, 'admin profile', res);
+});
+
+router.get('/test-login-pelajar', verifyLogin, (req, res) => {
+  if (!req.auth) {
+    return resp(401, null, 'Unauthorized', res);
   }
 
-  return resp(200, null, 'admin profile', res);
+  return resp(200, null, 'pelajar profile', res);
 });
 
 module.exports = router;
