@@ -27,8 +27,9 @@ const getEsaiById = async (req, res) => {
 
 const getEsaiByLevel = async (req, res) => {
     try {
-        const data = await esaiModel.getSoalEsaiByLevel(req.params.id_level);
-        return response(200, data, `Berhasil mengambil soal esai level ${req.params.id_level}`, res);
+        const { id_level } = req.params;
+        const data = await esaiModel.getSoalEsaiByLevel(id_level);
+        return response(200, data, `Berhasil mengambil soal esai level ${id_level}`, res);
     } catch (error) {
         return response(500, null, error.message, res);
     }
@@ -37,6 +38,11 @@ const getEsaiByLevel = async (req, res) => {
 const createEsai = async (req, res) => {
     try {
         const { id_level, text_soal, kata_kunci } = req.body;
+        
+        if (!id_level || !text_soal) {
+            return response(400, null, "id_level dan text_soal wajib diisi", res);
+        }
+
         const data = await esaiModel.createSoalEsai(id_level, text_soal, kata_kunci);
         return response(201, data, "Soal esai berhasil dibuat", res);
     } catch (error) {
@@ -48,6 +54,12 @@ const updateEsai = async (req, res) => {
     try {
         const { id } = req.params;
         const { id_level, text_soal, kata_kunci } = req.body;
+
+        const cekData = await esaiModel.getSoalEsaiById(id);
+        if (!cekData) {
+            return response(404, null, "Soal esai tidak ditemukan", res);
+        }
+
         const data = await esaiModel.updateSoalEsai(id, id_level, text_soal, kata_kunci);
         return response(200, data, "Soal esai berhasil diperbarui", res);
     } catch (error) {
@@ -57,11 +69,12 @@ const updateEsai = async (req, res) => {
 
 const deleteEsai = async (req, res) => {
     try {
-        await esaiModel.deleteSoalEsai(req.params.id);
+        const { id } = req.params;
+        await esaiModel.deleteSoalEsai(id);
         return response(200, null, "Soal esai berhasil dihapus", res);
     } catch (error) {
         return response(500, null, error.message, res);
     }
 };
 
-module.exports = { getAllEsai, getEsaiById ,getEsaiByLevel, createEsai, updateEsai, deleteEsai };
+module.exports = { getAllEsai, getEsaiById, getEsaiByLevel, createEsai, updateEsai, deleteEsai };

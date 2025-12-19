@@ -29,7 +29,7 @@ async function createSoalEsai(idLevel, textSoal, kataKunci) {
             id_level: Number(idLevel),
             tipe: 'esai',
             text_soal: textSoal,
-            kata_kunci: kataKunci
+            kata_kunci: kataKunci || null
         }
     });
 }
@@ -39,8 +39,8 @@ async function updateSoalEsai(id, idLevel, textSoal, kataKunci) {
         where: { id: Number(id) },
         data: {
             id_level: idLevel ? Number(idLevel) : undefined,
-            text_soal: textSoal,
-            kata_kunci: kataKunci
+            text_soal: textSoal !== undefined ? textSoal : undefined,
+            kata_kunci: kataKunci !== undefined ? kataKunci : undefined
         }
     });
 }
