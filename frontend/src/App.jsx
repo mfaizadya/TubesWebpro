@@ -1,17 +1,7 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-// Pastikan path ini benar & file-nya berekstensi .jsx, BUKAN .html
-import HomePage from './pages/Homepage';
-// import SectionPage from './pages/SectionPage'; // Nanti di-uncomment jika halaman sudah dibuat teman
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Login from './pages/Login';
+import Homepage from './pages/Homepage';
 
-// Komponen Placeholder Sementara
-const PlaceholderSection = () => (
-  <div className="container" style={{textAlign: 'center', marginTop: '50px'}}>
-    <h1>Halaman Section</h1>
-    <p>Halaman ini sedang dikerjakan oleh tim.</p>
-    <a href="/">Kembali ke Home</a>
-  </div>
-);
 
 function App() {
   return (
@@ -24,6 +14,19 @@ function App() {
       </Routes>
     </Router>
   );
+    <Router>
+      <Routes>
+        {/* 1. Login */}
+        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/login" element={<Login />} />
+
+        {/* 2. HomePage*/}
+        <Route path="/homepage" element={<Homepage />} />
+        
+      </Routes>
+    </Router>
+  );
 }
 
+export default App;
 export default App;

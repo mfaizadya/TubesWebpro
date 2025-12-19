@@ -21,7 +21,7 @@ const HomePage = () => {
     try {
       // Ganti URL ini dengan endpoint backend teman Anda
       // Contoh: http://localhost:3000/api/sections
-      const response = await axios.get('http://localhost:3000/api/sections');
+      const response = await axios.get('http://localhost:3030/api/sections');
       
       // Sesuaikan dengan struktur JSON dari backend. 
       // Jika backend mengirim { data: [...] }, gunakan response.data.data
