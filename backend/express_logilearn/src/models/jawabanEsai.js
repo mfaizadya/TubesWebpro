@@ -12,23 +12,24 @@ async function getJwbEsaiById(id) {
     })
 }
 
-async function createJwbEsai(idAttempt, idSoal, jawabanEsai) {
+async function createJwbEsai(idAttempt, idSoal, jawabanEsai, skor) {
     return prisma.jawabanEsais.create({
         data: {
             id_attempt: Number(idAttempt),
             id_soal: Number(idSoal),
             text_jawaban_esai: jawabanEsai,
-            skor: 0
+            skor: skor
         }
     })
 }
 
-async function updateJwbEsai(id, skor) {
+async function updateJwbEsai(id, idAdmin, skor) {
     return prisma.jawabanEsais.update({
         where: {
             id: Number(id)
         },
         data: {
+            id_admin: idAdmin,
             skor: skor
         }
     })
