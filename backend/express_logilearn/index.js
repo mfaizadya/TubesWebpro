@@ -12,6 +12,7 @@ const levelRouter = require('./src/routes/levelRoutes')
 const esaiRouter = require('./src/routes/soalesaiRoutes')
 const attemptRouter = require('./src/routes/attemptRoutes')
 const jawabanPGRouter = require('./src/routes/jawabanPGRoutes')
+const jawabanEsaiRouter = require('./src/routes/jawabanEsaiRoutes')
 const pelajarRoutes = require('./src/routes/pelajarRoutes');
 
 app.use(cors());
@@ -25,6 +26,7 @@ app.use('/api', esaiRouter)
 app.use('/api', attemptRouter)
 app.use('/api', pelajarRoutes)
 app.use('/api', jawabanPGRouter)
+app.use('/api', jawabanEsaiRouter)
 
 app.get('/', (req, res) => {
     res.send('Hello world')
