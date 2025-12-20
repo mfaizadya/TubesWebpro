@@ -8,6 +8,10 @@ const loginAdmin = async (req, res) => {
   try {
     const { username, password } = req.body;
 
+    if (!username || !password) {
+      return response(400, null, "Username dan password wajib diisi", res);
+    }
+
     const admin = await prisma.admins.findFirst({
       where: { username: username }
     });
@@ -29,10 +33,14 @@ const loginAdmin = async (req, res) => {
 
     const dataLogin = {
       token: token,
-      admin: { id: admin.id, nama: admin.nama }
+      admin: { 
+        id: admin.id, 
+        nama: admin.nama,
+        username: admin.username 
+      }
     };
 
-    return response(200, dataLogin, "Login Berhasil", res);
+    return response(200, dataLogin, "Login Admin Berhasil", res);
 
   } catch (error) {
     return response(500, null, `Terjadi kesalahan server: ${error.message}`, res);
@@ -119,4 +127,4 @@ module.exports = {
   loginAdmin,
   loginPelajar,
   registerPelajar
- };
+};
