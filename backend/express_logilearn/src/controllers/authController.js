@@ -78,12 +78,10 @@ const registerPelajar = async (req, res) => {
   try {
     const { nama, username, password } = req.body;
 
-    // 1. Validasi Input
     if (!nama || !username || !password) {
       return response(400, null, "Nama, Username, dan Password wajib diisi", res);
     }
 
-    // 2. Cek Duplikat Username
     const existingPelajar = await prisma.pelajars.findFirst({
       where: { username: username }
     });
@@ -92,11 +90,9 @@ const registerPelajar = async (req, res) => {
       return response(400, null, "Username sudah digunakan, silakan pilih yang lain", res);
     }
 
-    // 3. Hash Password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // 4. Simpan ke Database
     const newPelajar = await prisma.pelajars.create({
       data: {
         nama,
@@ -105,7 +101,6 @@ const registerPelajar = async (req, res) => {
       },
     });
 
-    // 5. Response Sukses
     const dataRegister = {
       id: newPelajar.id,
       nama: newPelajar.nama,
