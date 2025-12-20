@@ -15,9 +15,28 @@ const Homepage = () => {
 
   useEffect(() => {
     const fetchSections = async () => {
+      const token = localStorage.getItem('token');
+
+      if (!token) {
+        navigate('/login'); 
+        return;
+      }
+
       try {
-        const response = await fetch("http://localhost:3030/api/sections"); 
+        const response = await fetch("http://localhost:3030/api/sections", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+          }
+        }); 
         
+        if (response.status === 401) {
+          localStorage.removeItem('token');
+          navigate('/login');
+          return;
+        }
+
         if (!response.ok) {
           throw new Error("Gagal mengambil data section dari server.");
         }
@@ -34,7 +53,7 @@ const Homepage = () => {
     };
 
     fetchSections();
-  }, []);
+  }, [navigate]);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -51,12 +70,10 @@ const Homepage = () => {
     <>
       <Navbar />
 
-      {/* Main Content */}
       <div className="container">
         <h1>Selamat Datang di Dashboard Admin</h1>
         <p>Kelola section, level, soal, dan review jawaban siswa dengan mudah melalui halaman ini.</p>
         
-
         <main className="content-body">
           {loading ? (
             <div className="loading-state">Memuat data...</div>
@@ -100,7 +117,6 @@ const Homepage = () => {
                 </tbody>
               </table>
 
-              {/* Pagination Controls */}
               <div className="pagination-container">
                 <button
                   className="page-btn"
@@ -125,8 +141,9 @@ const Homepage = () => {
             </div>
           )}
         </main>
-    </div>
+      </div>
     </>
   );
 }
+
 export default Homepage;
