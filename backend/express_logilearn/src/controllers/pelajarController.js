@@ -58,29 +58,6 @@ const getProfile = async (req, res) => {
   }
 };
 
-const updateProfile = async (req, res) => {
-  try {
-    const { nama, username } = req.body;
-    const pelajarId = req.auth.id;
-
-    const updated = await prisma.pelajars.update({
-      where: { id: pelajarId },
-      data: { 
-        nama: nama, 
-        username: username 
-      }
-    });
-
-    return response(200, { 
-      nama: updated.nama, 
-      username: updated.username 
-    }, "Profil berhasil diperbarui", res);
-  } catch (error) {
-    return response(500, null, "Gagal update profil. Username mungkin sudah digunakan.", res);
-  }
-};
-
-
 const changePassword = async (req, res) => {
   try {
     const { oldPassword, newPassword } = req.body;
@@ -111,6 +88,5 @@ const changePassword = async (req, res) => {
 
 module.exports = { 
   getProfile, 
-  updateProfile, 
   changePassword 
 };
