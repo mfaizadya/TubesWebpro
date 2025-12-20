@@ -10,7 +10,7 @@ router.post('/levels', levelController.create)
 router.get('/levels', levelController.getAll)
 router.get('/levels/:id', levelController.getById)
 router.get('/:slugSection/levels', authMid.verifyLogin, levelController.getAllBySection);
-router.get('/:slugSection/levels/:id', authMid.verifyLogin, levelController.getById);
+router.get('/:slugSection/levels/:id', authMid.verifyLogin, levelController.getBySectionId);
 
 //update
 router.put('/levels/:id', levelController.update)
