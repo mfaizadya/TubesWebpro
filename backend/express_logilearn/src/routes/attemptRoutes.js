@@ -1,20 +1,23 @@
 const express = require('express');
 const router = express.Router();
 const attemptController = require('../controllers/attemptController');
+// Import Middleware
+const { verifyLogin, onlyAdmin } = require('../middlewares/authMiddleware');
 
-// Create
-router.post('/attempts', attemptController.create);
+// Create (Admin Only) ---
+router.post('/attempts', verifyLogin, onlyAdmin, attemptController.create);
 
-// Read
-router.get('/attempts', attemptController.getAllAttempts);
-router.get('/attempts/:id', attemptController.getAttemptById);
-router.get('/attempts/level/:levelId', attemptController.getAttemptsByLevel);
-router.get('/attempts/pelajar/:pelajarId', attemptController.getAttemptsByPelajar);
+// Read (Authenticated User) ---
+// attempt bisa dilihat oleh admin maupun pelajar yang bersangkutan
+router.get('/attempts', verifyLogin, attemptController.getAllAttempts);
+router.get('/attempts/:id', verifyLogin, attemptController.getAttemptById);
+router.get('/attempts/level/:levelId', verifyLogin, attemptController.getAttemptsByLevel);
+router.get('/attempts/pelajar/:pelajarId', verifyLogin, attemptController.getAttemptsByPelajar);
 
-// Update
-router.put('/attempts/:id', attemptController.update);
+// --- Update (Admin Only) ---
+router.put('/attempts/:id', verifyLogin, onlyAdmin, attemptController.update);
 
-// Delete
-router.delete('/attempts/:id', attemptController.remove);
+// --- Delete (Admin Only) ---
+router.delete('/attempts/:id', verifyLogin, onlyAdmin, attemptController.remove);
 
 module.exports = router;

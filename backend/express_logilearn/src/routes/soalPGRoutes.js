@@ -1,19 +1,19 @@
-const express = require('express')
-const router = express.Router()
-const soalPGController = require('../controllers/soalPGController')
+const express = require('express');
+const router = express.Router();
+const soalPGController = require('../controllers/soalPGController'); 
+const { verifyLogin, onlyAdmin } = require('../middlewares/authMiddleware');
 
-// Create
-router.post('/soals-pg', soalPGController.create)
+// --- Create (Admin Only) ---
+router.post('/soal-pg', verifyLogin, onlyAdmin, soalPGController.create);
 
-// Read
-router.get('/soals-pg', soalPGController.getAll)
-router.get('/soals-pg/:id', soalPGController.getById)
-router.get('/soals-pg/level/:idLevel', soalPGController.getByLevel)
+// --- Read (Authenticated User / Public) ---
+router.get('/soal-pg', verifyLogin, soalPGController.getAllSoal);
+router.get('/soal-pg/:id', verifyLogin, soalPGController.getSoalById);
 
-// Update
-router.put('/soals-pg/:id', soalPGController.update)
+// --- Update (Admin Only) ---
+router.put('/soal-pg/:id', verifyLogin, onlyAdmin, soalPGController.update);
 
-// Delete
-router.delete('/soals-pg/:id', soalPGController.delete)
+// --- Delete (Admin Only) ---
+router.delete('/soal-pg/:id', verifyLogin, onlyAdmin, soalPGController.delete);
 
-module.exports = router
+module.exports = router;
