@@ -4,6 +4,16 @@ async function getAllLevels() {
     return prisma.levels.findMany({})
 }
 
+async function getLevelsBySection(slugSection) {
+    return prisma.levels.findMany({
+        where: {
+            sections: {
+                slug: slugSection
+            }
+        }
+    })
+}
+
 async function getLevelById(id) {
     return prisma.levels.findUnique({
         where: {
@@ -51,6 +61,7 @@ async function deleteLevel(id) {
 module.exports = {
     getAllLevels,
     getLevelById,
+    getLevelsBySection,
     createLevel,
     updateLevel,
     deleteLevel
