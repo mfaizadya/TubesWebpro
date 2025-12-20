@@ -25,6 +25,20 @@ async function getAll(req, res) {
     }
 }
 
+async function getAllBySection(req, res) {
+    try {
+        const {slugSection} = req.params
+        const data = await Level.getLevelsBySection(slugSection)
+        if(!data){
+            return response(404, null, `data not found`, res)
+        }
+        response(200, data, `get all levels by section" ${slugSection}`, res)
+    } catch(err) {
+        console.log(err.message)
+        response(500, null, `failed to : ${err.message}`, res)
+    }
+}
+
 async function getById(req, res) {
     try {
         const {id} = req.params
@@ -71,6 +85,7 @@ async function remove(req, res) {
 }
 module.exports = {
     getAll,
+    getAllBySection,
     getById,
     create,
     update,

@@ -19,10 +19,11 @@ async function getSectionById(id) {
     })
 }
 
-async function createSection(nama) {
+async function createSection(nama, slug) {
     return prisma.sections.create({
         data: {
-            nama: nama
+            nama: nama,
+            slug
         }
     })
 }

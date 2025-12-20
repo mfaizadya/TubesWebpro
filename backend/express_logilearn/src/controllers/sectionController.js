@@ -29,8 +29,8 @@ async function getById(req, res) {
 
 async function create(req, res) {
     try {
-        const {nama} = req.body
-        const data = await Section.createSection(nama)
+        const {nama, slug} = req.body
+        const data = await Section.createSection(nama, slug)
         response(200, data, `section created successfully`, res)
     } catch (err){
         console.log(err.message)
