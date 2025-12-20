@@ -4,7 +4,6 @@ const { getProfile, updateProfile, changePassword } = require('../controllers/pe
 const { verifyLogin } = require('../middlewares/authMiddleware');
 
 router.get('/profile', verifyLogin, getProfile);
-router.put('/profile/update', verifyLogin, updateProfile);
 router.put('/profile/change-password', verifyLogin, changePassword);
 
 module.exports = router;
