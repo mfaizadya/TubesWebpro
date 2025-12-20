@@ -209,6 +209,49 @@ class Attempt {
       throw error;
     }
   }
+
+  // Create attempt with answers (Transaction)
+  static async createAttemptWithAnswers(id_level, id_pelajar, skor, jawaban_pgs, jawaban_esais) {
+    try {
+      return await prisma.$transaction(async (tx) => {
+        // 1. Create Attempt
+        const attempt = await tx.attempts.create({
+          data: {
+            id_level: parseInt(id_level),
+            id_pelajar: parseInt(id_pelajar),
+            skor: parseFloat(skor)
+          }
+        });
+
+        // 2. Create Jawaban PGs
+        if (jawaban_pgs && jawaban_pgs.length > 0) {
+          await tx.jawabanPGs.createMany({
+            data: jawaban_pgs.map(j => ({
+              id_attempt: attempt.id,
+              id_opsi: parseInt(j.id_opsi),
+              skor: parseFloat(j.skor)
+            }))
+          });
+        }
+
+        // 3. Create Jawaban Esais
+        if (jawaban_esais && jawaban_esais.length > 0) {
+          await tx.jawabanEsais.createMany({
+            data: jawaban_esais.map(j => ({
+              id_attempt: attempt.id,
+              id_soal: parseInt(j.id_soal),
+              text_jawaban_esai: j.text_jawaban_esai,
+              skor: parseFloat(j.skor)
+            }))
+          });
+        }
+
+        return attempt;
+      });
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 module.exports = Attempt;

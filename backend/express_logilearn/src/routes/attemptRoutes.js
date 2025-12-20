@@ -14,6 +14,9 @@ router.get('/attempts/:id', verifyLogin, attemptController.getAttemptById);
 router.get('/attempts/level/:levelId', verifyLogin, attemptController.getAttemptsByLevel);
 router.get('/attempts/pelajar/:pelajarId', verifyLogin, attemptController.getAttemptsByPelajar);
 
+// Submit Attempt (Authenticated User)
+router.post('/attempts/submit', verifyLogin, attemptController.submitAttempt);
+
 // --- Update (Admin Only) ---
 router.put('/attempts/:id', verifyLogin, onlyAdmin, attemptController.update);
 
