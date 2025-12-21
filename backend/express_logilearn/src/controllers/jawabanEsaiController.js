@@ -18,7 +18,8 @@ async function create(req, res) {
       idAttempt,
       idSoal,
       jawaban,
-      result.score
+      result.score,
+      result.feedback
     )
 
     // Recalculate attempt score

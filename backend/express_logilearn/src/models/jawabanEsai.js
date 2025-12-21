@@ -12,13 +12,14 @@ async function getJwbEsaiById(id) {
     })
 }
 
-async function createJwbEsai(idAttempt, idSoal, jawabanEsai, skor) {
+async function createJwbEsai(idAttempt, idSoal, jawabanEsai, skor, feedback) {
     return prisma.jawabanEsais.create({
         data: {
             id_attempt: Number(idAttempt),
             id_soal: Number(idSoal),
             text_jawaban_esai: jawabanEsai,
-            skor: skor
+            skor: skor,
+            feedback: feedback
         }
     })
 }
