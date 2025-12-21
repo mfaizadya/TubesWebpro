@@ -85,83 +85,28 @@ async function create(req, res) {
   }
 }
 
-// Submit Attempt (Auto Grading)
+// Submit Attempt (Finalize/Recalculate Score)
 async function submitAttempt(req, res) {
   try {
-    const { id_level, id_pelajar, answers } = req.body;
-
-    if (!id_level || !id_pelajar || !answers || !Array.isArray(answers)) {
-      return response(400, null, 'id_level, id_pelajar, dan answers (array) harus diisi', res);
+    // Expect 'id_attempt' in body or derive from context if necessary.
+    // Based on user request "id attemptny kita pake", we likely get it in the body or params.
+    // The previous implementation used req.body.id_level and id_pelajar to CREATE a NEW one with answers.
+    // The NEW implementation should just update an EXISTING attempt.
+    
+    let { id_attempt } = req.body;
+    
+    if (!id_attempt) {
+       return response(400, null, 'id_attempt harus diisi', res);
     }
 
-    // 1. Get Level Data (Questions & Options)
-    const levelData = await Level.getLevelById(id_level);
-    if (!levelData) {
-      return response(404, null, 'Level tidak ditemukan', res);
+    // Recalculate based on saved answers
+    const updatedAttempt = await Attempt.recalculateScore(id_attempt);
+
+    if (!updatedAttempt) {
+      return response(404, null, 'Attempt tidak ditemukan', res);
     }
 
-    let totalScore = 0;
-    const jawabanPGs = [];
-    const jawabanEsais = [];
-
-    // 2. Process Answers
-    // Note: Use for...of loop for async operations inside
-    for (const ans of answers) {
-      const soal = levelData.soals.find(s => s.id === parseInt(ans.id_soal));
-      
-      if (!soal) {
-        console.warn(`Soal ID ${ans.id_soal} tidak ditemukan di Level ${id_level}`);
-        continue;
-      }
-
-      if (soal.tipe === 'pg') {
-        const selectedOpsi = soal.opsis.find(o => o.id === parseInt(ans.id_opsi));
-        const score = (selectedOpsi && selectedOpsi.is_correct) ? 1.0 : 0.0;
-        
-        totalScore += score;
-        jawabanPGs.push({
-          id_opsi: ans.id_opsi,
-          skor: score
-        });
-      } else if (soal.tipe === 'esai') {
-        try {
-            const aiRes = await aiGrading.nilaiEsai(soal.text_soal, ans.text_jawaban);
-            const score = aiRes.score; // 0.0 - 1.0
-            
-            totalScore += score;
-            jawabanEsais.push({
-                id_soal: soal.id,
-                text_jawaban_esai: ans.text_jawaban,
-                skor: score
-            });
-        } catch (err) {
-            console.error(`Error grading essay soal ${soal.id}:`, err.message);
-            // Default to 0 if AI fails? or allow manual review later? 
-            // For now, let's set 0 but log it.
-            jawabanEsais.push({
-                id_soal: soal.id,
-                text_jawaban_esai: ans.text_jawaban,
-                skor: 0.0
-            });
-        }
-      }
-    }
-
-    // 3. Calculate Final Percentage
-    // Assuming each question is worth 1 point max.
-    const maxScore = levelData.soals.length; 
-    const finalPercentage = maxScore > 0 ? (totalScore / maxScore) * 100 : 0;
-
-    // 4. Save to Database
-    const attempt = await Attempt.createAttemptWithAnswers(
-      id_level,
-      id_pelajar,
-      finalPercentage,
-      jawabanPGs,
-      jawabanEsais
-    );
-
-    response(200, { attempt, score: finalPercentage }, 'Attempt submitted and graded successfully', res);
+    response(200, updatedAttempt, 'Attempt submitted (score recalculated) successfully', res);
 
   } catch (error) {
     console.log(error.message);
