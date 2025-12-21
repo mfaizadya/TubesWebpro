@@ -1,6 +1,7 @@
 const { nilaiEsai } = require('../services/aiGrading')
 const Soal = require('../models/soalesai')
 const JwbEsai = require('../models/jawabanEsai')
+const Attempt = require('../models/attempt')
 const response = require('../helpers/response')
 
 async function create(req, res) {
@@ -19,6 +20,9 @@ async function create(req, res) {
       jawaban,
       result.score
     )
+
+    // Recalculate attempt score
+    await Attempt.recalculateScore(idAttempt)
 
     response(200, data, "successfully", res)
   } catch (err) {

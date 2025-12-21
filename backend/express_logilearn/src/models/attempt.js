@@ -252,6 +252,56 @@ class Attempt {
       throw error;
     }
   }
+  // Recalculate score
+  static async recalculateScore(id) {
+    try {
+      const attempt = await prisma.attempts.findUnique({
+        where: { id: parseInt(id) },
+        include: {
+          levels: {
+            include: {
+              soals: true
+            }
+          },
+          jawaban_pgs: true,
+          jawaban_esais: true
+        }
+      });
+
+      if (!attempt) return null;
+
+      let totalScore = 0;
+
+      // Sum PG scores
+      if (attempt.jawaban_pgs) {
+        attempt.jawaban_pgs.forEach(j => {
+          totalScore += parseFloat(j.skor || 0);
+        });
+      }
+
+      // Sum Essay scores
+      if (attempt.jawaban_esais) {
+        attempt.jawaban_esais.forEach(j => {
+          totalScore += parseFloat(j.skor || 0);
+        });
+      }
+
+      // Calculate percentage
+      const maxScore = attempt.levels && attempt.levels.soals ? attempt.levels.soals.length : 0;
+      const finalPercentage = maxScore > 0 ? (totalScore / maxScore) * 100 : 0;
+
+      // Update attempt
+      return await prisma.attempts.update({
+        where: { id: parseInt(id) },
+        data: {
+          skor: finalPercentage
+        }
+      });
+
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 module.exports = Attempt;

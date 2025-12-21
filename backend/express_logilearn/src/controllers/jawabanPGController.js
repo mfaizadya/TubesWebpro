@@ -1,4 +1,5 @@
 const JwbPG = require('../models/jawabanPG')
+const Attempt = require('../models/attempt')
 const response = require('../helpers/response')
 
 async function create(req, res) {
@@ -7,6 +8,10 @@ async function create(req, res) {
         const {idOpsi} = req.body
 
         const data = await JwbPG.createJwbPG(idAttempt, idOpsi)
+        
+        // Recalculate attempt score
+        await Attempt.recalculateScore(idAttempt)
+
         response(200, data, `jawabanPG created successfully`, res)
     } catch(err) {
         console.log(err.message)

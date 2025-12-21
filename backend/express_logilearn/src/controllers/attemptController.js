@@ -65,7 +65,13 @@ async function getAttemptsByPelajar(req, res) {
 // Create attempt
 async function create(req, res) {
   try {
-    const { id_level, id_pelajar, skor } = req.body;
+    let { id_level, id_pelajar, skor } = req.body;
+
+    // Handle Pelajar creating their own attempt
+    if (req.auth && req.auth.type === 'PELAJAR') {
+      id_pelajar = req.auth.id;
+      if (skor === undefined) skor = 0;
+    }
 
     if (!id_level || !id_pelajar || skor === undefined) {
       return response(400, null, 'id_level, id_pelajar, dan skor harus diisi', res);

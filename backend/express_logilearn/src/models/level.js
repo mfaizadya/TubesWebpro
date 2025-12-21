@@ -8,7 +8,9 @@ async function getLevelsBySection(slugSection) {
     return prisma.levels.findMany({
         where: {
             sections: {
-                slug: slugSection
+                is: {
+                    slug: slugSection
+                }
             }
         }
     })
@@ -18,7 +20,9 @@ async function getLevelsBySectionId(slugSection, id) {
     return prisma.levels.findFirst({
         where: {
             sections: {
-                slug: slugSection
+                is: {
+                    slug: slugSection
+                }
             },
             id: Number(id)
         },
@@ -84,7 +88,9 @@ async function getSoalsByLevelId(slugSection, idLevel) {
         where: {
             id: Number(idLevel),
             sections: {
-                slug: slugSection
+                is: {
+                    slug: slugSection
+                }
             }
         }
     });
@@ -120,7 +126,9 @@ async function getSoalByLevelIdAndSoalId(slugSection, idLevel, idSoal) {
         where: {
             id: Number(idLevel),
             sections: {
-                slug: slugSection
+                is: {
+                    slug: slugSection
+                }
             }
         },
         include: {

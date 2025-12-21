@@ -4,8 +4,8 @@ const attemptController = require('../controllers/attemptController');
 // Import Middleware
 const { verifyLogin, onlyAdmin } = require('../middlewares/authMiddleware');
 
-// Create (Admin Only) ---
-router.post('/attempts', verifyLogin, onlyAdmin, attemptController.create);
+// Create
+router.post('/attempts', verifyLogin, attemptController.create);
 
 // Read (Authenticated User) ---
 // attempt bisa dilihat oleh admin maupun pelajar yang bersangkutan
