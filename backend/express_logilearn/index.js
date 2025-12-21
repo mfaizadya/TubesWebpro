@@ -9,6 +9,7 @@ const port = process.env.PORT || 3030
 const authRoutes = require('./src/routes/authRoutes');
 const sectionRouter = require('./src/routes/sectionRoutes')
 const levelRouter = require('./src/routes/levelRoutes')
+const soalPGRouter = require('./src/routes/soalPGRoutes')
 const esaiRouter = require('./src/routes/soalesaiRoutes')
 const attemptRouter = require('./src/routes/attemptRoutes')
 const jawabanPGRouter = require('./src/routes/jawabanPGRoutes')
@@ -23,6 +24,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api', sectionRouter)
 app.use('/api', levelRouter)
 app.use('/api', esaiRouter)
+app.use('/api', soalPGRouter)
 app.use('/api', attemptRouter)
 app.use('/api', pelajarRoutes)
 app.use('/api', jawabanPGRouter)

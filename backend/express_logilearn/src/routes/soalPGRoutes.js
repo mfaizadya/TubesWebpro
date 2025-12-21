@@ -7,8 +7,8 @@ const { verifyLogin, onlyAdmin } = require('../middlewares/authMiddleware');
 router.post('/soal-pg', verifyLogin, onlyAdmin, soalPGController.create);
 
 // --- Read (Authenticated User / Public) ---
-router.get('/soal-pg', verifyLogin, soalPGController.getAllSoal);
-router.get('/soal-pg/:id', verifyLogin, soalPGController.getSoalById);
+router.get('/soal-pg', verifyLogin, soalPGController.getAll);
+router.get('/soal-pg/:id', verifyLogin, soalPGController.getById);
 
 // --- Update (Admin Only) ---
 router.put('/soal-pg/:id', verifyLogin, onlyAdmin, soalPGController.update);
