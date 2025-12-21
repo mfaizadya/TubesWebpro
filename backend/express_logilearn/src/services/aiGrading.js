@@ -2,25 +2,33 @@ const GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
 
 async function nilaiEsai(soal, jawaban) {
   const prompt = `
-Kamu adalah asisten penilai soal esai.
+  Kamu adalah asisten penilai soal esai.
 
-Soal:
-${soal}
+  Soal:
+  ${soal}
 
-Jawaban pelajar:
-${jawaban}
+  Jawaban pelajar:
+  ${jawaban}
 
-Aturan:
-- Skor 0.0 sampai 1.0
-- 0.0 = salah total
-- 1.0 = benar
+  Aturan penilaian:
+  - Skor antara 0.0 sampai 1.0
+  - 0.0 = salah total
+  - 1.0 = benar dan lengkap
+  - Jawaban sebagian benar diberi skor proporsional
+  - Gunakan Bahasa Indonesia formal
 
-Jawab HANYA dengan JSON VALID.
-JANGAN tambahkan teks apapun.
+  TUGAS:
+  1. Tentukan skor
+  2. Berikan feedback singkat (1-3 kalimat)
 
-Contoh:
-{"score":0.75}
-`
+  FORMAT OUTPUT (WAJIB JSON VALID):
+  {
+    "score": number,
+    "feedback": string
+  }
+
+  JANGAN menambahkan teks di luar JSON.
+  `
 
   const response = await fetch(GROQ_URL, {
     method: "POST",
@@ -58,7 +66,8 @@ Contoh:
   const parsed = JSON.parse(match[0])
 
   return {
-    score: Math.max(0, Math.min(parsed.score, 1))
+    score: Math.max(0, Math.min(parsed.score, 1)),
+    feedback: parsed.feedback || ""
   }
 }
 
