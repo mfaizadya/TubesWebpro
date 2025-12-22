@@ -44,7 +44,6 @@ async function create(req, res) {
     try {
         const { id_level, text_soal, opsi } = req.body
         
-        // Validation
         if (!id_level || !text_soal || !opsi || !Array.isArray(opsi) || opsi.length === 0) {
             return response(400, null, `missing or invalid required fields: id_level, text_soal, opsi (array)`, res)
         }
@@ -70,7 +69,6 @@ async function update(req, res) {
         const { id } = req.params
         const { text_soal, opsi } = req.body
 
-        // Validation
         if (!text_soal || !opsi || !Array.isArray(opsi) || opsi.length === 0) {
             return response(400, null, `missing or invalid required fields: text_soal, opsi (array)`, res)
         }

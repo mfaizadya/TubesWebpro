@@ -54,14 +54,12 @@ async function createSoalPG(idLevel, textSoal, opsi) {
 }
 
 async function updateSoalPG(id, textSoal, opsi) {
-    // Delete existing options
     await prisma.opsis.deleteMany({
         where: {
             id_soal: Number(id)
         }
     })
 
-    // Update soal and create new options
     return prisma.soals.update({
         where: {
             id: Number(id)

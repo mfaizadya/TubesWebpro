@@ -3,10 +3,8 @@ const router = express.Router();
 const JwbPGController = require('../controllers/jawabanPGController');
 const { verifyLogin, onlyAdmin } = require('../middlewares/authMiddleware');
 
-// --- Create ---
 router.post('/attempts/:idAttempt/jawaban-pg', verifyLogin, JwbPGController.create);
 
-// --- Read ---
 router.get('/jawaban-pgs', verifyLogin, JwbPGController.getAll);
 router.get('/jawaban-pgs/:id', verifyLogin, JwbPGController.getById);
 

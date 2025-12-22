@@ -3,7 +3,6 @@ const Attempt = require('../models/attempt');
 const Level = require('../models/level');
 const aiGrading = require('../services/aiGrading');
 
-// Get all attempts
 async function getAllAttempts(req, res) {
   try {
     const data = await Attempt.getAllAttempts();
@@ -17,7 +16,6 @@ async function getAllAttempts(req, res) {
   }
 }
 
-// Get attempt by ID
 async function getAttemptById(req, res) {
   try {
     const { id } = req.params;
@@ -32,7 +30,6 @@ async function getAttemptById(req, res) {
   }
 }
 
-// Get attempts by level
 async function getAttemptsByLevel(req, res) {
   try {
     const { levelId } = req.params;
@@ -47,7 +44,6 @@ async function getAttemptsByLevel(req, res) {
   }
 }
 
-// Get attempts by pelajar
 async function getAttemptsByPelajar(req, res) {
   try {
     const { pelajarId } = req.params;
@@ -62,12 +58,10 @@ async function getAttemptsByPelajar(req, res) {
   }
 }
 
-// Create attempt
 async function create(req, res) {
   try {
     let { id_level, id_pelajar, skor } = req.body;
 
-    // Handle Pelajar creating their own attempt
     if (req.auth && req.auth.type === 'PELAJAR') {
       id_pelajar = req.auth.id;
       if (skor === undefined) skor = 0;
@@ -85,21 +79,14 @@ async function create(req, res) {
   }
 }
 
-// Submit Attempt (Finalize/Recalculate Score)
 async function submitAttempt(req, res) {
   try {
-    // Expect 'id_attempt' in body or derive from context if necessary.
-    // Based on user request "id attemptny kita pake", we likely get it in the body or params.
-    // The previous implementation used req.body.id_level and id_pelajar to CREATE a NEW one with answers.
-    // The NEW implementation should just update an EXISTING attempt.
-    
     let { id_attempt } = req.body;
     
     if (!id_attempt) {
        return response(400, null, 'id_attempt harus diisi', res);
     }
 
-    // Recalculate based on saved answers
     const updatedAttempt = await Attempt.recalculateScore(id_attempt);
 
     if (!updatedAttempt) {
@@ -114,7 +101,6 @@ async function submitAttempt(req, res) {
   }
 }
 
-// Update attempt
 async function update(req, res) {
   try {
     const { id } = req.params;
@@ -137,7 +123,6 @@ async function update(req, res) {
   }
 }
 
-// Delete attempt
 async function remove(req, res) {
   try {
     const { id } = req.params;

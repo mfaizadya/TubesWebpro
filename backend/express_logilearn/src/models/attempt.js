@@ -2,7 +2,6 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 class Attempt {
-  // Get all attempts with related data
   static async getAllAttempts() {
     try {
       const attempts = await prisma.attempts.findMany({
@@ -40,7 +39,6 @@ class Attempt {
     }
   }
 
-  // Get attempt by ID
   static async getAttemptById(id) {
     try {
       const attempt = await prisma.attempts.findUnique({
@@ -75,7 +73,6 @@ class Attempt {
     }
   }
 
-  // Get attempts by level
   static async getAttemptsByLevel(levelId) {
     try {
       const attempts = await prisma.attempts.findMany({
@@ -113,7 +110,6 @@ class Attempt {
     }
   }
 
-  // Get attempts by pelajar
   static async getAttemptsByPelajar(pelajarId) {
     try {
       const attempts = await prisma.attempts.findMany({
@@ -151,7 +147,6 @@ class Attempt {
     }
   }
 
-  // Create attempt
   static async createAttempt(id_level, id_pelajar, skor) {
     try {
       const attempt = await prisma.attempts.create({
@@ -175,7 +170,6 @@ class Attempt {
     }
   }
 
-  // Update attempt
   static async updateAttempt(id, skor) {
     try {
       const attempt = await prisma.attempts.update({
@@ -198,7 +192,6 @@ class Attempt {
     }
   }
 
-  // Delete attempt
   static async deleteAttempt(id) {
     try {
       const attempt = await prisma.attempts.delete({
@@ -210,11 +203,9 @@ class Attempt {
     }
   }
 
-  // Create attempt with answers (Transaction)
   static async createAttemptWithAnswers(id_level, id_pelajar, skor, jawaban_pgs, jawaban_esais) {
     try {
       return await prisma.$transaction(async (tx) => {
-        // 1. Create Attempt
         const attempt = await tx.attempts.create({
           data: {
             id_level: parseInt(id_level),
@@ -223,7 +214,6 @@ class Attempt {
           }
         });
 
-        // 2. Create Jawaban PGs
         if (jawaban_pgs && jawaban_pgs.length > 0) {
           await tx.jawabanPGs.createMany({
             data: jawaban_pgs.map(j => ({
@@ -234,7 +224,6 @@ class Attempt {
           });
         }
 
-        // 3. Create Jawaban Esais
         if (jawaban_esais && jawaban_esais.length > 0) {
           await tx.jawabanEsais.createMany({
             data: jawaban_esais.map(j => ({
@@ -252,7 +241,6 @@ class Attempt {
       throw error;
     }
   }
-  // Recalculate score
   static async recalculateScore(id) {
     try {
       const attempt = await prisma.attempts.findUnique({
@@ -272,25 +260,21 @@ class Attempt {
 
       let totalScore = 0;
 
-      // Sum PG scores
       if (attempt.jawaban_pgs) {
         attempt.jawaban_pgs.forEach(j => {
           totalScore += parseFloat(j.skor || 0);
         });
       }
 
-      // Sum Essay scores
       if (attempt.jawaban_esais) {
         attempt.jawaban_esais.forEach(j => {
           totalScore += parseFloat(j.skor || 0);
         });
       }
 
-      // Calculate percentage
       const maxScore = attempt.levels && attempt.levels.soals ? attempt.levels.soals.length : 0;
       const finalPercentage = maxScore > 0 ? (totalScore / maxScore) * 100 : 0;
 
-      // Update attempt
       return await prisma.attempts.update({
         where: { id: parseInt(id) },
         data: {

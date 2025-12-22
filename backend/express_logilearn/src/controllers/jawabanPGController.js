@@ -9,7 +9,6 @@ async function create(req, res) {
 
         const data = await JwbPG.createJwbPG(idAttempt, idOpsi)
         
-        // Recalculate attempt score
         await Attempt.recalculateScore(idAttempt)
 
         response(200, data, `jawabanPG created successfully`, res)
