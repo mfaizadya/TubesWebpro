@@ -17,11 +17,12 @@ const ListLevel = () => {
     try {
       setLoading(true);
       const response = await fetch('http://localhost:3030/api/levels');
-      if (!response.ok) {
-        throw new Error('Gagal memuat level');
-      }
       const data = await response.json();
-      setLevels(data.datas || []);
+      if (!response.ok) {
+        throw new Error(`${data.payload.message}`);
+      }
+      
+      setLevels(data.payload.datas || []);
       setError(null);
     } catch (err) {
       setError(err.message);
