@@ -159,20 +159,20 @@ const LevelPage = () => {
       <Navbar />
 
       <div className="container mt-5">
-        <div className="row mb-4">
-          <div className="col-12">
-            <h1 className="fw-bold mb-1">Daftar Level</h1>
-            <p className="text-muted">Kelola data level</p>
-          </div>
-        </div>
+        <div className="row mb-4 align-items-center">
+          <div className="col d-flex justify-content-between align-items-center">
+            <div>
+              <h1 className="fw-bold mb-1">Daftar Level</h1>
+              <p className="text-muted mb-0">Kelola data level</p>
+            </div>
 
-        <div className="col-auto">
-          <button
-            className="btn btn-primary rounded-pill px-4"
-            onClick={() => setShowAddModal(true)}
-          >
-            + Tambah Level
-          </button>
+            <button
+              className="btn btn-success rounded-pill px-4"
+              onClick={() => setShowAddModal(true)}
+            >
+              + Tambah Level
+            </button>
+          </div>
         </div>
 
         <div className="card shadow-sm border-0 rounded-4">
@@ -220,18 +220,21 @@ const LevelPage = () => {
                       <td className="px-4 fw-semibold">{level.nama}</td>
                       <td className="px-4">{level.sections?.nama || "-"}</td>
                       <td className="px-4 text-center">
-                        <button className="btn btn-sm btn-outline-primary rounded-pill me-2">
+                        <div className="d-flex gap-2 justify-content-center">
+                          <button className="btn btn-sm btn-outline-primary rounded-pill px-3">
                           Detil
                         </button>
-                        <button className="btn btn-sm btn-outline-success rounded-pill me-2">
+                        <button className="btn btn-sm btn-outline-warning rounded-pill px-3">
                           Ubah
                         </button>
                         <button
-                          className="btn btn-sm btn-outline-danger rounded-pill"
+                          className="btn btn-sm btn-outline-danger rounded-pill px-3"
                           onClick={() => handleDeleteClick(level)}
                         >
                           Hapus
                         </button>
+                        </div>
+                        
                       </td>
                     </tr>
                   ))}
