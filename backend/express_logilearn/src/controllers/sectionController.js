@@ -4,7 +4,7 @@ const response = require('../helpers/response')
 async function getAll(req, res) {
     try {
         const data = await Section.getAllSections()
-        if (!data){
+        if (!data) {
             return response(404, null, `data not found`, res)
         }
         response(200, data, `get all sections`, res)
@@ -16,9 +16,9 @@ async function getAll(req, res) {
 
 async function getById(req, res) {
     try {
-        const {id} = req.params
+        const { id } = req.params
         const data = await Section.getSectionById(id)
-        if (!data){
+        if (!data) {
             return response(404, null, `data not found`, res)
         }
         response(200, data, `get section by id: ${id}`, res)
@@ -29,10 +29,10 @@ async function getById(req, res) {
 
 async function create(req, res) {
     try {
-        const {nama, slug} = req.body
+        const { nama, slug } = req.body
         const data = await Section.createSection(nama, slug)
         response(200, data, `section created successfully`, res)
-    } catch (err){
+    } catch (err) {
         console.log(err.message)
         response(500, null, `failed to create section: ${err.message}`, res)
     }
@@ -40,15 +40,15 @@ async function create(req, res) {
 
 async function update(req, res) {
     try {
-        const {id} = req.params
-        const {nama} = req.body
+        const { id } = req.params
+        const { nama } = req.body
         const data = await Section.getSectionById(id)
-        if (!data){
+        if (!data) {
             return response(404, null, `data not found`, res)
         }
-        const updated = await Section.updateSection(id,nama)
+        const updated = await Section.updateSection(id, nama)
         response(200, updated, `section updated successfully`, res)
-    } catch (err){
+    } catch (err) {
         console.log(err.message)
         response(500, null, `failed to update section: ${err.message}`, res)
     }
@@ -56,9 +56,9 @@ async function update(req, res) {
 
 async function remove(req, res) {
     try {
-        const {id} = req.params
+        const { id } = req.params
         const data = await Section.getSectionById(id)
-        if (!data){
+        if (!data) {
             return response(404, null, `data not found`, res)
         }
         await Section.deleteSection(id)

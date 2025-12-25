@@ -6,10 +6,7 @@ const aiGrading = require('../services/aiGrading');
 async function getAllAttempts(req, res) {
   try {
     const data = await Attempt.getAllAttempts();
-    if (!data || data.length === 0) {
-      return response(404, null, 'Tidak ada attempt ditemukan', res);
-    }
-    response(200, data, 'Berhasil mendapatkan semua attempt', res);
+    response(200, data || [], 'Berhasil mendapatkan semua attempt', res);
   } catch (error) {
     console.log(error.message);
     response(500, null, `Terjadi kesalahan server: ${error.message}`, res);
@@ -34,10 +31,7 @@ async function getAttemptsByLevel(req, res) {
   try {
     const { levelId } = req.params;
     const data = await Attempt.getAttemptsByLevel(levelId);
-    if (!data || data.length === 0) {
-      return response(404, null, 'Tidak ada attempt untuk level ini', res);
-    }
-    response(200, data, `Berhasil mendapatkan attempt untuk level: ${levelId}`, res);
+    response(200, data || [], `Berhasil mendapatkan attempt untuk level: ${levelId}`, res);
   } catch (error) {
     console.log(error.message);
     response(500, null, `Terjadi kesalahan server: ${error.message}`, res);
@@ -48,10 +42,7 @@ async function getAttemptsByPelajar(req, res) {
   try {
     const { pelajarId } = req.params;
     const data = await Attempt.getAttemptsByPelajar(pelajarId);
-    if (!data || data.length === 0) {
-      return response(404, null, 'Tidak ada attempt untuk pelajar ini', res);
-    }
-    response(200, data, `Berhasil mendapatkan attempt untuk pelajar: ${pelajarId}`, res);
+    response(200, data || [], `Berhasil mendapatkan attempt untuk pelajar: ${pelajarId}`, res);
   } catch (error) {
     console.log(error.message);
     response(500, null, `Terjadi kesalahan server: ${error.message}`, res);
