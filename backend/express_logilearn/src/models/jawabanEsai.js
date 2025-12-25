@@ -24,14 +24,15 @@ async function createJwbEsai(idAttempt, idSoal, jawabanEsai, skor, feedback) {
     })
 }
 
-async function updateJwbEsai(id, idAdmin, skor) {
+async function updateJwbEsai(id, idAdmin, skor, feedback) {
     return prisma.jawabanEsais.update({
         where: {
             id: Number(id)
         },
         data: {
             id_admin: idAdmin,
-            skor: skor
+            skor: skor,
+            feedback: feedback
         }
     })
 }

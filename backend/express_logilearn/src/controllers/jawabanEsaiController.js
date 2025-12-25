@@ -56,10 +56,23 @@ async function getById(req, res) {
 
 async function update(req, res) {
     try {
-        const { idJwbEsai } = req.params
-        const { idAdmin, skor } = req.body
-        data = await JwbEsai.updateJwbEsai(idJwbEsai, idAdmin, skor)
-        response(200, data, `successfully`, res)
+        const { id } = req.params
+        // Get idAdmin from authenticated user if available, otherwise from body
+        const idAdmin = req.auth ? req.auth.id : req.body.idAdmin
+        const { skor, feedback } = req.body
+
+        if (skor === undefined) {
+             return response(400, null, "Skor is required", res)
+        }
+
+        const updatedAnswer = await JwbEsai.updateJwbEsai(id, idAdmin, skor, feedback)
+        
+        // Recalculate attempt score
+        if (updatedAnswer && updatedAnswer.id_attempt) {
+             await Attempt.recalculateScore(updatedAnswer.id_attempt)
+        }
+
+        response(200, updatedAnswer, `successfully`, res)
     } catch(err) {
         console.log(err.message)
         response(500, null, `failed to : ${err.message}`, res)

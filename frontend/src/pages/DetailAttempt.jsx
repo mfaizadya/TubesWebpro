@@ -10,9 +10,59 @@ export default function DetailAttempt() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Edit State
+  const [editingId, setEditingId] = useState(null);
+  const [editForm, setEditForm] = useState({ skor: '', feedback: '' });
+  const [isSaving, setIsSaving] = useState(false);
+
   useEffect(() => {
     fetchAttemptDetail();
   }, [id]);
+
+  const handleEditClick = (jawaban) => {
+    setEditingId(jawaban.id);
+    setEditForm({
+      skor: jawaban.skor,
+      feedback: jawaban.feedback || ''
+    });
+  };
+
+  const handleCancelEdit = () => {
+    setEditingId(null);
+    setEditForm({ skor: '', feedback: '' });
+  };
+
+  const handleSaveEdit = async () => {
+    if (!editingId) return;
+
+    try {
+      setIsSaving(true);
+      const token = localStorage.getItem('token');
+      const response = await fetch(`http://localhost:3030/api/jawaban-esais/${editingId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          skor: Number(editForm.skor),
+          feedback: editForm.feedback
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Gagal menyimpan perubahan');
+      }
+
+      // Refresh data
+      await fetchAttemptDetail();
+      handleCancelEdit(); // Close edit mode
+    } catch (err) {
+      alert(err.message);
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
   const fetchAttemptDetail = async () => {
     try {
@@ -134,8 +184,8 @@ export default function DetailAttempt() {
                 <div className="mt-4 pt-2">
                   <h6 className="fw-bold mb-3">{jawaban.opsis?.soals?.text_soal}</h6>
 
-                  <div className="d-flex align-items-center gap-2 mb-2">
-                    <span className="text-muted small">Jawaban Siswa:</span>
+                  <div className="bg-white p-3 border rounded mb-3 d-flex gap-2">
+                    <span className="text-dark fw-medium text-nowrap">Jawaban Siswa:</span>
                     <span className={`fw-medium ${jawaban.opsis?.is_correct ? 'text-success' : 'text-danger'}`}>
                       {jawaban.opsis?.text_opsi}
                     </span>
@@ -163,39 +213,97 @@ export default function DetailAttempt() {
               </div>
             ))}
 
-            {attempt.jawaban_esais && attempt.jawaban_esais.map((jawaban, index) => (
-              <div key={`esai-${jawaban.id}`} className="mb-4 p-3 border rounded-3">
-                <div className="d-flex justify-content-between align-items-start mb-3">
-                  <div className="d-flex gap-2">
-                    <span className="badge bg-primary rounded-pill">
-                      Soal {(attempt.jawaban_pgs ? attempt.jawaban_pgs.length : 0) + index + 1}
-                    </span>
+            {attempt.jawaban_esais && attempt.jawaban_esais.map((jawaban, index) => {
+              const isEditing = editingId === jawaban.id;
+
+              return (
+                <div key={`esai-${jawaban.id}`} className="mb-4 p-3 border rounded-3">
+                  <div className="d-flex justify-content-between align-items-start mb-3">
+                    <div className="d-flex gap-2">
+                      <span className="badge bg-primary rounded-pill">
+                        Soal {(attempt.jawaban_pgs ? attempt.jawaban_pgs.length : 0) + index + 1}
+                      </span>
+                    </div>
+                    <div className="d-flex align-items-center gap-2">
+                      {jawaban.admins && (
+                        <small className="text-muted">Dinilai oleh: <span className="fw-bold">{jawaban.admins.nama}</span></small>
+                      )}
+                      {!isEditing && (
+                        <button
+                          className="btn btn-sm btn-outline-primary"
+                          onClick={() => handleEditClick(jawaban)}
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" className="bi bi-pencil-fill" viewBox="0 0 16 16">
+                            <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
+                          </svg> Edit
+                        </button>
+                      )}
+                    </div>
                   </div>
-                  {jawaban.admins && (
-                    <small className="text-muted">Dinilai oleh: <span className="fw-bold">{jawaban.admins.nama}</span></small>
+
+                  <h6 className="fw-bold mb-3">{jawaban.soals?.text_soal}</h6>
+
+                  <div className="bg-white p-3 border rounded mb-3 d-flex gap-2">
+                    <span className="text-dark fw-medium text-nowrap">Jawaban Siswa:</span>
+                    <span className="text-dark">{jawaban.text_jawaban || jawaban.text_jawaban_esai}</span>
+                  </div>
+
+                  {isEditing ? (
+                    <div className="bg-light p-3 border rounded mb-3">
+                      <h6 className="fw-bold mb-3">Edit Penilaian</h6>
+                      <div className="mb-3">
+                        <label className="form-label small fw-bold">Skor</label>
+                        <input
+                          type="number"
+                          className="form-control"
+                          value={editForm.skor}
+                          onChange={(e) => setEditForm({ ...editForm, skor: e.target.value })}
+                        />
+                      </div>
+                      <div className="mb-3">
+                        <label className="form-label small fw-bold">Feedback AI</label>
+                        <textarea
+                          className="form-control"
+                          rows="3"
+                          value={editForm.feedback}
+                          onChange={(e) => setEditForm({ ...editForm, feedback: e.target.value })}
+                        ></textarea>
+                      </div>
+                      <div className="d-flex gap-2 justify-content-end">
+                        <button
+                          className="btn btn-secondary btn-sm"
+                          onClick={handleCancelEdit}
+                          disabled={isSaving}
+                        >
+                          Batal
+                        </button>
+                        <button
+                          className="btn btn-primary btn-sm"
+                          onClick={handleSaveEdit}
+                          disabled={isSaving}
+                        >
+                          {isSaving ? 'Menyimpan...' : 'Simpan'}
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <>
+                      {jawaban.feedback && (
+                        <div className="bg-warning-subtle p-3 border border-warning rounded mb-3">
+                          <small className="text-warning-emphasis fw-bold d-block mb-1">Feedback AI:</small>
+                          <p className="mb-0 text-dark small">{jawaban.feedback}</p>
+                        </div>
+                      )}
+
+                      <div className="d-flex align-items-center gap-2">
+                        <span className="text-muted small">Skor:</span>
+                        <span className="badge bg-secondary rounded-pill">{jawaban.skor}</span>
+                      </div>
+                    </>
                   )}
                 </div>
-
-                <h6 className="fw-bold mb-3">{jawaban.soals?.text_soal}</h6>
-
-                <div className="bg-white p-3 border rounded mb-3 d-flex gap-2">
-                  <span className="text-dark fw-medium text-nowrap">Jawaban Siswa:</span>
-                  <span className="text-dark">{jawaban.text_jawaban || jawaban.text_jawaban_esai}</span>
-                </div>
-
-                {jawaban.feedback && (
-                  <div className="bg-warning-subtle p-3 border border-warning rounded mb-3">
-                    <small className="text-warning-emphasis fw-bold d-block mb-1">Feedback AI:</small>
-                    <p className="mb-0 text-dark small">{jawaban.feedback}</p>
-                  </div>
-                )}
-
-                <div className="d-flex align-items-center gap-2">
-                  <span className="text-muted small">Skor:</span>
-                  <span className="badge bg-secondary rounded-pill">{jawaban.skor}</span>
-                </div>
-              </div>
-            ))}
+              );
+            })}
 
             {(!attempt.jawaban_pgs?.length && !attempt.jawaban_esais?.length) && (
               <p className="text-muted text-center py-4">Belum ada jawaban yang direkam.</p>
