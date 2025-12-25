@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import "./styles/ListLevel.css";
+import Swal from "sweetalert2";
+import "sweetalert2/dist/sweetalert2.min.css";
 
 import AddLevelModal from "../components/AddLevelModal";
 import UpdateLevelModal from "../components/UpdateLevelModal";
@@ -72,9 +74,21 @@ const LevelPage = () => {
 
       setShowDeleteModal(false);
       setSelectedLevel(null);
-      alert(responseJson.payload.message);
+      Swal.fire({
+        icon: "success",
+        title: "Berhasil",
+        text: "Level berhasil dihapus",
+        timer: 2000,
+        showConfirmButton: false,
+      });
     } catch (err) {
-      alert(`Gagal menghapus level: ${err.message}`);
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: `${err.message}`,
+        timer: 2000,
+        showConfirmButton: false,
+      });
     }
   };
 
@@ -109,7 +123,13 @@ const LevelPage = () => {
 
   const handleAddLevel = async () => {
     if (!newLevelName || !selectedSectionId) {
-      alert("Nama level dan section wajib diisi");
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: "Nama level dan section wajib diisi",
+        timer: 2000,
+        showConfirmButton: false,
+      });
       return;
     }
 
@@ -140,15 +160,33 @@ const LevelPage = () => {
       setNewLevelName("");
       setSelectedSectionId("");
 
-      alert("Level berhasil ditambahkan");
+      Swal.fire({
+        icon: "success",
+        title: "Berhasil",
+        text: "Level berhasil ditambahkan",
+        timer: 2000,
+        showConfirmButton: false,
+      });
     } catch (err) {
-      alert(err.message);
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: `${err.message}`,
+        timer: 2000,
+        showConfirmButton: false,
+      });
     }
   };
 
   const handleUpdateLevel = async () => {
     if (!updateLevelName || !updateSectionId) {
-      alert("Nama level dan section wajib diisi");
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: "Nama level dan section wajib diisi",
+        timer: 2000,
+        showConfirmButton: false,
+      });
       return;
     }
 
@@ -180,9 +218,21 @@ const LevelPage = () => {
       setShowUpdateModal(false);
       setSelectedLevel(null);
 
-      alert("Level berhasil diperbarui");
+      Swal.fire({
+        icon: "success",
+        title: "Berhasil",
+        text: "Level berhasil diperbarui",
+        timer: 2000,
+        showConfirmButton: false,
+      });
     } catch (err) {
-      alert(err.message);
+      Swal.fire({
+        icon: "error",
+        title: "Gagal",
+        text: `${err.message}`,
+        timer: 2000,
+        showConfirmButton: false,
+      });
     }
   };
 
@@ -378,7 +428,7 @@ const LevelPage = () => {
                         className="page-link"
                         onClick={() => setCurrentPage((prev) => prev - 1)}
                       >
-                        Previous
+                        Sebelumnya
                       </button>
                     </li>
                     {[...Array(totalPages)].map((_, i) => (
@@ -405,7 +455,7 @@ const LevelPage = () => {
                         className="page-link"
                         onClick={() => setCurrentPage((prev) => prev + 1)}
                       >
-                        Next
+                        Selanjutnya
                       </button>
                     </li>
                   </ul>
