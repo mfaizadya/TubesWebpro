@@ -1,11 +1,25 @@
 const Level = require('../models/level')
 const response = require('../helpers/response')
+const axios = require('axios')
 
 async function create(req, res) {
     try {
         const {nama, idSection} = req.body
         const data = await Level.createLevel(idSection, nama)
         response(200, data, `successfully`, res)
+    } catch(err) {
+        console.log(err.message)
+        response(500, null, `failed to : ${err.message}`, res)
+    }
+}
+
+async function fetchLevels(req, res) {
+    try {
+        const resp = await axios.get('http://localhost:8000/getLevel.php')
+        if(!resp){
+            return response(404, null, `data not found`, res)
+        }
+        response(200, resp.data.data, `get all levels`, res)
     } catch(err) {
         console.log(err.message)
         response(500, null, `failed to : ${err.message}`, res)
@@ -168,6 +182,7 @@ async function getSoalByLevelAndId(req, res) {
 }
 
 module.exports = {
+    fetchLevels,
     getAll,
     getAllBySection,
     getBySectionId,
