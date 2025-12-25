@@ -14,6 +14,21 @@ const LoginAdmin = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         setError('');
+
+        const isUsernameEmpty = !username.trim();
+        const isPasswordEmpty = !password.trim();
+
+        if (isUsernameEmpty && isPasswordEmpty) {
+            setError('Username dan password harus diisi');
+            return;
+        } else if (isUsernameEmpty) {
+            setError('Username harus diisi');
+            return;
+        } else if (isPasswordEmpty) {
+            setError('Password harus diisi');
+            return;
+        }
+
         setLoading(true);
 
         try {
@@ -38,6 +53,9 @@ const LoginAdmin = () => {
         }
     };
 
+    const showUsernameAlert = error.toLowerCase().includes('username') && !username.trim();
+    const showPasswordAlert = error.toLowerCase().includes('password') && !password.trim();
+
     return (
         <div className="login-body d-flex align-items-center justify-content-center min-vh-100">
             <div className="card border-0 shadow-lg p-4" style={{ maxWidth: '400px', width: '100%', borderRadius: '20px' }}>
@@ -48,37 +66,43 @@ const LoginAdmin = () => {
                 </div>
 
                 {error && (
-                    <div className="alert alert-danger py-2 small border-0 text-center mb-3">
+                    <div className="alert alert-danger py-2 small border-0 text-center mb-3 shadow-sm">
                         {error}
                     </div>
                 )}
 
-                <form onSubmit={handleLogin}>
+                <form onSubmit={handleLogin} noValidate>
                     <div className="mb-3">
                         <label className="form-label fw-bold small text-secondary">Username Admin</label>
-                        <div className="input-group">
+                        <div className="input-group has-validation">
                             <input 
                                 type="text" 
-                                className="form-control bg-light" 
+                                className={`form-control bg-light ${showUsernameAlert ? 'is-invalid' : ''}`} 
                                 placeholder="Username"
                                 value={username}
-                                onChange={(e) => setUsername(e.target.value)}
-                                required
+                                onChange={(e) => {
+                                    setUsername(e.target.value);
+                                    if(error.toLowerCase().includes('username')) setError('');
+                                }}
                             />
+                            {showUsernameAlert}
                         </div>
                     </div>
 
                     <div className="mb-4">
                         <label className="form-label fw-bold small text-secondary">Kata Sandi</label>
-                        <div className="input-group">
+                        <div className="input-group has-validation">
                             <input 
                                 type="password" 
-                                className="form-control bg-light" 
+                                className={`form-control bg-light ${showPasswordAlert ? 'is-invalid' : ''}`} 
                                 placeholder="password"
                                 value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
+                                onChange={(e) => {
+                                    setPassword(e.target.value);
+                                    if(error.toLowerCase().includes('password')) setError('');
+                                }}
                             />
+                            {showPasswordAlert}
                         </div>
                     </div>
 

@@ -17,7 +17,7 @@ const loginAdmin = async (req, res) => {
     });
 
     if (!admin) {
-      return response(404, null, "Admin tidak ditemukan", res);
+      return response(404, null, "Admin Atau Password salah", res);
     }
 
     const isPasswordValid = await bcrypt.compare(password, admin.password);
