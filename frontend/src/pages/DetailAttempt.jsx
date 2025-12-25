@@ -52,8 +52,11 @@ export default function DetailAttempt() {
     return (
       <>
         <Navbar />
-        <div className="container">
-          <p>Memuat data...</p>
+        <div className="container mt-5 text-center">
+          <div className="spinner-border text-primary" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+          <p className="mt-2 text-muted">Memuat detail attempt...</p>
         </div>
       </>
     );
@@ -63,9 +66,13 @@ export default function DetailAttempt() {
     return (
       <>
         <Navbar />
-        <div className="container">
-          <p style={{ color: 'red' }}>Error: {error}</p>
-          <button onClick={handleBack}>⬅ Kembali</button>
+        <div className="container mt-5">
+          <div className="alert alert-danger d-flex align-items-center" role="alert">
+            <div>Error: {error || 'Data tidak ditemukan'}</div>
+          </div>
+          <button className="btn btn-outline-secondary" onClick={handleBack}>
+            &larr; Kembali
+          </button>
         </div>
       </>
     );
@@ -74,74 +81,128 @@ export default function DetailAttempt() {
   return (
     <>
       <Navbar />
-      <div className="container">
-        <h1>Detail Attempt</h1>
+      <div className="container mt-5 mb-5">
 
-        <div id="attemptDetail">
-          <div className="card">
-            <h3>Informasi Attempt</h3>
-            <p>
-              <strong>Pelajar:</strong> {attempt.pelajars?.nama}
-            </p>
-            <p>
-              <strong>Level:</strong> {attempt.levels?.nama}
-            </p>
-            <p>
-              <strong>Section:</strong> {attempt.levels?.sections?.nama}
-            </p>
-            <p>
-              <strong>Skor:</strong> {attempt.skor}
-            </p>
+        {/* Header */}
+        <div className="d-flex justify-content-between align-items-center mb-4">
+          <div>
+            <h1 className="fw-bold mb-1">Detail Attempt</h1>
+            <p className="text-muted">Rincian jawaban dan skor siswa</p>
           </div>
-
-          {attempt.jawaban_pgs && attempt.jawaban_pgs.length > 0 && (
-            <div className="card">
-              <h3>Jawaban Pilihan Ganda</h3>
-              {attempt.jawaban_pgs.map((jawaban, index) => (
-                <div key={jawaban.id} style={{ marginBottom: '1rem' }}>
-                  <p>
-                    <strong>Soal {index + 1}:</strong> {jawaban.opsis?.soals?.text_soal}
-                  </p>
-                  <p>
-                    <strong>Jawaban:</strong> {jawaban.opsis?.text_opsi}
-                  </p>
-                  <p>
-                    <strong>Benar:</strong>{' '}
-                    {jawaban.opsis?.is_correct ? '✓ Benar' : '✗ Salah'}
-                  </p>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {attempt.jawaban_esais && attempt.jawaban_esais.length > 0 && (
-            <div className="card">
-              <h3>Jawaban Esai</h3>
-              {attempt.jawaban_esais.map((jawaban, index) => (
-                <div key={jawaban.id} style={{ marginBottom: '1rem' }}>
-                  <p>
-                    <strong>Soal {index + 1}:</strong> {jawaban.soals?.text_soal}
-                  </p>
-                  <p>
-                    <strong>Jawaban:</strong> {jawaban.text_jawaban}
-                  </p>
-                  {jawaban.admins && (
-                    <p>
-                      <strong>Dinilai oleh:</strong> {jawaban.admins.nama}
-                    </p>
-                  )}
-                  {jawaban.feedback && (
-                    <p>
-                      <strong>Feedback:</strong> {jawaban.feedback}
-                    </p>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
+          <button className="btn btn-outline-secondary rounded-pill px-4" onClick={handleBack}>
+            &larr; Kembali
+          </button>
         </div>
 
-        <button onClick={handleBack}>⬅ Kembali</button>
+        {/* Info Card */}
+        <div className="card shadow-sm border-0 rounded-4 mb-4">
+          <div className="card-body p-4">
+            <h5 className="fw-bold text-primary mb-4">Informasi Umum</h5>
+            <div className="row g-3">
+              <div className="col-md-3">
+                <small className="text-muted d-block uppercase-label">Siswa</small>
+                <span className="fw-bold fs-5">{attempt.pelajars?.nama}</span>
+              </div>
+              <div className="col-md-3">
+                <small className="text-muted d-block uppercase-label">Level</small>
+                <span className="fw-medium">{attempt.levels?.nama}</span>
+              </div>
+              <div className="col-md-3">
+                <small className="text-muted d-block uppercase-label">Section</small>
+                <span className="fw-medium">{attempt.levels?.sections?.nama}</span>
+              </div>
+              <div className="col-md-3">
+                <small className="text-muted d-block uppercase-label">Skor Akhir</small>
+                <span className={`fw-bold fs-4 ${attempt.skor >= 70 ? 'text-success' : 'text-danger'}`}>
+                  {Number(attempt.skor).toFixed(2)}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Combine Questions into one flow */}
+        <div className="card shadow-sm border-0 rounded-4 mb-4">
+          <div className="card-body p-4">
+            <h5 className="fw-bold text-primary mb-4">Daftar Pertanyaan</h5>
+
+            {attempt.jawaban_pgs && attempt.jawaban_pgs.map((jawaban, index) => (
+              <div key={`pg-${jawaban.id}`} className="mb-4 p-3 border rounded-3 bg-light-subtle position-relative">
+                <span className="position-absolute top-0 start-0 badge bg-primary m-3 rounded-pill">
+                  Soal {index + 1}
+                </span>
+                <div className="mt-4 pt-2">
+                  <h6 className="fw-bold mb-3">{jawaban.opsis?.soals?.text_soal}</h6>
+
+                  <div className="d-flex align-items-center gap-2 mb-2">
+                    <span className="text-muted small">Jawaban Siswa:</span>
+                    <span className={`fw-medium ${jawaban.opsis?.is_correct ? 'text-success' : 'text-danger'}`}>
+                      {jawaban.opsis?.text_opsi}
+                    </span>
+                  </div>
+
+                  <div className="d-flex align-items-center gap-2">
+                    <span className="text-muted small">Status:</span>
+                    {jawaban.opsis?.is_correct ? (
+                      <span className="badge bg-success-subtle text-success border border-success d-flex align-items-center gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" className="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+                        </svg>
+                        Benar
+                      </span>
+                    ) : (
+                      <span className="badge bg-danger-subtle text-danger border border-danger d-flex align-items-center gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" className="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z" />
+                        </svg>
+                        Salah
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+
+            {attempt.jawaban_esais && attempt.jawaban_esais.map((jawaban, index) => (
+              <div key={`esai-${jawaban.id}`} className="mb-4 p-3 border rounded-3">
+                <div className="d-flex justify-content-between align-items-start mb-3">
+                  <div className="d-flex gap-2">
+                    <span className="badge bg-primary rounded-pill">
+                      Soal {(attempt.jawaban_pgs ? attempt.jawaban_pgs.length : 0) + index + 1}
+                    </span>
+                  </div>
+                  {jawaban.admins && (
+                    <small className="text-muted">Dinilai oleh: <span className="fw-bold">{jawaban.admins.nama}</span></small>
+                  )}
+                </div>
+
+                <h6 className="fw-bold mb-3">{jawaban.soals?.text_soal}</h6>
+
+                <div className="bg-white p-3 border rounded mb-3 d-flex gap-2">
+                  <span className="text-dark fw-medium text-nowrap">Jawaban Siswa:</span>
+                  <span className="text-dark">{jawaban.text_jawaban || jawaban.text_jawaban_esai}</span>
+                </div>
+
+                {jawaban.feedback && (
+                  <div className="bg-warning-subtle p-3 border border-warning rounded mb-3">
+                    <small className="text-warning-emphasis fw-bold d-block mb-1">Feedback AI:</small>
+                    <p className="mb-0 text-dark small">{jawaban.feedback}</p>
+                  </div>
+                )}
+
+                <div className="d-flex align-items-center gap-2">
+                  <span className="text-muted small">Skor:</span>
+                  <span className="badge bg-secondary rounded-pill">{jawaban.skor}</span>
+                </div>
+              </div>
+            ))}
+
+            {(!attempt.jawaban_pgs?.length && !attempt.jawaban_esais?.length) && (
+              <p className="text-muted text-center py-4">Belum ada jawaban yang direkam.</p>
+            )}
+          </div>
+        </div>
+
       </div>
     </>
   );
