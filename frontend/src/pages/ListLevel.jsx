@@ -340,7 +340,7 @@ const LevelPage = () => {
           <div className="card-footer bg-white py-3 px-4 border-top">
             <div className="d-flex flex-column flex-md-row justify-content-between align-items-center">
               <div className="text-muted small mb-2 mb-md-0">
-                Menampilkan {filteredLevels.length > 0 ? indexOfFirstItem + 1 : 0} ke {Math.min(indexOfLastItem, filteredLevels.length)} dari {filteredLevels.length} entri
+                Menampilkan {filteredLevels.length > 0 ? indexOfFirstItem + 1 : 0} ke {Math.min(indexOfLastItem, filteredLevels.length)} dari {filteredLevels.length} data
               </div>
 
               <div className="d-flex align-items-center gap-3">
