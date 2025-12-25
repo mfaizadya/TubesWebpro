@@ -20,7 +20,7 @@ const DeleteLevelModal = ({ show, onClose, onDelete, selectedLevel }) => {
 
             <div className="modal-body">
               Apakah anda yakin ingin menghapus level{" "}
-              <strong>{selectedLevel?.nama}</strong>?
+              <strong>{selectedLevel?.nama_level}</strong>?
             </div>
 
             <div className="modal-footer">
