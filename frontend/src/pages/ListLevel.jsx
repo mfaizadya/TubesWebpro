@@ -94,9 +94,9 @@ const LevelPage= () => {
                   <td className='fw-bold'>{level.nama}</td>
                   <td>{level.sections?.nama || "-"}</td>
                   <td>
-                    <button className='btn-details'>
-                      Detail
-                    </button>
+                    <button className='btn-detail'>Detail</button>
+                    <button className="btn-update">Update</button>
+                    <button className="btn-delete">Delete</button>
                   </td>
                 </tr>
               ))
