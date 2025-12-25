@@ -6,7 +6,7 @@ function index()
 {
     try {
         $levels = getLevels();
-
+        // var_dump($levels);
         echo json_encode([
             "status" => true,
             "data" => $levels
