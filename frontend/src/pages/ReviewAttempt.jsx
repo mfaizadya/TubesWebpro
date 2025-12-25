@@ -159,7 +159,7 @@ export default function ReviewAttempt() {
                       </td>
                       <td className="px-4 text-muted">{attempt.levels?.sections?.nama || '-'}</td>
                       <td className="px-4">
-                        <span className={`fw-bold ${attempt.skor >= 70 ? 'text-success' : 'text-danger'}`}>
+                        <span className={`fw-bold ${attempt.skor >= 75 ? 'text-success' : 'text-danger'}`}>
                           {Number(attempt.skor).toFixed(2)}
                         </span>
                       </td>

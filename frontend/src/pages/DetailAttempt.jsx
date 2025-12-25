@@ -163,7 +163,7 @@ export default function DetailAttempt() {
               </div>
               <div className="col-md-3">
                 <small className="text-muted d-block uppercase-label">Skor Akhir</small>
-                <span className={`fw-bold fs-4 ${attempt.skor >= 70 ? 'text-success' : 'text-danger'}`}>
+                <span className={`fw-bold fs-4 ${attempt.skor >= 75 ? 'text-success' : 'text-danger'}`}>
                   {Number(attempt.skor).toFixed(2)}
                 </span>
               </div>
