@@ -428,7 +428,7 @@ const LevelPage = () => {
                         className="page-link"
                         onClick={() => setCurrentPage((prev) => prev - 1)}
                       >
-                        Previous
+                        Sebelumnya
                       </button>
                     </li>
                     {[...Array(totalPages)].map((_, i) => (
@@ -455,7 +455,7 @@ const LevelPage = () => {
                         className="page-link"
                         onClick={() => setCurrentPage((prev) => prev + 1)}
                       >
-                        Next
+                        Selanjutnya
                       </button>
                     </li>
                   </ul>
