@@ -106,15 +106,10 @@ export default function DetailSoalEsai() {
                 cursor: 'default'
               }}
             ></textarea>
-            <p className="small mt-2 mb-0" style={{ color: '#64748b', fontSize: '12px' }}>
-              <i className="bi bi-shield-check me-1 text-primary opacity-75"></i> 
-              Detail ini hanya dapat diubah melalui menu edit.
-            </p>
+            
           </div>
 
           {error && <div className="alert alert-danger py-2 small border-0 mb-4">{error}</div>}
-
-          <hr className="my-4 opacity-25" />
 
           <div className="d-flex justify-content-end gap-2 mt-2">
             <button 
@@ -124,18 +119,6 @@ export default function DetailSoalEsai() {
               style={{ ...interStyle, backgroundColor: '#f8fafc', color: '#0f172a', fontSize: '14px' }}
             >
               Kembali
-            </button>
-            <button
-              className="btn btn-primary px-4 py-2 fw-semibold rounded-3 shadow-sm border-0"
-              onClick={() => navigate(`/edit-soal-esai/${id}`)}
-              style={{ 
-                ...interStyle, 
-                minWidth: '160px', 
-                backgroundColor: '#2563eb', 
-                fontSize: '14px' 
-              }}
-            >
-              Ubah Soal
             </button>
           </div>
 

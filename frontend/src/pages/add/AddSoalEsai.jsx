@@ -37,7 +37,8 @@ export default function AddSoalEsai() {
       });
 
       if (response.ok) {
-        navigate(-1);
+        navigate(`/list-soal/${levelId}`, { state: { message: "Soal berhasil ditambahkan!" }});
+        
       } else {
         const result = await response.json();
         setError(result.payload?.message || 'Gagal menyimpan soal.');
@@ -118,9 +119,6 @@ export default function AddSoalEsai() {
                 maxHeight: '180px'
               }}
             ></textarea>
-            <p className="small mt-2 mb-0" style={{ color: '#64748b', fontSize: '12px' }}>
-              Kata kunci membantu admin mendeteksi kesesuaian jawaban siswa.
-            </p>
           </div>
 
           <div className="d-flex justify-content-end gap-2 mt-2">

@@ -7,6 +7,7 @@ export default function EditSoalEsai() {
   
   const [pertanyaan, setPertanyaan] = useState('');
   const [kataKunci, setKataKunci] = useState('');
+  const [levelId, setLevelId] = useState('');
   const [loadingFetch, setLoadingFetch] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState('');
@@ -23,6 +24,7 @@ export default function EditSoalEsai() {
         if (result.payload?.datas) {
           setPertanyaan(result.payload.datas.text_soal);
           setKataKunci(result.payload.datas.kata_kunci || '');
+          setLevelId(result.payload.datas.id_level);
         }
       } catch (error) {
         setError(error.message);
@@ -57,7 +59,7 @@ export default function EditSoalEsai() {
       });
 
       if (response.ok) {
-        navigate(-1);
+        navigate(`/list-soal/${levelId}`, { state: { message: "Soal berhasil diubah!" }});
       } else {
         const result = await response.json();
         setError(result.payload?.message || 'Gagal memperbarui soal.');
@@ -98,7 +100,7 @@ export default function EditSoalEsai() {
               <h1 className="h4 fw-bold mb-1" style={{ color: '#0f172a', letterSpacing: '-0.02em' }}>
                 Ubah Soal Esai
               </h1>
-              <p className="text-muted small mb-0">Ubah pertanyaan esai Anda</p>
+              <p className="text-muted small mb-0">Ubah pertanyaan esai</p>
             </div>
           </div>
 
@@ -147,9 +149,6 @@ export default function EditSoalEsai() {
                 maxHeight: '180px'
               }}
             ></textarea>
-            <p className="small mt-2 mb-0" style={{ color: '#64748b', fontSize: '12px' }}>
-              Kata kunci membantu admin mendeteksi kesesuaian jawaban siswa.
-            </p>
           </div>
 
           {error && <div className="alert alert-danger py-2 small border-0 mb-4">{error}</div>}

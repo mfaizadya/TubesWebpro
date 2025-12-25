@@ -11,7 +11,7 @@ import DetailSoalPG from './pages/DetailSoalPG';
 import DetailSoalEsai from './pages/DetailSoalEsai';
 import AddSoalEsai from './pages/add/AddSoalEsai';
 import EditSoalEsai from './pages/edit/EditSoalEsai';
-
+import ListSoal from './pages/ListSoal';
 
 function App() {
   return (
@@ -29,19 +29,22 @@ function App() {
         <Route path="/levels" element={<ListLevel />} />
         {/* <Route path="/levels/:id" element={<DetailLevel/>}/> */}
 
-        {/* 5. Soal PG */}
+        {/* 4. Soal PG */}
         <Route path="/soals-pg" element={<ListSoalPG />} />
         <Route path="/soals-pg/:id" element={<DetailSoalPG />} />
         <Route path="/add-soal-pg" element={<AddSoalPG />} />
 
-        {/* 6. Soal Essai */}
+        {/* 5. Soal Essai */}
         <Route path="/soal-esai/detail/:id" element={<DetailSoalEsai />}/>
-        <Route path="/add-esai" element={<AddSoalEsai />} />
-        <Route path="/edit-esai/:id" element={<EditSoalEsai />} />
+        <Route path="/soal-esai/add" element={<AddSoalEsai />} />
+        <Route path="/soal-esai/edit/:id" element={<EditSoalEsai />} />
 
-        {/* 4. Review Attempt */}
+        {/* 6. Review Attempt */}
         <Route path="/review-attempt" element={<ReviewAttempt />} />
         <Route path="/detail-attempt/:id" element={<DetailAttempt />} />
+
+        {/* 7. Review Attempt */}
+        <Route path="/list-soal/:id_level" element={<ListSoal />} />
       </Routes>
     </Router>
   );
