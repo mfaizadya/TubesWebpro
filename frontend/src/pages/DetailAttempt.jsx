@@ -150,8 +150,8 @@ export default function DetailAttempt() {
             <h5 className="fw-bold text-primary mb-4">Informasi Umum</h5>
             <div className="row g-3">
               <div className="col-md-3">
-                <small className="text-muted d-block uppercase-label">Siswa</small>
-                <span className="fw-bold fs-5">{attempt.pelajars?.nama}</span>
+                <small className="text-muted d-block uppercase-label">Username</small>
+                <span className="fw-bold fs-5">{attempt.pelajars?.username}</span>
               </div>
               <div className="col-md-3">
                 <small className="text-muted d-block uppercase-label">Level</small>

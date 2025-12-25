@@ -125,7 +125,7 @@ export default function ReviewAttempt() {
               <thead className="bg-light">
                 <tr>
                   <th className="px-4 py-3 text-secondary text-uppercase small fw-bold">No</th>
-                  <th className="px-4 py-3 text-secondary text-uppercase small fw-bold">Nama Siswa</th>
+                  <th className="px-4 py-3 text-secondary text-uppercase small fw-bold">Username</th>
                   <th className="px-4 py-3 text-secondary text-uppercase small fw-bold">Level</th>
                   <th className="px-4 py-3 text-secondary text-uppercase small fw-bold">Section</th>
                   <th className="px-4 py-3 text-secondary text-uppercase small fw-bold">Skor</th>
@@ -151,7 +151,7 @@ export default function ReviewAttempt() {
                   currentRows.map((attempt, index) => (
                     <tr key={attempt.id}>
                       <td className="px-4">{(currentPage - 1) * rowsPerPage + index + 1}</td>
-                      <td className="px-4 fw-bold text-dark">{attempt.pelajars?.nama || '-'}</td>
+                      <td className="px-4 fw-bold text-dark">{attempt.pelajars?.username || '-'}</td>
                       <td className="px-4">
                         <span className="badge bg-light text-dark border">
                           {attempt.levels?.nama || '-'}
