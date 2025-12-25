@@ -13,6 +13,11 @@ const LevelPage = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedLevel, setSelectedLevel] = useState(null);
 
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [sections, setSections] = useState([]);
+  const [newLevelName, setNewLevelName] = useState("");
+  const [selectedSectionId, setSelectedSectionId] = useState("");
+
   const handleDeleteClick = (level) => {
     setSelectedLevel(level);
     setShowDeleteModal(true);
@@ -53,17 +58,81 @@ const LevelPage = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchLevels = async () => {
-      const token = localStorage.getItem("token");
+  const fetchLevels = async () => {
+    const token = localStorage.getItem("token");
 
-      if (!token) {
-        navigate("/login");
-        return;
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:3030/api/levels", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const responseJson = await response.json();
+
+      if (responseJson?.payload?.statusCode !== 200) {
+        throw new Error(responseJson.payload.message);
       }
 
+      setLevels(responseJson.payload.datas || []);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleAddLevel = async () => {
+    if (!newLevelName || !selectedSectionId) {
+      alert("Nama level dan section wajib diisi");
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem("token");
+
+      const response = await fetch("http://localhost:3030/api/levels", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          nama: newLevelName,
+          idSection: selectedSectionId,
+        }),
+      });
+
+      const responseJson = await response.json();
+
+      if (responseJson?.payload?.statusCode !== 200) {
+        throw new Error(responseJson.payload.message);
+      }
+
+      await fetchLevels();
+
+      setShowAddModal(false);
+      setNewLevelName("");
+      setSelectedSectionId("");
+
+      alert("Level berhasil ditambahkan");
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchLevels();
+    const fetchSections = async () => {
+      const token = localStorage.getItem("token");
+
       try {
-        const response = await fetch("http://localhost:3030/api/levels", {
+        const response = await fetch("http://localhost:3030/api/sections", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -75,15 +144,14 @@ const LevelPage = () => {
           throw new Error(responseJson.payload.message);
         }
 
-        setLevels(responseJson.payload.datas || []);
+        setSections(responseJson.payload.datas || []);
       } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
+        console.error(err.message);
       }
     };
 
     fetchLevels();
+    fetchSections();
   }, [navigate]);
 
   return (
@@ -96,6 +164,15 @@ const LevelPage = () => {
             <h1 className="fw-bold mb-1">Daftar Level</h1>
             <p className="text-muted">Kelola data level</p>
           </div>
+        </div>
+
+        <div className="col-auto">
+          <button
+            className="btn btn-primary rounded-pill px-4"
+            onClick={() => setShowAddModal(true)}
+          >
+            + Tambah Level
+          </button>
         </div>
 
         <div className="card shadow-sm border-0 rounded-4">
@@ -141,9 +218,7 @@ const LevelPage = () => {
                     <tr key={level.id}>
                       <td className="px-4">{index + 1}</td>
                       <td className="px-4 fw-semibold">{level.nama}</td>
-                      <td className="px-4">
-                        {level.sections?.nama || "-"}
-                      </td>
+                      <td className="px-4">{level.sections?.nama || "-"}</td>
                       <td className="px-4 text-center">
                         <button className="btn btn-sm btn-outline-primary rounded-pill me-2">
                           Detil
@@ -198,6 +273,69 @@ const LevelPage = () => {
                     onClick={handleConfirmDelete}
                   >
                     Hapus
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+      {showAddModal && (
+        <>
+          <div className="modal-backdrop show"></div>
+
+          <div className="modal d-block" tabIndex="-1">
+            <div className="modal-dialog modal-dialog-centered">
+              <div className="modal-content rounded-4">
+                <div className="modal-header">
+                  <h5 className="modal-title fw-bold">Tambah Level</h5>
+                  <button
+                    className="btn-close"
+                    onClick={() => setShowAddModal(false)}
+                  ></button>
+                </div>
+
+                <div className="modal-body">
+                  <div className="mb-3">
+                    <label className="form-label fw-semibold">Nama Level</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Masukkan nama level"
+                      value={newLevelName}
+                      onChange={(e) => setNewLevelName(e.target.value)}
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label fw-semibold">Section</label>
+                    <select
+                      className="form-select"
+                      value={selectedSectionId}
+                      onChange={(e) => setSelectedSectionId(e.target.value)}
+                    >
+                      <label htmlFor=""></label>
+                      <option value="">--Pilih Section--</option>
+                      {sections.map((section) => (
+                        <option key={section.id} value={section.id}>
+                          {section.nama}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="modal-footer">
+                  <button
+                    className="btn btn-outline-secondary rounded-pill"
+                    onClick={() => setShowAddModal(false)}
+                  >
+                    Batal
+                  </button>
+                  <button
+                    className="btn btn-success rounded-pill"
+                    onClick={handleAddLevel}
+                  >
+                    Simpan
                   </button>
                 </div>
               </div>
