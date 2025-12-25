@@ -201,3 +201,29 @@ a {
   gap: 12px;
   margin-top: 20px;
 }
+
+.search-wrapper {
+  position: relative;
+  width: 260px;
+}
+
+.search-input {
+  padding-left: 40px;
+  border-radius: 999px;
+  height: 38px;
+  font-size: 0.9rem;
+}
+
+.search-input::placeholder {
+  color: #9ca3af;
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  left: 14px;
+  transform: translateY(-50%);
+  color: #9ca3af;
+  font-size: 0.9rem;
+  pointer-events: none;
+}

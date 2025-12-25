@@ -22,6 +22,11 @@ const LevelPage = () => {
   const [updateLevelName, setUpdateLevelName] = useState("");
   const [updateSectionId, setUpdateSectionId] = useState("");
 
+  const [searchTerm, setSearchTerm] = useState("");
+  
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
+
   const handleUpdateClick = (level) => {
     setSelectedLevel(level);
     setUpdateLevelName(level.nama);
@@ -177,6 +182,19 @@ const LevelPage = () => {
     }
   };
 
+  const filteredLevels = levels.filter((level) => {
+    const levelName = level.nama?.toLowerCase() || "";
+    const sectionName = level.sections?.nama?.toLowerCase() || "";
+    const keyword = searchTerm.toLowerCase();
+
+    return levelName.includes(keyword) || sectionName.includes(keyword);
+  });
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredLevels.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(filteredLevels.length / itemsPerPage);
+
   useEffect(() => {
     fetchLevels();
     const fetchSections = async () => {
@@ -226,6 +244,30 @@ const LevelPage = () => {
           </div>
         </div>
 
+        <div className="row mb-3 align-items-center">
+          <div className="col-md-6">
+            <h5 className="fw-semibold mb-2 mb-md-0">Daftar Level Terbaru</h5>
+          </div>
+
+          <div className="col-md-6 d-flex justify-content-md-end">
+            <div className="search-wrapper">
+              <span className="search-icon">
+                {/* <i className="bi bi-search"></i> */}
+              </span>
+              <input
+                type="text"
+                className="form-control search-input"
+                placeholder="Cari level, section..."
+                value={searchTerm}
+                onChange={(e) => {
+                    setSearchTerm(e.target.value);
+                    setCurrentPage(1); // Reset ke hal 1 saat cari
+                }}
+              />
+            </div>
+          </div>
+        </div>
+
         <div className="card shadow-sm border-0 rounded-4">
           <div className="card-body p-0">
             <table className="table table-hover align-middle mb-0">
@@ -255,7 +297,7 @@ const LevelPage = () => {
                   </tr>
                 )}
 
-                {!loading && !error && levels.length === 0 && (
+                {!loading && !error && filteredLevels.length === 0 && (
                   <tr>
                     <td colSpan="4" className="text-center text-muted py-4">
                       Belum ada level
@@ -265,9 +307,9 @@ const LevelPage = () => {
 
                 {!loading &&
                   !error &&
-                  levels.map((level, index) => (
+                  currentItems.map((level, index) => (
                     <tr key={level.id}>
-                      <td className="px-4">{index + 1}</td>
+                      <td className="px-4">{indexOfFirstItem + index + 1}</td>
                       <td className="px-4 fw-semibold">{level.nama}</td>
                       <td className="px-4">{level.sections?.nama || "-"}</td>
                       <td className="px-4 text-center">
@@ -293,6 +335,60 @@ const LevelPage = () => {
                   ))}
               </tbody>
             </table>
+          </div>
+          
+          <div className="card-footer bg-white py-3 px-4 border-top">
+            <div className="d-flex flex-column flex-md-row justify-content-between align-items-center">
+              <div className="text-muted small mb-2 mb-md-0">
+                Menampilkan {filteredLevels.length > 0 ? indexOfFirstItem + 1 : 0} ke {Math.min(indexOfLastItem, filteredLevels.length)} dari {filteredLevels.length} data
+              </div>
+
+              <div className="d-flex align-items-center gap-3">
+                <div className="d-flex align-items-center">
+                  <span className="small text-muted me-2">Baris:</span>
+                  <select 
+                    className="form-select form-select-sm w-auto" 
+                    value={itemsPerPage}
+                    onChange={(e) => {
+                        setItemsPerPage(Number(e.target.value));
+                        setCurrentPage(1);
+                    }}
+                  >
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                  </select>
+                </div>
+
+                <nav>
+                  <ul className="pagination pagination-sm mb-0">
+                    <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
+                      <button 
+                        className="page-link" 
+                        onClick={() => setCurrentPage(prev => prev - 1)}
+                      >
+                        Previous
+                      </button>
+                    </li>
+                    {[...Array(totalPages)].map((_, i) => (
+                      <li key={i} className={`page-item ${currentPage === i + 1 ? "active" : ""}`}>
+                        <button className="page-link" onClick={() => setCurrentPage(i + 1)}>
+                          {i + 1}
+                        </button>
+                      </li>
+                    ))}
+                    <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
+                      <button 
+                        className="page-link" 
+                        onClick={() => setCurrentPage(prev => prev + 1)}
+                      >
+                        Next
+                      </button>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
           </div>
         </div>
       </div>
