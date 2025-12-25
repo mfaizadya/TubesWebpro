@@ -19,18 +19,20 @@ const Navbar = () => {
       <div className="navbar-wrapper">
         <div className="navbar-container">
           <div className="nav-brand">
-            <button 
+            <button
               className="brand-link"
               onClick={() => navigate('/homepage')}
             >
               <span className="brand-text">LogiLearn</span>
               <img src={logoImg} alt="LogiLearn Logo" className="brand-logo" />
             </button>
+            <span className="brand-separator">|</span>
+            <span className="brand-subtitle">Dashboard Admin</span>
           </div>
-          
+
           <div className="nav-right">
             <div className="nav-links">
-              <button 
+              <button
                 className="nav-link"
                 onClick={() => navigate('/levels')}
               >
@@ -38,7 +40,7 @@ const Navbar = () => {
               </button>
             </div>
             <div className="nav-links">
-              <button 
+              <button
                 className="nav-link"
                 onClick={() => navigate('/review-attempt')}
               >
@@ -46,8 +48,8 @@ const Navbar = () => {
               </button>
             </div>
             <div className="nav-logout">
-              <button 
-                onClick={handleLogout} 
+              <button
+                onClick={handleLogout}
                 className="btn-logout"
               >
                 Keluar
