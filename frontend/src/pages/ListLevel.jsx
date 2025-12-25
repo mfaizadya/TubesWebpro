@@ -265,7 +265,7 @@ const LevelPage = () => {
                 value={searchTerm}
                 onChange={(e) => {
                   setSearchTerm(e.target.value);
-                  setCurrentPage(1); // Reset ke hal 1 saat cari
+                  setCurrentPage(1);
                 }}
               />
             </div>
