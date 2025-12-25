@@ -19,7 +19,7 @@ async function fetchLevels(req, res) {
         if(!resp){
             return response(404, null, `data not found`, res)
         }
-        response(200, resp.data, `get all levels`, res)
+        response(200, resp.data.data, `get all levels`, res)
     } catch(err) {
         console.log(err.message)
         response(500, null, `failed to : ${err.message}`, res)

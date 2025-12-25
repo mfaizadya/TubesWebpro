@@ -87,7 +87,7 @@ const LevelPage = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:3030/api/levels", {
+      const response = await fetch("http://localhost:3030/api/fetch-levels", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -187,8 +187,8 @@ const LevelPage = () => {
   };
 
   const filteredLevels = levels.filter((level) => {
-    const levelName = level.nama?.toLowerCase() || "";
-    const sectionName = level.sections?.nama?.toLowerCase() || "";
+    const levelName = level.nama_level?.toLowerCase() || "";
+    const sectionName = level.nama_section?.toLowerCase() || "";
     const keyword = searchTerm.toLowerCase();
 
     return levelName.includes(keyword) || sectionName.includes(keyword);
@@ -314,8 +314,8 @@ const LevelPage = () => {
                   currentItems.map((level, index) => (
                     <tr key={level.id}>
                       <td className="px-4">{indexOfFirstItem + index + 1}</td>
-                      <td className="px-4 fw-semibold">{level.nama}</td>
-                      <td className="px-4">{level.sections?.nama || "-"}</td>
+                      <td className="px-4 fw-semibold">{level.nama_level}</td>
+                      <td className="px-4">{level?.nama_section || "-"}</td>
                       <td className="px-4 text-center">
                         <div className="d-flex gap-2 justify-content-center">
                           <button className="btn btn-sm btn-outline-primary rounded-pill px-3">
