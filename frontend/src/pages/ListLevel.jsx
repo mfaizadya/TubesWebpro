@@ -4,6 +4,8 @@ import Navbar from "../components/Navbar";
 import "./styles/ListLevel.css";
 
 import AddLevelModal from "../components/AddLevelModal";
+import UpdateLevelModal from "../components/UpdateLevelModal";
+import DeleteLevelModal from "../components/DeleteLevelModal";
 
 const LevelPage = () => {
   const navigate = useNavigate();
@@ -413,46 +415,12 @@ const LevelPage = () => {
           </div>
         </div>
       </div>
-
-      {showDeleteModal && (
-        <>
-          <div className="modal-backdrop show"></div>
-
-          <div className="modal d-block" tabIndex="-1">
-            <div className="modal-dialog modal-dialog-centered">
-              <div className="modal-content rounded-4">
-                <div className="modal-header">
-                  <h5 className="modal-title fw-bold">Hapus Level</h5>
-                  <button
-                    className="btn-close"
-                    onClick={() => setShowDeleteModal(false)}
-                  ></button>
-                </div>
-
-                <div className="modal-body">
-                  Apakah anda yakin ingin menghapus level{" "}
-                  <strong>{selectedLevel?.nama}</strong>?
-                </div>
-
-                <div className="modal-footer">
-                  <button
-                    className="btn btn-outline-secondary rounded-pill"
-                    onClick={() => setShowDeleteModal(false)}
-                  >
-                    Batal
-                  </button>
-                  <button
-                    className="btn btn-danger rounded-pill"
-                    onClick={handleConfirmDelete}
-                  >
-                    Hapus
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </>
-      )}
+      <DeleteLevelModal
+        show={showDeleteModal}
+        onClose={() => setShowDeleteModal(false)}
+        onDelete={handleConfirmDelete}
+        selectedLevel={selectedLevel}
+      />
       <AddLevelModal
         show={showAddModal}
         onClose={() => setShowAddModal(false)}
@@ -463,69 +431,16 @@ const LevelPage = () => {
         selectedSectionId={selectedSectionId}
         setSelectedSectionId={setSelectedSectionId}
       />
-      {showUpdateModal && (
-        <>
-          <div className="modal-backdrop show"></div>
-
-          <div className="modal d-block" tabIndex="-1">
-            <div className="modal-dialog modal-dialog-centered">
-              <div className="modal-content rounded-4">
-                <div className="modal-header">
-                  <h5 className="modal-title fw-bold">Ubah Level</h5>
-                  <button
-                    className="btn-close"
-                    onClick={() => setShowUpdateModal(false)}
-                  ></button>
-                </div>
-
-                <div className="modal-body">
-                  <div className="mb-3">
-                    <label className="form-label fw-semibold">Nama Level</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Masukkan nama level"
-                      value={updateLevelName}
-                      onChange={(e) => setUpdateLevelName(e.target.value)}
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label className="form-label fw-semibold">Section</label>
-                    <select
-                      className="form-select"
-                      value={updateSectionId}
-                      onChange={(e) => setUpdateSectionId(e.target.value)}
-                    >
-                      <label htmlFor=""></label>
-                      <option value="">--Pilih Section--</option>
-                      {sections.map((section) => (
-                        <option key={section.id} value={section.id}>
-                          {section.nama}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-
-                <div className="modal-footer">
-                  <button
-                    className="btn btn-outline-secondary rounded-pill"
-                    onClick={() => setShowUpdateModal(false)}
-                  >
-                    Batal
-                  </button>
-                  <button
-                    className="btn btn-success rounded-pill"
-                    onClick={handleUpdateLevel}
-                  >
-                    Simpan
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </>
-      )}
+      <UpdateLevelModal
+        show={showUpdateModal}
+        onClose={() => setShowUpdateModal(false)}
+        onSubmit={handleUpdateLevel}
+        updateLevelName={updateLevelName}
+        setUpdateLevelName={setUpdateLevelName}
+        sections={sections}
+        updateSectionId={updateSectionId}
+        setUpdateSectionId={setUpdateSectionId}
+      />
     </>
   );
 };

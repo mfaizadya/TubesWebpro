@@ -1,25 +1,26 @@
 import React from "react";
 
-const AddLevelModal = ({
+const UpdateLevelModal = ({
   show,
   onClose,
   onSubmit,
-  newLevelName,
-  setNewLevelName,
+  updateLevelName,
+  setUpdateLevelName,
   sections,
-  selectedSectionId,
-  setSelectedSectionId,
+  updateSectionId,
+  setUpdateSectionId,
 }) => {
   if (!show) return null;
 
   return (
     <>
       <div className="modal-backdrop show"></div>
+
       <div className="modal d-block" tabIndex="-1">
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content rounded-4">
             <div className="modal-header">
-              <h5 className="modal-title fw-bold">Tambah Level</h5>
+              <h5 className="modal-title fw-bold">Ubah Level</h5>
               <button
                 className="btn-close"
                 onClick={onClose}
@@ -33,16 +34,16 @@ const AddLevelModal = ({
                   type="text"
                   className="form-control"
                   placeholder="Masukkan nama level"
-                  value={newLevelName}
-                  onChange={(e) => setNewLevelName(e.target.value)}
+                  value={updateLevelName}
+                  onChange={(e) => setUpdateLevelName(e.target.value)}
                 />
               </div>
               <div className="mb-3">
                 <label className="form-label fw-semibold">Section</label>
                 <select
                   className="form-select"
-                  value={selectedSectionId}
-                  onChange={(e) => setSelectedSectionId(e.target.value)}
+                  value={updateSectionId}
+                  onChange={(e) => setUpdateSectionId(e.target.value)}
                 >
                   <option value="">--Pilih Section--</option>
                   {sections.map((section) => (
@@ -75,4 +76,4 @@ const AddLevelModal = ({
   );
 };
 
-export default AddLevelModal;
+export default UpdateLevelModal;
