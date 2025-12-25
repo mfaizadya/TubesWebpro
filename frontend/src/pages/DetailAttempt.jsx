@@ -17,7 +17,12 @@ export default function DetailAttempt() {
   const fetchAttemptDetail = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`http://localhost:3030/api/attempts/${id}`);
+      const token = localStorage.getItem('token');
+      const response = await fetch(`http://localhost:3030/api/attempts/${id}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
       if (!response.ok) {
         throw new Error(`Gagal memuat detail attempt: ${response.status} ${response.statusText}`);
       }
