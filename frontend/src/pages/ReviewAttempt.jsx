@@ -16,7 +16,12 @@ export default function ReviewAttempt() {
   const fetchAttempts = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:3030/api/attempts');
+      const token = localStorage.getItem('token');
+      const response = await fetch('http://localhost:3030/api/attempts', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
       if (!response.ok) {
         throw new Error(`Gagal memuat attempt: ${response.status} ${response.statusText}`);
       }
