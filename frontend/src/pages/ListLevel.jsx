@@ -33,8 +33,8 @@ const LevelPage = () => {
 
   const handleUpdateClick = (level) => {
     setSelectedLevel(level);
-    setUpdateLevelName(level.nama);
-    setUpdateSectionId(level.sections?.id || "");
+    setUpdateLevelName(level.nama_level);
+    setUpdateSectionId(level?.id_section || "");
     setShowUpdateModal(true);
   };
 
