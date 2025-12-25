@@ -18,8 +18,9 @@ function getConnection() {
 function getLevels() {
     $db = getConnection();
 
-    $sql = "SELECT * 
-            FROM levels l";
+    $sql = "SELECT l.id, l.nama AS nama_level, s.nama AS nama_section 
+            FROM levels l
+            JOIN sections s on s.id = l.id_section";
     $stmt = $db->prepare($sql);
     $stmt->execute();
 
