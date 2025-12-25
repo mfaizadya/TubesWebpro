@@ -153,7 +153,7 @@ const ListSoal = () => {
         <div className="row mb-4 align-items-center">
           <div className="col d-flex justify-content-between align-items-center flex-wrap gap-3">
             <div>
-              <h1 className="fw-bold mb-1">Daftar Soal Level {levelName}</h1>
+              <h1 className="fw-bold mb-1">Daftar Soal {levelName}</h1>
               <p className="text-muted mb-0">Manajemen Soal</p>
             </div>
             <div className="d-flex gap-2">
