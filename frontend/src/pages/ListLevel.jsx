@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import "./styles/ListLevel.css";
 
+import AddLevelModal from "../components/AddLevelModal";
+
 const LevelPage = () => {
   const navigate = useNavigate();
 
@@ -23,7 +25,7 @@ const LevelPage = () => {
   const [updateSectionId, setUpdateSectionId] = useState("");
 
   const [searchTerm, setSearchTerm] = useState("");
-  
+
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5);
 
@@ -260,8 +262,8 @@ const LevelPage = () => {
                 placeholder="Cari level, section..."
                 value={searchTerm}
                 onChange={(e) => {
-                    setSearchTerm(e.target.value);
-                    setCurrentPage(1); // Reset ke hal 1 saat cari
+                  setSearchTerm(e.target.value);
+                  setCurrentPage(1); // Reset ke hal 1 saat cari
                 }}
               />
             </div>
@@ -336,22 +338,25 @@ const LevelPage = () => {
               </tbody>
             </table>
           </div>
-          
+
           <div className="card-footer bg-white py-3 px-4 border-top">
             <div className="d-flex flex-column flex-md-row justify-content-between align-items-center">
               <div className="text-muted small mb-2 mb-md-0">
-                Menampilkan {filteredLevels.length > 0 ? indexOfFirstItem + 1 : 0} ke {Math.min(indexOfLastItem, filteredLevels.length)} dari {filteredLevels.length} data
+                Menampilkan{" "}
+                {filteredLevels.length > 0 ? indexOfFirstItem + 1 : 0} ke{" "}
+                {Math.min(indexOfLastItem, filteredLevels.length)} dari{" "}
+                {filteredLevels.length} data
               </div>
 
               <div className="d-flex align-items-center gap-3">
                 <div className="d-flex align-items-center">
                   <span className="small text-muted me-2">Baris:</span>
-                  <select 
-                    className="form-select form-select-sm w-auto" 
+                  <select
+                    className="form-select form-select-sm w-auto"
                     value={itemsPerPage}
                     onChange={(e) => {
-                        setItemsPerPage(Number(e.target.value));
-                        setCurrentPage(1);
+                      setItemsPerPage(Number(e.target.value));
+                      setCurrentPage(1);
                     }}
                   >
                     <option value="5">5</option>
@@ -362,25 +367,41 @@ const LevelPage = () => {
 
                 <nav>
                   <ul className="pagination pagination-sm mb-0">
-                    <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
-                      <button 
-                        className="page-link" 
-                        onClick={() => setCurrentPage(prev => prev - 1)}
+                    <li
+                      className={`page-item ${
+                        currentPage === 1 ? "disabled" : ""
+                      }`}
+                    >
+                      <button
+                        className="page-link"
+                        onClick={() => setCurrentPage((prev) => prev - 1)}
                       >
                         Previous
                       </button>
                     </li>
                     {[...Array(totalPages)].map((_, i) => (
-                      <li key={i} className={`page-item ${currentPage === i + 1 ? "active" : ""}`}>
-                        <button className="page-link" onClick={() => setCurrentPage(i + 1)}>
+                      <li
+                        key={i}
+                        className={`page-item ${
+                          currentPage === i + 1 ? "active" : ""
+                        }`}
+                      >
+                        <button
+                          className="page-link"
+                          onClick={() => setCurrentPage(i + 1)}
+                        >
                           {i + 1}
                         </button>
                       </li>
                     ))}
-                    <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
-                      <button 
-                        className="page-link" 
-                        onClick={() => setCurrentPage(prev => prev + 1)}
+                    <li
+                      className={`page-item ${
+                        currentPage === totalPages ? "disabled" : ""
+                      }`}
+                    >
+                      <button
+                        className="page-link"
+                        onClick={() => setCurrentPage((prev) => prev + 1)}
                       >
                         Next
                       </button>
@@ -432,69 +453,16 @@ const LevelPage = () => {
           </div>
         </>
       )}
-      {showAddModal && (
-        <>
-          <div className="modal-backdrop show"></div>
-
-          <div className="modal d-block" tabIndex="-1">
-            <div className="modal-dialog modal-dialog-centered">
-              <div className="modal-content rounded-4">
-                <div className="modal-header">
-                  <h5 className="modal-title fw-bold">Tambah Level</h5>
-                  <button
-                    className="btn-close"
-                    onClick={() => setShowAddModal(false)}
-                  ></button>
-                </div>
-
-                <div className="modal-body">
-                  <div className="mb-3">
-                    <label className="form-label fw-semibold">Nama Level</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Masukkan nama level"
-                      value={newLevelName}
-                      onChange={(e) => setNewLevelName(e.target.value)}
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label className="form-label fw-semibold">Section</label>
-                    <select
-                      className="form-select"
-                      value={selectedSectionId}
-                      onChange={(e) => setSelectedSectionId(e.target.value)}
-                    >
-                      <label htmlFor=""></label>
-                      <option value="">--Pilih Section--</option>
-                      {sections.map((section) => (
-                        <option key={section.id} value={section.id}>
-                          {section.nama}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-
-                <div className="modal-footer">
-                  <button
-                    className="btn btn-outline-secondary rounded-pill"
-                    onClick={() => setShowAddModal(false)}
-                  >
-                    Batal
-                  </button>
-                  <button
-                    className="btn btn-success rounded-pill"
-                    onClick={handleAddLevel}
-                  >
-                    Simpan
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </>
-      )}
+      <AddLevelModal
+        show={showAddModal}
+        onClose={() => setShowAddModal(false)}
+        onSubmit={handleAddLevel}
+        newLevelName={newLevelName}
+        setNewLevelName={setNewLevelName}
+        sections={sections}
+        selectedSectionId={selectedSectionId}
+        setSelectedSectionId={setSelectedSectionId}
+      />
       {showUpdateModal && (
         <>
           <div className="modal-backdrop show"></div>
