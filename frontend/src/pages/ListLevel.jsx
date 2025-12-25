@@ -3,139 +3,115 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import './styles/ListLevel.css';
 
-const ListLevel = () => {
-  const navigate = useNavigate();
-  const [levels, setLevels] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+const LevelPage= () => {
+  const navigate = useNavigate()
+
+  const [levels, setLevels] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null) 
 
   useEffect(() => {
-    fetchLevels();
-  }, []);
+    const fetchLevels = async () => {
+      const token = localStorage.getItem("token")
 
-  const fetchLevels = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch('http://localhost:3030/api/levels');
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error(`${data.payload.message}`);
+      if (!token) {
+        navigate("/login")
+        return
       }
-      
-      setLevels(data.payload.datas || []);
-      setError(null);
-    } catch (err) {
-      setError(err.message);
-      console.error('Error:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    navigate('/login');
-  };
-
-  const handleAddLevel = () => {
-    navigate('/add-level');
-  };
-
-  const handleEditLevel = (id) => {
-    navigate(`/edit-level/${id}`);
-  };
-
-  const handleDeleteLevel = async (id) => {
-    if (window.confirm('Apakah Anda yakin ingin menghapus level ini?')) {
       try {
-        const response = await fetch(`http://localhost:3030/api/levels/${id}`, {
-          method: 'DELETE',
-        });
-        if (!response.ok) {
-          throw new Error('Gagal menghapus level');
+        const response = await fetch("http://localhost:3030/api/levels", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+          }
+        })
+
+        const responseJson = await response.json()
+
+        if (responseJson?.payload?.statusCode !== 200){
+          throw new Error(`Gagal memuat data level: ${responseJson.payload.message}`)
         }
-        setLevels(levels.filter(level => level.id !== id));
+
+        
+        const levelData = responseJson?.payload?.datas || []
+        setLevels(levelData)
+
       } catch (err) {
-        alert('Error: ' + err.message);
+        setError(err.message)
+      } finally {
+        setLoading(false)
       }
     }
-  };
 
-  const handleViewSoal = (id) => {
-    navigate(`/list-soal-pg/${id}`);
-  };
+    fetchLevels()
+  }, [navigate])
+
+  if (loading) {
+    return (
+      <>
+        <Navbar/>
+        <div className='container'>
+          Memuat data level...
+        </div>
+      </>
+    )
+  }
+
+  if (error) {
+    return (
+      <>
+        <Navbar/>
+        <div className='container'>
+          {error}
+        </div>
+      </>
+    )
+  }
 
   return (
     <>
-      <Navbar />
+      <Navbar/>
+      <div className='container'>
+        <h1>Daftar Level</h1>
 
-      {/* Main Content */}
-      <div className="container">
-        <div className="page-header">
-          <div>
-            <h1>Daftar Level</h1>
-            <p>Kelola semua level pembelajaran</p>
-          </div>
-          <button className="btn-add" onClick={handleAddLevel}>
-            + Tambah Level
-          </button>
-        </div>
+        <table className='custom-table'>
+          <thead>
+            <tr>
+              <th>NO</th>
+              <th>Nama Level</th>
+              <th>Section</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
 
-        {loading && <p>Memuat data...</p>}
-        {error && <p style={{ color: 'red' }}>Error: {error}</p>}
-
-        {!loading && levels.length === 0 && (
-          <p>Tidak ada level ditemukan. Silakan tambahkan level baru.</p>
-        )}
-
-        {!loading && levels.length > 0 && (
-          <div className="table-container">
-            <table>
-              <thead>
-                <tr>
-                  <th>No</th>
-                  <th>Nama Level</th>
-                  <th>Section</th>
-                  <th>Aksi</th>
+          <tbody>
+            { levels.length > 0 ? (
+              levels.map((level, index) => (
+                <tr key={level.id} >
+                  <td>{index+1}</td>
+                  <td className='fw-bold'>{level.nama}</td>
+                  <td>{level.sections?.nama || "-"}</td>
+                  <td>
+                    <button className='btn-details'>
+                      Detail
+                    </button>
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                {levels.map((level, index) => (
-                  <tr key={level.id}>
-                    <td>{index + 1}</td>
-                    <td>{level.nama}</td>
-                    <td>{level.sections?.nama || '-'}</td>
-                    <td>
-                      <div className="action-buttons">
-                        <button
-                          className="view-btn"
-                          onClick={() => handleViewSoal(level.id)}
-                        >
-                          Lihat Soal
-                        </button>
-                        <button
-                          className="rename-btn"
-                          onClick={() => handleEditLevel(level.id)}
-                        >
-                          Edit
-                        </button>
-                        <button
-                          className="delete-btn"
-                          onClick={() => handleDeleteLevel(level.id)}
-                        >
-                          Hapus
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+              ))
+            ) : (
+              <tr>
+                <td colSpan="4" className='text-center'>
+                  Belum ada level
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default ListLevel;
+export default LevelPage
