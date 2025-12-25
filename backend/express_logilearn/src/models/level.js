@@ -1,7 +1,11 @@
 const prisma = require('./prisma')
 
 async function getAllLevels() {
-    return prisma.levels.findMany({})
+    return prisma.levels.findMany({
+        include: {
+            sections: true
+        }
+    })
 }
 
 async function getLevelsBySection(slugSection) {

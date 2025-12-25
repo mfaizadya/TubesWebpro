@@ -1,135 +1,181 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Navbar from '../components/Navbar';
-import './styles/ListLevel.css';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import "./styles/ListLevel.css";
 
-const ListLevel = () => {
+const LevelPage = () => {
   const navigate = useNavigate();
+
   const [levels, setLevels] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [selectedLevel, setSelectedLevel] = useState(null);
+  
+  const handleDeleteClick = (level) => {
+    console.log("HANDLE DELETE", level); 
+    setSelectedLevel(level);
+    setShowDeleteModal(true);
+  };
 
-  useEffect(() => {
-    fetchLevels();
-  }, []);
+  const handleConfirmDelete = async () => {
+    if (!selectedLevel) return;
 
-  const fetchLevels = async () => {
     try {
-      setLoading(true);
-      const response = await fetch('http://localhost:3030/api/levels');
-      if (!response.ok) {
-        throw new Error('Gagal memuat level');
-      }
-      const data = await response.json();
-      setLevels(data.datas || []);
-      setError(null);
-    } catch (err) {
-      setError(err.message);
-      console.error('Error:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
+      const token = localStorage.getItem("token");
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    navigate('/login');
-  };
-
-  const handleAddLevel = () => {
-    navigate('/add-level');
-  };
-
-  const handleEditLevel = (id) => {
-    navigate(`/edit-level/${id}`);
-  };
-
-  const handleDeleteLevel = async (id) => {
-    if (window.confirm('Apakah Anda yakin ingin menghapus level ini?')) {
-      try {
-        const response = await fetch(`http://localhost:3030/api/levels/${id}`, {
-          method: 'DELETE',
-        });
-        if (!response.ok) {
-          throw new Error('Gagal menghapus level');
+      const response = await fetch(
+        `http://localhost:3030/api/levels/${selectedLevel.id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
         }
-        setLevels(levels.filter(level => level.id !== id));
-      } catch (err) {
-        alert('Error: ' + err.message);
+      );
+
+      const responseJson = await response.json();
+
+      if (responseJson?.payload?.statusCode !== 200) {
+        throw new Error(
+          `Gagal menghapus level: ${responseJson.payload.message}`
+        );
       }
+
+      setLevels((prev) =>
+        prev.filter((level) => level.id !== selectedLevel.id)
+      );
+
+      alert(`${responseJson.payload.message}`)
+      setShowDeleteModal(false);
+      setSelectedLevel(null);
+    } catch (err) {
+      alert(`Terjadi kesalahan ketika menghapus level: ${err.message}`);
     }
   };
+  
+  useEffect(() => {
+    const fetchLevels = async () => {
+      const token = localStorage.getItem("token");
 
-  const handleViewSoal = (id) => {
-    navigate(`/list-soal-pg/${id}`);
-  };
+      if (!token) {
+        navigate("/login");
+        return;
+      }
+
+      try {
+        const response = await fetch("http://localhost:3030/api/levels", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const responseJson = await response.json();
+
+        if (responseJson?.payload?.statusCode !== 200) {
+          throw new Error(
+            `Gagal memuat data level: ${responseJson.payload.message}`
+          );
+        }
+
+        const levelData = responseJson?.payload?.datas || [];
+        setLevels(levelData);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLevels();
+  }, [navigate]);
+
+  if (loading) {
+    return (
+      <>
+        <Navbar />
+        <div className="container">Memuat data level...</div>
+      </>
+    );
+  }
+
+  if (error) {
+    return (
+      <>
+        <Navbar />
+        <div className="container">{error}</div>
+      </>
+    );
+  }
 
   return (
     <>
       <Navbar />
-
-      {/* Main Content */}
       <div className="container">
-        <div className="page-header">
-          <div>
-            <h1>Daftar Level</h1>
-            <p>Kelola semua level pembelajaran</p>
-          </div>
-          <button className="btn-add" onClick={handleAddLevel}>
-            + Tambah Level
-          </button>
-        </div>
+        <h1>Daftar Level</h1>
 
-        {loading && <p>Memuat data...</p>}
-        {error && <p style={{ color: 'red' }}>Error: {error}</p>}
+        <table className="custom-table">
+          <thead>
+            <tr>
+              <th>NO</th>
+              <th>Nama Level</th>
+              <th>Section</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
 
-        {!loading && levels.length === 0 && (
-          <p>Tidak ada level ditemukan. Silakan tambahkan level baru.</p>
-        )}
-
-        {!loading && levels.length > 0 && (
-          <div className="table-container">
-            <table>
-              <thead>
-                <tr>
-                  <th>No</th>
-                  <th>Nama Level</th>
-                  <th>Section</th>
-                  <th>Aksi</th>
+          <tbody>
+            {levels.length > 0 ? (
+              levels.map((level, index) => (
+                <tr key={level.id}>
+                  <td>{index + 1}</td>
+                  <td className="fw-bold">{level.nama}</td>
+                  <td>{level.sections?.nama || "-"}</td>
+                  <td>
+                    <button className="btn-detail">Detil</button>
+                    <button className="btn-update">Ubah</button>
+                    <button
+                      className="btn-delete"
+                      onClick={() => {handleDeleteClick(level)}}
+                    >
+                      Delete
+                    </button>
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                {levels.map((level, index) => (
-                  <tr key={level.id}>
-                    <td>{index + 1}</td>
-                    <td>{level.nama}</td>
-                    <td>{level.sections?.nama || '-'}</td>
-                    <td>
-                      <div className="action-buttons">
-                        <button
-                          className="view-btn"
-                          onClick={() => handleViewSoal(level.id)}
-                        >
-                          Lihat Soal
-                        </button>
-                        <button
-                          className="rename-btn"
-                          onClick={() => handleEditLevel(level.id)}
-                        >
-                          Edit
-                        </button>
-                        <button
-                          className="delete-btn"
-                          onClick={() => handleDeleteLevel(level.id)}
-                        >
-                          Hapus
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="4" className="text-center">
+                  Belum ada level
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+        {showDeleteModal && (
+          <div className="modal-overlay">
+            <div className="modal-box">
+              <h3>Hapus Level</h3>
+              <p>
+                Apakah anda yakin ingin menghapus level{" "}
+                <strong>{selectedLevel?.nama}</strong>?
+              </p>
+              <div className="modal-actions">
+                <button
+                  className="btn-detail"
+                  onClick={() => setShowDeleteModal(false)}
+                >
+                  Batal
+                </button>
+                <button
+                  className="btn-delete"
+                  onClick={handleConfirmDelete}
+                >Hapus</button>
+              </div>
+            </div>
           </div>
         )}
       </div>
@@ -137,4 +183,4 @@ const ListLevel = () => {
   );
 };
 
-export default ListLevel;
+export default LevelPage;

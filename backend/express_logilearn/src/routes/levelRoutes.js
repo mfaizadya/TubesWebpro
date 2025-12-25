@@ -12,7 +12,7 @@ router.get('/:slugSection/levels/:id/soal', authMid.verifyLogin, levelController
 router.get('/:slugSection/levels/:id', authMid.verifyLogin, levelController.getBySectionId);
 router.get('/:slugSection/levels', authMid.verifyLogin, levelController.getAllBySection);
 router.get('/levels', levelController.getAll)
-router.get('/levels/:id', levelController.getById)
+router.get('/levels/:id', authMid.verifyLogin, authMid.onlyAdmin, levelController.getById)
 
 //update
 router.put('/levels/:id', levelController.update)
