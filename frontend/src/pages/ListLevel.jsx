@@ -22,6 +22,8 @@ const LevelPage = () => {
   const [updateLevelName, setUpdateLevelName] = useState("");
   const [updateSectionId, setUpdateSectionId] = useState("");
 
+  const [searchTerm, setSearchTerm] = useState("");
+
   const handleUpdateClick = (level) => {
     setSelectedLevel(level);
     setUpdateLevelName(level.nama);
@@ -177,6 +179,14 @@ const LevelPage = () => {
     }
   };
 
+  const filteredLevels = levels.filter((level) => {
+    const levelName = level.nama?.toLowerCase() || "";
+    const sectionName = level.sections?.nama?.toLowerCase() || "";
+    const keyword = searchTerm.toLowerCase();
+
+    return levelName.includes(keyword) || sectionName.includes(keyword);
+  });
+
   useEffect(() => {
     fetchLevels();
     const fetchSections = async () => {
@@ -226,6 +236,27 @@ const LevelPage = () => {
           </div>
         </div>
 
+        <div className="row mb-3 align-items-center">
+          <div className="col-md-6">
+            <h5 className="fw-semibold mb-2 mb-md-0">Daftar Level Terbaru</h5>
+          </div>
+
+          <div className="col-md-6 d-flex justify-content-md-end">
+            <div className="search-wrapper">
+              <span className="search-icon">
+                {/* <i className="bi bi-search"></i> */}
+              </span>
+              <input
+                type="text"
+                className="form-control search-input"
+                placeholder="Cari level, section..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+          </div>
+        </div>
+
         <div className="card shadow-sm border-0 rounded-4">
           <div className="card-body p-0">
             <table className="table table-hover align-middle mb-0">
@@ -265,7 +296,7 @@ const LevelPage = () => {
 
                 {!loading &&
                   !error &&
-                  levels.map((level, index) => (
+                  filteredLevels.map((level, index) => (
                     <tr key={level.id}>
                       <td className="px-4">{index + 1}</td>
                       <td className="px-4 fw-semibold">{level.nama}</td>
