@@ -22,16 +22,22 @@ export default function EditSoalPG() {
     }
   }, [id]);
 
-  const [levelId, setLevelId] = useState(null); // Add state for levelId
+  const [levelId, setLevelId] = useState(null);
 
   const fetchSoal = async () => {
     try {
-      const response = await fetch(`http://localhost:3030/api/soals-pg/${id}`);
+      const token = localStorage.getItem('token');
+      const response = await fetch(`http://localhost:3030/api/soals-pg/${id}`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
       const data = await response.json();
-      if (data.data) {
-        setPertanyaan(data.data.text_soal);
-        setOpsi(data.data.opsis || []);
-        setLevelId(data.data.id_level); // Store levelId
+
+      if (data.payload?.datas) {
+        setPertanyaan(data.payload.datas.text_soal);
+        setOpsi(data.payload.datas.opsis || []);
+        setLevelId(data.payload.datas.id_level);
+      } else {
+        setError('Data soal tidak ditemukan.');
       }
       setLoading(false);
     } catch (err) {
@@ -88,9 +94,13 @@ export default function EditSoalPG() {
 
     setIsSaving(true);
     try {
+      const token = localStorage.getItem('token');
       const response = await fetch(`http://localhost:3030/api/soals-pg/${id}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
         body: JSON.stringify({
           text_soal: pertanyaan,
           opsi
