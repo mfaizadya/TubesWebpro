@@ -64,7 +64,7 @@ const ListSoal = () => {
           }
         }
 
-        const resEsai = await fetch(`http://localhost:3030/api/soal-esai/level/${id_level}`, {
+        const resEsai = await fetch(`http://localhost:3030/api/fetch-soal-esai`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -76,7 +76,10 @@ const ListSoal = () => {
         let listEsai = [];
         if (resEsai.ok) {
           const dataEsai = await resEsai.json();
-          listEsai = (dataEsai.payload?.datas || []).map(s => ({ ...s, tipe: 'esai' }));
+          const allEsai = dataEsai.payload?.datas || [];
+          listEsai = allEsai
+            .filter(s => Number(s.id_level) === Number(id_level))
+            .map(s => ({ ...s, tipe: 'esai' }));
         }
 
         let listPG = [];
@@ -279,7 +282,7 @@ const ListSoal = () => {
                         className="page-link"
                         onClick={() => setCurrentPage(prev => prev - 1)}
                       >
-                        Previous
+                        &lt;
                       </button>
                     </li>
                     {[...Array(totalPages)].map((_, i) => (
@@ -294,7 +297,7 @@ const ListSoal = () => {
                         className="page-link"
                         onClick={() => setCurrentPage(prev => prev + 1)}
                       >
-                        Next
+                        &gt;
                       </button>
                     </li>
                   </ul>
