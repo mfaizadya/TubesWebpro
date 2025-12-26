@@ -47,7 +47,6 @@ export default function ReviewAttempt() {
     navigate(`/detail-attempt/${attemptId}`);
   };
 
-  // Pagination & Search State
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [searchTerm, setSearchTerm] = useState('');
@@ -75,7 +74,7 @@ export default function ReviewAttempt() {
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
-    setCurrentPage(1); // Reset to first page on search
+    setCurrentPage(1);
   };
 
   return (

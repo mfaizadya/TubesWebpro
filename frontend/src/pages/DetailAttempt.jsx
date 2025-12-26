@@ -10,7 +10,6 @@ export default function DetailAttempt() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Edit State
   const [editingId, setEditingId] = useState(null);
   const [editForm, setEditForm] = useState({ skor: '', feedback: '' });
   const [isSaving, setIsSaving] = useState(false);
@@ -54,9 +53,8 @@ export default function DetailAttempt() {
         throw new Error('Gagal menyimpan perubahan');
       }
 
-      // Refresh data
       await fetchAttemptDetail();
-      handleCancelEdit(); // Close edit mode
+      handleCancelEdit();
     } catch (err) {
       alert(err.message);
     } finally {
@@ -171,7 +169,6 @@ export default function DetailAttempt() {
           </div>
         </div>
 
-        {/* Combine Questions into one flow */}
         <div className="card shadow-sm border-0 rounded-4 mb-4">
           <div className="card-body p-4">
             <h5 className="fw-bold text-primary mb-4">Daftar Pertanyaan</h5>

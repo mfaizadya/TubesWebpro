@@ -14,7 +14,7 @@ export default function DetailSoalPG() {
   }, [id])
 
   const fetchSoal = async () => {
-    setError(null) // Clear error on start
+    setError(null)
     try {
       const token = localStorage.getItem('token');
       const response = await fetch(`http://localhost:3030/api/soals-pg/${id}`, {
@@ -22,10 +22,9 @@ export default function DetailSoalPG() {
       });
       const data = await response.json()
 
-      // Check payload.datas based on response helper structure
       if (data.payload?.datas) {
         setSoal(data.payload.datas)
-        setError(null) // Clear error on success to be safe
+        setError(null)
       } else {
         setError("Soal tidak ditemukan")
       }

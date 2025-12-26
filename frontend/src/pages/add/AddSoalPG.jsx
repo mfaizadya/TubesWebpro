@@ -168,7 +168,7 @@ export default function AddSoalPG() {
                     </span>
                     <input
                       type="text"
-                      className="form-control border-light rounded-3 py-2 ps-5" // ps-5 to make room for the label A/B/C
+                      className="form-control border-light rounded-3 py-2 ps-5" 
                       placeholder={`Masukkan teks opsi ${String.fromCharCode(65 + index)}`}
                       value={o.text_opsi}
                       onChange={(e) => handleOpsiChange(index, e.target.value)}
