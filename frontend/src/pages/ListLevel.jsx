@@ -288,13 +288,11 @@ const LevelPage = () => {
           </div>
 
           <div className="col-md-6 d-flex justify-content-md-end">
-            <div className="search-wrapper">
-              <span className="search-icon">
-                {/* <i className="bi bi-search"></i> */}
-              </span>
+            <div className="position-relative">
+              <i className="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
               <input
                 type="text"
-                className="form-control search-input"
+                className="form-control ps-5"
                 placeholder="Cari level, section..."
                 value={searchTerm}
                 onChange={(e) => {
