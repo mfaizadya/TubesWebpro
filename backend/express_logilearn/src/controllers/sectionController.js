@@ -1,5 +1,6 @@
 const Section = require('../models/section')
 const response = require('../helpers/response')
+const axios = require('axios')
 
 async function getAll(req, res) {
     try {
@@ -11,6 +12,19 @@ async function getAll(req, res) {
     } catch (err) {
         console.log(err.message)
         response(500, null, `failed to get all sections: ${err.message}`, res)
+    }
+}
+
+async function fetchSections(req, res) {
+    try {
+        const resp = await axios.get('http://localhost:8000/getSection.php')
+        if (!resp) {
+            return response(404, null, `data not found`, res)
+        }
+        response(200, resp.data.data, `get all sections from PHP API`, res)
+    } catch (err) {
+        console.log(err.message)
+        response(500, null, `failed to fetch sections from PHP API: ${err.message}`, res)
     }
 }
 
@@ -70,6 +84,7 @@ async function remove(req, res) {
 }
 
 module.exports = {
+    fetchSections,
     getAll,
     getById,
     create,
