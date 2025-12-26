@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-import '../styles/ReviewAttempt.css';
+import './styles/ReviewAttempt.css';
 
 export default function ReviewAttempt() {
   const [attempts, setAttempts] = useState([]);
