@@ -43,6 +43,7 @@ const LoginAdmin = () => {
                 localStorage.setItem('token', token);
                 localStorage.setItem('role', 'ADMIN');
                 localStorage.setItem('user_name', admin.nama);
+                localStorage.setItem('id', admin.id);
                 navigate('/homepage');
             }
         } catch (err) {
