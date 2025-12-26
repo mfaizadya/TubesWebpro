@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import Swal from 'sweetalert2';
 
 const Homepage = () => {
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ const Homepage = () => {
 
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:3030/api/sections", {
+      const response = await fetch("http://localhost:3030/api/sections-php", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -150,6 +151,12 @@ const Homepage = () => {
       setEditSection(null);
       setEditName('');
       fetchSections();
+      Swal.fire({
+        icon: 'success',
+        title: 'Berhasil!',
+        text: 'Berhasil mengubah nama section',
+        confirmButtonColor: '#0d6efd'
+      });
     } catch (err) {
       alert(err.message);
       console.error("Error updating section:", err);
@@ -194,7 +201,13 @@ const Homepage = () => {
 
       setShowDeleteModal(false);
       setDeleteSection(null);
-      fetchSections(); // Refresh data
+      fetchSections();
+      Swal.fire({
+        icon: 'success',
+        title: 'Berhasil!',
+        text: 'Section berhasil dihapus',
+        confirmButtonColor: '#0d6efd'
+      });
     } catch (err) {
       alert(err.message);
       console.error("Error deleting section:", err);
@@ -250,7 +263,13 @@ const Homepage = () => {
 
       setShowAddModal(false);
       setAddName('');
-      fetchSections(); // Refresh data
+      fetchSections();
+      Swal.fire({
+        icon: 'success',
+        title: 'Berhasil!',
+        text: 'Berhasil menambah section',
+        confirmButtonColor: '#0d6efd'
+      });
     } catch (err) {
       alert(err.message);
       console.error("Error creating section:", err);
@@ -341,28 +360,22 @@ const Homepage = () => {
                       <td className="px-4 fw-bold text-dark">{section.nama || "Tanpa Judul"}</td>
                       <td className="px-4">
                         <span className="badge bg-light text-dark border">
-                          {section.levels ? `${section.levels.length} Level` : "0 Level"}
+                          {section.levels ? `${section.levels.length} Level` : section.jumlah_level ? `${section.jumlah_level} Level` : "0 Level"}
                         </span>
                       </td>
                       <td className="px-4 text-center">
                         <div className="d-flex gap-2 justify-content-center">
                           <button
-                            className="btn btn-sm btn-outline-primary rounded-pill px-3"
-                            onClick={() => handleDetailsClick(section.id)}
+                            className="btn btn-sm btn-outline-warning rounded-pill px-3"
+                            onClick={() => handleEditClick(section)}
                           >
-                            Detil
+                            Ubah
                           </button>
                           <button
                             className="btn btn-sm btn-outline-danger rounded-pill px-3"
                             onClick={() => handleDeleteClick(section)}
                           >
                             Hapus
-                          </button>
-                          <button
-                            className="btn btn-sm btn-outline-warning rounded-pill px-3"
-                            onClick={() => handleEditClick(section)}
-                          >
-                            Ubah
                           </button>
                         </div>
                       </td>
