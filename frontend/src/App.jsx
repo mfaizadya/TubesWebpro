@@ -10,6 +10,7 @@ import DetailSoalPG from './pages/DetailSoalPG';
 import DetailSoalEsai from './pages/DetailSoalEsai';
 import AddSoalEsai from './pages/add/AddSoalEsai';
 import EditSoalEsai from './pages/edit/EditSoalEsai';
+import EditSoalPG from './pages/edit/EditSoalPG';
 import ListSoal from './pages/ListSoal';
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
         {/* 4. Soal PG */}
         <Route path="/soals-pg" element={<ListSoalPG />} />
         <Route path="/soal-pg/detail/:id" element={<DetailSoalPG />} />
+        <Route path="/soal-pg/edit/:id" element={<EditSoalPG />} />
         <Route path="/add-soal-pg" element={<AddSoalPG />} />
 
         {/* 5. Soal Essai */}
