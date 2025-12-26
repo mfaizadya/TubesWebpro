@@ -95,7 +95,7 @@ export default function ReviewAttempt() {
         <div className="card shadow-sm border-0 rounded-4 overflow-hidden">
           <div className="card-header bg-white py-3 px-4 border-bottom">
             <div className="d-flex justify-content-between align-items-center">
-              <h5 className="mb-0 fw-bold text-primary">Daftar Attempt Terbaru</h5>
+              <h5 className="mb-0 fw-bold text-dark">Daftar Attempt Terbaru</h5>
               <div style={{ position: 'relative', width: '300px' }}>
                 <input
                   type="text"
