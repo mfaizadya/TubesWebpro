@@ -107,7 +107,7 @@ const ListSoal = () => {
       const token = localStorage.getItem("token");
       const endpoint = selectedSoal.tipe === 'esai'
         ? `http://localhost:3030/api/soal-esai/${selectedSoal.id}`
-        : `http://localhost:3030/api/soal-pg/${selectedSoal.id}`;
+        : `http://localhost:3030/api/soals-pg/${selectedSoal.id}`;
 
       const response = await fetch(endpoint, {
         method: "DELETE",
