@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import './styles/ReviewAttempt.css';
@@ -13,10 +13,6 @@ export default function DetailAttempt() {
   const [editingId, setEditingId] = useState(null);
   const [editForm, setEditForm] = useState({ skor: '', feedback: '' });
   const [isSaving, setIsSaving] = useState(false);
-
-  useEffect(() => {
-    fetchAttemptDetail();
-  }, [id]);
 
   const handleEditClick = (jawaban) => {
     setEditingId(jawaban.id);
@@ -53,8 +49,7 @@ export default function DetailAttempt() {
         throw new Error('Gagal menyimpan perubahan');
       }
 
-      await fetchAttemptDetail();
-      handleCancelEdit();
+      window.location.reload();
     } catch (err) {
       alert(err.message);
     } finally {
@@ -62,7 +57,7 @@ export default function DetailAttempt() {
     }
   };
 
-  const fetchAttemptDetail = async () => {
+  const fetchAttemptDetail = useCallback(async () => {
     try {
       setLoading(true);
       const token = localStorage.getItem('token');
@@ -85,12 +80,15 @@ export default function DetailAttempt() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [id]);
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    navigate('/login');
-  };
+  useEffect(() => {
+    fetchAttemptDetail();
+  }, [fetchAttemptDetail]);
+
+
+
+
 
   const handleBack = () => {
     navigate('/review-attempt');

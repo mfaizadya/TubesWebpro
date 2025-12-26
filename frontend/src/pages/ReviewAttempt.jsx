@@ -38,10 +38,7 @@ export default function ReviewAttempt() {
     }
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    navigate('/login');
-  };
+
 
   const handleViewDetail = (attemptId) => {
     navigate(`/detail-attempt/${attemptId}`);
@@ -51,7 +48,6 @@ export default function ReviewAttempt() {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Search Logic
   const filteredAttempts = attempts.filter((attempt) =>
     attempt.pelajars?.nama?.toLowerCase().includes(searchTerm.toLowerCase()) ||
     attempt.levels?.nama?.toLowerCase().includes(searchTerm.toLowerCase()) ||
