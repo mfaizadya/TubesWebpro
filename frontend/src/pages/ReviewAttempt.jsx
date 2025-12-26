@@ -17,7 +17,7 @@ export default function ReviewAttempt() {
     try {
       setLoading(true);
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:3030/api/attempts', {
+      const response = await fetch('http://localhost:8000/getAttempts.php', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
