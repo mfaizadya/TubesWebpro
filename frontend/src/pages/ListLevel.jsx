@@ -122,18 +122,10 @@ const LevelPage = () => {
   };
 
   const handleAddLevel = async () => {
-    if (!newLevelName || !selectedSectionId) {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal",
-        text: "Nama level dan section wajib diisi",
-        timer: 2000,
-        showConfirmButton: false,
-      });
-      return;
-    }
-
     try {
+      if (!newLevelName || !selectedSectionId) {
+        throw new Error("Nama level dan section wajib diisi");
+      }
       const token = localStorage.getItem("token");
 
       const response = await fetch("http://localhost:3030/api/levels", {
@@ -179,18 +171,10 @@ const LevelPage = () => {
   };
 
   const handleUpdateLevel = async () => {
-    if (!updateLevelName || !updateSectionId) {
-      Swal.fire({
-        icon: "error",
-        title: "Gagal",
-        text: "Nama level dan section wajib diisi",
-        timer: 2000,
-        showConfirmButton: false,
-      });
-      return;
-    }
-
     try {
+      if (!updateLevelName || !updateSectionId) {
+        throw new Error("Nama level dan section wajib diisi");
+      }
       const token = localStorage.getItem("token");
 
       const response = await fetch(
@@ -368,7 +352,10 @@ const LevelPage = () => {
                       <td className="px-4">{level?.nama_section || "-"}</td>
                       <td className="px-4 text-center">
                         <div className="d-flex gap-2 justify-content-center">
-                          <button className="btn btn-sm btn-outline-primary rounded-pill px-3" onClick={() => navigate(`/list-soal/${level.id}`)}>
+                          <button
+                            className="btn btn-sm btn-outline-primary rounded-pill px-3"
+                            onClick={() => navigate(`/list-soal/${level.id}`)}
+                          >
                             Detil
                           </button>
                           <button
