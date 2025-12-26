@@ -13,7 +13,7 @@ const ListSoal = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
-  
+
   const [toast, setToast] = useState({ show: false, message: "", type: "" });
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -31,11 +31,11 @@ const ListSoal = () => {
     if (location.state?.message) {
       const msg = location.state.message.toLowerCase();
       let type = "success";
-      
+
       if (msg.includes("ubah") || msg.includes("edit")) {
         type = "warning text-dark";
       }
-      
+
       showToast(location.state.message, type);
       window.history.replaceState({}, document.title);
     }
@@ -57,7 +57,7 @@ const ListSoal = () => {
         if (resLevel.ok) {
           const result = await resLevel.json();
           const namaLevel = result.payload?.datas?.nama;
-         if (namaLevel) {
+          if (namaLevel) {
             setLevelName(namaLevel);
           } else {
             setLevelName("Level " + id_level);
@@ -67,14 +67,23 @@ const ListSoal = () => {
         const resEsai = await fetch(`http://localhost:3030/api/soal-esai/level/${id_level}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        
-        if (!resEsai.ok) throw new Error("Gagal mengambil data soal");
-        const dataEsai = await resEsai.json();
 
-        // Fetch Soal PG
+        const resPG = await fetch(`http://localhost:3030/api/soals-pg/level/${id_level}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
 
-        const listEsai = (dataEsai.payload?.datas || []).map(s => ({ ...s, tipe: 'esai' }));
-        const listPG = []; // Isi sama dataPG
+
+        let listEsai = [];
+        if (resEsai.ok) {
+          const dataEsai = await resEsai.json();
+          listEsai = (dataEsai.payload?.datas || []).map(s => ({ ...s, tipe: 'esai' }));
+        }
+
+        let listPG = [];
+        if (resPG.ok) {
+          const dataPG = await resPG.json();
+          listPG = (dataPG.payload?.datas || []).map(s => ({ ...s, tipe: 'pg' }));
+        }
 
         setSoals([...listEsai, ...listPG]);
       } catch (err) {
@@ -96,7 +105,7 @@ const ListSoal = () => {
     if (!selectedSoal) return;
     try {
       const token = localStorage.getItem("token");
-      const endpoint = selectedSoal.tipe === 'esai' 
+      const endpoint = selectedSoal.tipe === 'esai'
         ? `http://localhost:3030/api/soal-esai/${selectedSoal.id}`
         : `http://localhost:3030/api/soal-pg/${selectedSoal.id}`;
 
@@ -130,19 +139,19 @@ const ListSoal = () => {
     <>
       <Navbar />
       {toast.show && (
-        <div 
-          className="position-fixed w-100 d-flex justify-content-end" 
-          style={{ top: "107px", right:"2%"}}
+        <div
+          className="position-fixed w-100 d-flex justify-content-end"
+          style={{ top: "107px", right: "2%" }}
         >
           <div className={`toast show align-items-center text-white bg-${toast.type} border-0 shadow-lg`}>
             <div className="d-flex">
               <div className="toast-body fw-bold">
                 {toast.message}
               </div>
-              <button 
-                type="button" 
-                className={`btn-close ${toast.type.includes('warning') ? '' : 'btn-close-white'} me-2 m-auto`} 
-                onClick={() => setToast({...toast, show: false})}
+              <button
+                type="button"
+                className={`btn-close ${toast.type.includes('warning') ? '' : 'btn-close-white'} me-2 m-auto`}
+                onClick={() => setToast({ ...toast, show: false })}
               ></button>
             </div>
           </div>
@@ -199,10 +208,10 @@ const ListSoal = () => {
             <table className="table table-hover align-middle mb-0">
               <thead className="table-light text-uppercase small">
                 <tr>
-                  <th className="px-4 py-3 text-center" style={{width: "80px"}}>No</th>
-                  <th className="px-4 py-3" style={{width: "120px"}}>Tipe</th>
+                  <th className="px-4 py-3 text-center" style={{ width: "80px" }}>No</th>
+                  <th className="px-4 py-3" style={{ width: "120px" }}>Tipe</th>
                   <th className="px-4 py-3">Pertanyaan</th>
-                  <th className="px-4 py-3 text-center" style={{width: "250px"}}>Aksi</th>
+                  <th className="px-4 py-3 text-center" style={{ width: "250px" }}>Aksi</th>
                 </tr>
               </thead>
               <tbody>
@@ -249,12 +258,12 @@ const ListSoal = () => {
               <div className="d-flex align-items-center gap-3">
                 <div className="d-flex align-items-center">
                   <span className="small text-muted me-2">Baris:</span>
-                  <select 
-                    className="form-select form-select-sm w-auto" 
+                  <select
+                    className="form-select form-select-sm w-auto"
                     value={itemsPerPage}
                     onChange={(e) => {
-                        setItemsPerPage(Number(e.target.value));
-                        setCurrentPage(1);
+                      setItemsPerPage(Number(e.target.value));
+                      setCurrentPage(1);
                     }}
                   >
                     <option value="5">5</option>
@@ -266,8 +275,8 @@ const ListSoal = () => {
                 <nav>
                   <ul className="pagination pagination-sm mb-0">
                     <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
-                      <button 
-                        className="page-link" 
+                      <button
+                        className="page-link"
                         onClick={() => setCurrentPage(prev => prev - 1)}
                       >
                         Previous
@@ -281,8 +290,8 @@ const ListSoal = () => {
                       </li>
                     ))}
                     <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
-                      <button 
-                        className="page-link" 
+                      <button
+                        className="page-link"
                         onClick={() => setCurrentPage(prev => prev + 1)}
                       >
                         Next

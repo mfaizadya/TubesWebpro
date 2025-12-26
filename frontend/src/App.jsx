@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Login from './pages/Login';
 import Homepage from './pages/Homepage';
 import ListLevel from './pages/ListLevel';
-// import DetailLevel from './pages/LevelDetail';
 import ReviewAttempt from './pages/ReviewAttempt';
 import DetailAttempt from './pages/DetailAttempt';
 import AddSoalPG from './pages/add/AddSoalPG';
@@ -31,11 +30,11 @@ function App() {
 
         {/* 4. Soal PG */}
         <Route path="/soals-pg" element={<ListSoalPG />} />
-        <Route path="/soals-pg/:id" element={<DetailSoalPG />} />
+        <Route path="/soal-pg/detail/:id" element={<DetailSoalPG />} />
         <Route path="/add-soal-pg" element={<AddSoalPG />} />
 
         {/* 5. Soal Essai */}
-        <Route path="/soal-esai/detail/:id" element={<DetailSoalEsai />}/>
+        <Route path="/soal-esai/detail/:id" element={<DetailSoalEsai />} />
         <Route path="/soal-esai/add" element={<AddSoalEsai />} />
         <Route path="/soal-esai/edit/:id" element={<EditSoalEsai />} />
 
