@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Login from './pages/Login';
 import Homepage from './pages/Homepage';
 import ListLevel from './pages/ListLevel';
-// import DetailLevel from './pages/LevelDetail';
 import ReviewAttempt from './pages/ReviewAttempt';
 import DetailAttempt from './pages/DetailAttempt';
 import AddSoalPG from './pages/add/AddSoalPG';
@@ -11,6 +10,7 @@ import DetailSoalPG from './pages/DetailSoalPG';
 import DetailSoalEsai from './pages/DetailSoalEsai';
 import AddSoalEsai from './pages/add/AddSoalEsai';
 import EditSoalEsai from './pages/edit/EditSoalEsai';
+import EditSoalPG from './pages/edit/EditSoalPG';
 import ListSoal from './pages/ListSoal';
 
 function App() {
@@ -31,11 +31,12 @@ function App() {
 
         {/* 4. Soal PG */}
         <Route path="/soals-pg" element={<ListSoalPG />} />
-        <Route path="/soals-pg/:id" element={<DetailSoalPG />} />
+        <Route path="/soal-pg/detail/:id" element={<DetailSoalPG />} />
+        <Route path="/soal-pg/edit/:id" element={<EditSoalPG />} />
         <Route path="/add-soal-pg" element={<AddSoalPG />} />
 
         {/* 5. Soal Essai */}
-        <Route path="/soal-esai/detail/:id" element={<DetailSoalEsai />}/>
+        <Route path="/soal-esai/detail/:id" element={<DetailSoalEsai />} />
         <Route path="/soal-esai/add" element={<AddSoalEsai />} />
         <Route path="/soal-esai/edit/:id" element={<EditSoalEsai />} />
 

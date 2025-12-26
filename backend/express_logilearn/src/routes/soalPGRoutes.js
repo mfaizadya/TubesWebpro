@@ -3,13 +3,18 @@ const router = express.Router();
 const soalPGController = require('../controllers/soalPGController'); 
 const { verifyLogin, onlyAdmin } = require('../middlewares/authMiddleware');
 
-router.post('/soal-pg', verifyLogin, onlyAdmin, soalPGController.create);
+// Create
+router.post('/soals-pg', verifyLogin, onlyAdmin, soalPGController.create);
 
-router.get('/soal-pg', verifyLogin, soalPGController.getAll);
-router.get('/soal-pg/:id', verifyLogin, soalPGController.getById);
+// Read
+router.get('/soals-pg', verifyLogin, soalPGController.getAll);
+router.get('/soals-pg/level/:idLevel', verifyLogin, soalPGController.getByLevel);
+router.get('/soals-pg/:id', verifyLogin, soalPGController.getById);
 
-router.put('/soal-pg/:id', verifyLogin, onlyAdmin, soalPGController.update);
+// Update
+router.put('/soals-pg/:id', verifyLogin, onlyAdmin, soalPGController.update);
 
-router.delete('/soal-pg/:id', verifyLogin, onlyAdmin, soalPGController.delete);
+// Delete
+router.delete('/soals-pg/:id', verifyLogin, onlyAdmin, soalPGController.delete);
 
 module.exports = router;
