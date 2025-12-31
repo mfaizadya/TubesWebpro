@@ -25,7 +25,7 @@ function App() {
         <Route path="/home" element={<Homepage />} />
 
         {/* 3. Level */}
-        <Route path="/levels" element={<ListLevel />} />
+        <Route path="/:slugSection/levels" element={<ListLevel />} />
         {/* <Route path="/levels/:id" element={<DetailLevel/>}/> */}
 
         {/* 4. Soal PG */}
