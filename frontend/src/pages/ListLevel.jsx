@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import "./styles/ListLevel.css";
 import Swal from "sweetalert2";
@@ -11,6 +11,8 @@ import DeleteLevelModal from "../components/DeleteLevelModal";
 
 const LevelPage = () => {
   const navigate = useNavigate();
+
+  const { slugSection } = useParams();
 
   const [levels, setLevels] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -31,7 +33,7 @@ const LevelPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
   const handleUpdateClick = (level) => {
     setSelectedLevel(level);
@@ -101,7 +103,7 @@ const LevelPage = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:3030/api/fetch-levels", {
+      const response = await fetch(`http://localhost:3030/api/${slugSection}/fetch-levels`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

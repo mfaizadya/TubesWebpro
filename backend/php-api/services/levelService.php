@@ -15,14 +15,16 @@ function getConnection() {
     );
 }
 
-function getLevels() {
+function getLevelsBySectionSlug($slugSection) {
     $db = getConnection();
 
     $sql = "SELECT l.id, l.nama AS nama_level, s.id AS id_section, s.nama AS nama_section 
             FROM levels l
             JOIN sections s on s.id = l.id_section
-            ORDER BY s.id ASC";
+            WHERE s.slug = :slug
+            ORDER BY l.id ASC";
     $stmt = $db->prepare($sql);
+    $stmt->bindParam(':slug',$slugSection);
     $stmt->execute();
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
