@@ -71,7 +71,7 @@ export default function DetailAttempt() {
       Swal.fire({
         icon: "success",
         title: "Berhasil",
-        text: `Berhasil update `,
+        text: `Berhasil mengubah skor`,
         timer: 2000,
         showConfirmButton: false,
       }).then(() => {
@@ -322,7 +322,7 @@ export default function DetailAttempt() {
                             onClick={() => handleEditClick(jawaban)}
                           >
                             <i className="bi bi-pencil-fill"></i>
-                            Edit
+                            Ubah
                           </button>
                         }
                       </div>
