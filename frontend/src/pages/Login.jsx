@@ -19,13 +19,13 @@ const LoginAdmin = () => {
         const isPasswordEmpty = !password.trim();
 
         if (isUsernameEmpty && isPasswordEmpty) {
-            setError('Username dan password harus diisi');
+            setError('Username dan Kata Sandi harus diisi');
             return;
         } else if (isUsernameEmpty) {
             setError('Username harus diisi');
             return;
         } else if (isPasswordEmpty) {
-            setError('Password harus diisi');
+            setError('Kata sandi harus diisi');
             return;
         }
 
@@ -96,7 +96,7 @@ const LoginAdmin = () => {
                             <input 
                                 type="password" 
                                 className={`form-control bg-light ${showPasswordAlert ? 'is-invalid' : ''}`} 
-                                placeholder="password"
+                                placeholder="Kata Sandi"
                                 value={password}
                                 onChange={(e) => {
                                     setPassword(e.target.value);
