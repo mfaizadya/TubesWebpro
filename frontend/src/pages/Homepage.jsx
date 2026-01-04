@@ -366,6 +366,12 @@ const Homepage = () => {
                       <td className="px-4 text-center">
                         <div className="d-flex gap-2 justify-content-center">
                           <button
+                            className="btn btn-sm btn-outline-primary rounded-pill px-3"
+                            onClick={() => navigate(`/${section.slug}/levels`)}
+                          >
+                            Detil
+                          </button>
+                          <button
                             className="btn btn-sm btn-outline-warning rounded-pill px-3"
                             onClick={() => handleEditClick(section)}
                           >

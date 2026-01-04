@@ -15,7 +15,8 @@ async function create(req, res) {
 
 async function fetchLevels(req, res) {
     try {
-        const resp = await axios.get('http://localhost:8000/getLevel.php')
+        const {slugSection} = req.params
+        const resp = await axios.get(`http://localhost:8000/getLevel.php?slug=${slugSection}`)
         if(!resp){
             return response(404, null, `data not found`, res)
         }
