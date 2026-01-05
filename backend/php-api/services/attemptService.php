@@ -37,11 +37,6 @@ function getAttempts() {
     $stmt = $db->prepare($sql);
     $stmt->execute();
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    // Format data to match nested structure expected by frontend (optional but good for consistency)
-    // Frontend expects: attempts.pelajars.username, attempts.levels.nama, attempts.levels.sections.nama
-    // But SQL returns flat structure.
-    // I need to map it.
     
     $formatted = [];
     foreach ($results as $row) {
