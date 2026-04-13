@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import DashboardStats from '../components/DashboardStats';
 import Swal from 'sweetalert2';
 
 const Homepage = () => {
@@ -14,19 +15,16 @@ const Homepage = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Edit Modal
   const [showEditModal, setShowEditModal] = useState(false);
   const [editSection, setEditSection] = useState(null);
   const [editName, setEditName] = useState('');
   const [editLoading, setEditLoading] = useState(false);
   const [editError, setEditError] = useState('');
 
-  // Delete Modal
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deleteSection, setDeleteSection] = useState(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
 
-  // State Add Modal
   const [showAddModal, setShowAddModal] = useState(false);
   const [addName, setAddName] = useState('');
   const [addLoading, setAddLoading] = useState(false);
@@ -76,7 +74,6 @@ const Homepage = () => {
     fetchSections();
   }, [navigate]);
 
-  // Search 
   const filteredSections = sections.filter((section) =>
     section.nama?.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -112,7 +109,6 @@ const Homepage = () => {
     setShowEditModal(true);
   };
 
-  // Handler submit edit
   const handleEditSubmit = async () => {
     if (!editName.trim()) {
       setEditError('Nama section tidak boleh kosong!');
@@ -165,13 +161,11 @@ const Homepage = () => {
     }
   };
 
-  // Handler buka modal delete
   const handleDeleteClick = (section) => {
     setDeleteSection(section);
     setShowDeleteModal(true);
   };
 
-  // Handler untuk konfirmasi delete
   const handleDeleteConfirm = async () => {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -216,14 +210,12 @@ const Homepage = () => {
     }
   };
 
-  // Handler untuk buka modal tambah
   const handleAddClick = () => {
     setAddName('');
     setAddError('');
     setShowAddModal(true);
   };
 
-  // Handler untuk submit tambah section
   const handleAddSubmit = async () => {
     if (!addName.trim()) {
       setAddError('Nama section tidak boleh kosong!');
@@ -283,6 +275,9 @@ const Homepage = () => {
       <Navbar />
 
       <div className="container mt-5">
+        {/* Dashboard Charts */}
+        <DashboardStats />
+
         <div className="d-flex justify-content-between align-items-center mb-4">
           <div>
             <h1 className="fw-bold mb-1">Daftar Section</h1>
@@ -365,6 +360,12 @@ const Homepage = () => {
                       </td>
                       <td className="px-4 text-center">
                         <div className="d-flex gap-2 justify-content-center">
+                          <button
+                            className="btn btn-sm btn-outline-primary rounded-pill px-3"
+                            onClick={() => navigate(`/${section.slug}/levels`)}
+                          >
+                            Detil
+                          </button>
                           <button
                             className="btn btn-sm btn-outline-warning rounded-pill px-3"
                             onClick={() => handleEditClick(section)}

@@ -13,7 +13,7 @@ router.get('/:slugSection/levels/:id', authMid.verifyLogin, levelController.getB
 router.get('/:slugSection/levels', authMid.verifyLogin, levelController.getAllBySection);
 router.get('/levels', authMid.verifyLogin, authMid.onlyAdmin, levelController.getAll);
 router.get('/levels/:id', authMid.verifyLogin, authMid.onlyAdmin, levelController.getById);
-router.get('/fetch-levels', authMid.verifyLogin, authMid.onlyAdmin, levelController.fetchLevels);
+router.get('/:slugSection/fetch-levels', authMid.verifyLogin, authMid.onlyAdmin, levelController.fetchLevels);
 
 //update
 router.put('/levels/:id', levelController.update)
