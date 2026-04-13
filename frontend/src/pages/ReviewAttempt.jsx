@@ -5,6 +5,12 @@ import './styles/ReviewAttempt.css';
 
 export default function ReviewAttempt() {
   const [attempts, setAttempts] = useState([]);
+  const [stats, setStats] = useState({
+    totalAttempts: 0,
+    averageScore: 0,
+    lowestAvgLevel: '-',
+    lowestAvgScore: 0
+  });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -27,8 +33,16 @@ export default function ReviewAttempt() {
       }
       const data = await response.json();
       console.log('Response data:', data);
-      const attempts = data.payload?.datas || [];
-      setAttempts(attempts);
+      
+      const payloadData = data.payload?.datas;
+      if (payloadData && !Array.isArray(payloadData) && payloadData.attempts) {
+        setAttempts(payloadData.attempts);
+        if (payloadData.stats) {
+          setStats(payloadData.stats);
+        }
+      } else {
+        setAttempts(payloadData || []);
+      }
       setError(null);
     } catch (err) {
       setError(err.message);
@@ -79,34 +93,7 @@ export default function ReviewAttempt() {
     setCurrentPage(1); // Reset to first page on search
   };
 
-  // Stats Calculations
-  const totalAttempts = attempts.length;
-  const averageScore = totalAttempts > 0
-    ? attempts.reduce((acc, curr) => acc + Number(curr.skor), 0) / totalAttempts
-    : 0;
-
-  // Calculate Level with lowest average score
-  const levelScores = {};
-  attempts.forEach(a => {
-    if (a.levels && a.levels.nama) {
-      if (!levelScores[a.levels.nama]) {
-        levelScores[a.levels.nama] = { total: 0, count: 0 };
-      }
-      levelScores[a.levels.nama].total += Number(a.skor);
-      levelScores[a.levels.nama].count += 1;
-    }
-  });
-
-  let lowestAvgLevel = '-';
-  let lowestAvgScore = Infinity;
-  for (const [levelName, data] of Object.entries(levelScores)) {
-    const avg = data.total / data.count;
-    if (avg < lowestAvgScore) {
-      lowestAvgScore = avg;
-      lowestAvgLevel = levelName;
-    }
-  }
-  if (lowestAvgScore === Infinity) lowestAvgScore = 0;
+  const { totalAttempts, averageScore, lowestAvgLevel, lowestAvgScore } = stats;
 
   return (
     <>
@@ -163,7 +150,7 @@ export default function ReviewAttempt() {
                 <div className="dash-number" style={{ fontSize: lowestAvgLevel.length > 12 ? '1.2rem' : '1.8rem', wordBreak: 'break-word', lineHeight: '1.2', borderBottom: '1px solid rgba(255, 255, 255, 0.3)', paddingBottom: '0.2rem', marginBottom: '0.2rem' }}>
                   {lowestAvgLevel === '-' ? 'N/A' : lowestAvgLevel}
                 </div>
-                <div className="dash-label">RATA-RATA SKOR TERENDAH: {Object.keys(levelScores).length > 0 ? lowestAvgScore.toFixed(2) : '0.00'}</div>
+                <div className="dash-label">RATA-RATA SKOR TERENDAH: {totalAttempts > 0 ? lowestAvgScore.toFixed(2) : '0.00'}</div>
               </div>
             </div>
           </div>
